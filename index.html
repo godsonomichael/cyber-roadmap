@@ -528,7 +528,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
           <div class="c-info">
             <div class="c-name" id="nm-2">Professor Messer — Security+ Videos</div>
             <div class="c-meta">YouTube · Free · Watch throughout all phases</div>
-            <a class="c-link" href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" target="_blank">Open Course ↗</a>
+            <a class="c-link" href="https://www.youtube.com/playlist?list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuR" target="_blank">Watch Free on YouTube ↗</a>
           </div>
         </div>
         <div class="course-row">
@@ -829,19 +829,19 @@ function togglePass(){
 }
 
 function doGoogle(){
+  const errEl = document.getElementById('authErr');
+  errEl.textContent = 'Opening Google sign-in...';
   auth.signInWithPopup(googleProvider)
-    .then(result => {
-      // success handled by onAuthStateChanged
-    })
+    .then(() => { errEl.textContent = ''; })
     .catch(ex => {
       if(ex.code === 'auth/popup-blocked'){
-        document.getElementById('authErr').textContent = 'Popup blocked. Please allow popups for this site in Chrome settings, then try again.';
+        errEl.innerHTML = 'Popup blocked by Chrome. <strong>Fix:</strong> Tap the address bar → lock icon 🔒 → Pop-ups → Allow. Then try again.';
       } else if(ex.code === 'auth/popup-closed-by-user'){
-        document.getElementById('authErr').textContent = 'Sign-in cancelled. Try again.';
-      } else if(ex.code === 'auth/network-request-failed'){
-        document.getElementById('authErr').textContent = 'Network error. Check your connection and try again.';
+        errEl.textContent = 'Sign-in was closed. Tap "Continue with Google" again.';
+      } else if(ex.code === 'auth/network-request-failed' || ex.message.includes('ERR_QUIC')){
+        errEl.innerHTML = 'Google sign-in needs Firebase Hosting enabled. See setup guide or use Email sign-up instead.';
       } else {
-        document.getElementById('authErr').textContent = ex.message;
+        errEl.textContent = ex.message;
       }
     });
 }
@@ -853,8 +853,15 @@ auth.onAuthStateChanged(user => {
     uid = user.uid;
     document.getElementById('authPage').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    document.getElementById('navUser').textContent = user.displayName || user.email;
-    document.getElementById('menuEmail').textContent = user.email || user.displayName || '';
+    const displayName = user.displayName || '';
+    const email = user.email || '';
+    document.getElementById('navUser').textContent = displayName || email;
+    const menuEmailEl = document.getElementById('menuEmail');
+    if(menuEmailEl){
+      menuEmailEl.innerHTML = displayName
+        ? `<strong style="display:block;margin-bottom:2px;color:var(--text)">${displayName}</strong><span style="font-size:0.68rem">${email}</span>`
+        : email;
+    }
     loadData();
   } else {
     uid = null;
@@ -1116,15 +1123,20 @@ async function askGemini(){
     const data = await res.json();
     if(res.status === 429){
       aiBubble.className = 'bubble bubble-ai';
-      aiBubble.textContent = '⚠️ Daily AI limit reached. The free Gemini API resets every 24 hours. Come back tomorrow or ask Professor Messer on YouTube in the meantime!';
+      aiBubble.innerHTML = `<strong>⚠️ AI limit reached for now.</strong><br><br>
+The free Gemini tier allows about 15 questions per minute and 1,500 per day. It resets automatically.<br><br>
+<strong>While waiting, try these:</strong><br>
+• <a href="https://www.youtube.com/playlist?list=PLG49S3nxzAnl4QDVqK-hOnoqcSKEIDDuR" target="_blank" style="color:var(--accent)">Professor Messer Security+ ↗</a><br>
+• <a href="https://tryhackme.com" target="_blank" style="color:var(--accent)">TryHackMe ↗</a><br>
+• <a href="https://cyberdefenders.org" target="_blank" style="color:var(--accent)">CyberDefenders ↗</a>`;
     } else if(res.status === 403){
       aiBubble.className = 'bubble bubble-ai';
-      aiBubble.textContent = '⚠️ API key issue. Check that your Gemini API key is active at aistudio.google.com.';
+      aiBubble.innerHTML = '⚠️ API key issue. Go to <a href="https://aistudio.google.com" target="_blank" style="color:var(--accent)">aistudio.google.com ↗</a> and check your key is active.';
     } else if(!res.ok){
       aiBubble.className = 'bubble bubble-ai';
       aiBubble.textContent = `⚠️ Something went wrong (Error ${res.status}). Try again in a moment.`;
     } else {
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received. Please try again.';
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response. Please try again.';
       aiBubble.className = 'bubble bubble-ai';
       aiBubble.textContent = text;
     }
