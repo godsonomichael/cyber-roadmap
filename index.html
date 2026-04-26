@@ -767,13 +767,6 @@ const auth = firebase.auth();
 const db   = firebase.firestore();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-// Handle Google redirect result
-auth.getRedirectResult().then(result => {
-  if(result && result.user) console.log("Google sign-in redirect success");
-}).catch(e => {
-  if(e.code !== "auth/no-auth-event") console.error("Redirect error:", e.message);
-});
-
 let uid         = null;
 let courses     = new Array(15).fill(false);
 let certs       = new Array(6).fill(false);
@@ -792,16 +785,20 @@ function closeMenu(){
 // ── THEME ──
 const savedTheme = localStorage.getItem('crp-theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
-document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-document.getElementById('themeLabel').textContent = savedTheme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+function applyThemeUI(theme){
+  const btn = document.getElementById('themeBtn');
+  const lbl = document.getElementById('themeLabel');
+  if(btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  if(lbl) lbl.textContent = theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+}
+applyThemeUI(savedTheme);
 
 function toggleTheme(){
   const cur = document.documentElement.getAttribute('data-theme');
   const next = cur === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('crp-theme', next);
-  document.getElementById('themeBtn').textContent = next === 'dark' ? '☀️' : '🌙';
-  document.getElementById('themeLabel').textContent = next === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+  applyThemeUI(next);
 }
 
 // ── AUTH ──
@@ -832,8 +829,21 @@ function togglePass(){
 }
 
 function doGoogle(){
-  auth.signInWithRedirect(googleProvider)
-    .catch(ex => document.getElementById('authErr').textContent = ex.message);
+  auth.signInWithPopup(googleProvider)
+    .then(result => {
+      // success handled by onAuthStateChanged
+    })
+    .catch(ex => {
+      if(ex.code === 'auth/popup-blocked'){
+        document.getElementById('authErr').textContent = 'Popup blocked. Please allow popups for this site in Chrome settings, then try again.';
+      } else if(ex.code === 'auth/popup-closed-by-user'){
+        document.getElementById('authErr').textContent = 'Sign-in cancelled. Try again.';
+      } else if(ex.code === 'auth/network-request-failed'){
+        document.getElementById('authErr').textContent = 'Network error. Check your connection and try again.';
+      } else {
+        document.getElementById('authErr').textContent = ex.message;
+      }
+    });
 }
 
 function doLogout(){ auth.signOut(); }
@@ -1009,11 +1019,10 @@ const ROLES = [
 
 function getRoleStatus(r){
   const fc = r.fullC.every(i => courses[i]);
-  const ft = r.fullT.every(i => certs[i]);
+  const ft = r.fullT.length === 0 || r.fullT.every(i => certs[i]);
   if(fc && ft) return 'qualified';
-  const anyC = r.fullC.some(i => courses[i]);
-  const anyT = r.fullT.some(i => certs[i]);
-  if(anyC || anyT) return 'partial';
+  const doneC = r.fullC.filter(i => courses[i]).length;
+  if(doneC > 0) return 'partial';
   return 'locked';
 }
 
@@ -1047,6 +1056,7 @@ function renderRoles(){
       certsHtml = `<div class="certs-needed"><div class="cn-label">Certifications to land this role</div>${items}</div>`;
     }
 
+    const autoOpen = status !== 'locked' ? 'open' : '';
     const card = document.createElement('div');
     card.className = `role-card ${status}`;
     card.innerHTML = `
@@ -1058,7 +1068,7 @@ function renderRoles(){
         </div>
         <span class="role-badge ${badgeClass}">${badgeText}</span>
       </div>
-      <div class="role-body" id="rbody-${ri}">
+      <div class="role-body ${autoOpen}" id="rbody-${ri}">
         <div class="role-desc">${role.desc}</div>
         <div class="role-reqs-label">Requirements</div>
         <div class="role-tags">${tags}</div>
