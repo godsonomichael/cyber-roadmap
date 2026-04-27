@@ -11,7 +11,6 @@
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
-/* ── THEME TOKENS ── */
 [data-theme="dark"]{
   --bg:#0A0B0F;
   --bg2:#111318;
@@ -63,46 +62,34 @@
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s}
 
-/* ── GRID BG ── */
 .grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:1}
 [data-theme="dark"] .grid-bg{background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:44px 44px}
 [data-theme="light"] .grid-bg{background-image:linear-gradient(rgba(0,0,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.04) 1px,transparent 1px);background-size:44px 44px}
 
 /* ── AUTH ── */
 #authPage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;position:relative;z-index:1}
-
 .auth-wrap{width:100%;max-width:400px;animation:slideUp 0.5s cubic-bezier(0.16,1,0.3,1) forwards}
-
 .auth-brand{text-align:center;margin-bottom:32px}
 .auth-brand-mark{display:inline-flex;align-items:center;gap:10px;margin-bottom:12px}
 .auth-brand-icon{width:40px;height:40px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#0A0B0F;font-family:'Syne',sans-serif}
 .auth-brand-name{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text)}
 .auth-brand p{font-size:0.72rem;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase}
-
 .auth-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:var(--shadow)}
-
 .auth-tabs{display:flex;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:22px;gap:4px}
 .auth-tab{flex:1;padding:9px;background:transparent;border:none;border-radius:7px;color:var(--text3);font-family:'Inter',sans-serif;font-size:0.78rem;font-weight:500;cursor:pointer;transition:all 0.2s}
 .auth-tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm);font-weight:600}
-
 .field{margin-bottom:14px}
 .field label{display:block;font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
 .field input{width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:9px;padding:11px 14px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.88rem;outline:none;transition:all 0.2s}
 .field input:focus{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 3px var(--accent-glow)}
 .field input::placeholder{color:var(--text3)}
-
 .btn-primary{width:100%;padding:12px;background:var(--accent);color:#0A0B0F;border:none;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:0.03em}
 .btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 4px 16px var(--accent-glow)}
 .btn-primary:active{transform:translateY(0)}
-
-.divider{display:flex;align-items:center;gap:12px;margin:14px 0}
-.divider span{font-size:0.68rem;color:var(--text3);white-space:nowrap}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
-
-
 .auth-err{color:var(--red);font-size:0.72rem;text-align:center;margin-top:10px;min-height:16px;font-weight:500}
-
-/* ── THEME TOGGLE ── */
+.pass-wrap{position:relative}
+.pass-wrap input{padding-right:44px;width:100%}
+.pass-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:0.95rem;color:var(--text3);padding:0;line-height:1}
 
 /* ── APP ── */
 #app{display:none;position:relative;z-index:1}
@@ -115,14 +102,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .nav-logo-icon{width:30px;height:30px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:800;color:#0A0B0F}
 .nav-logo-text{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:800;color:var(--text)}
 .nav-right{display:flex;align-items:center;gap:10px}
-.nav-user{font-size:0.65rem;color:var(--text3);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.btn-sm{padding:7px 14px;font-size:0.7rem;border-radius:7px;border:1.5px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-family:'Inter',sans-serif;font-weight:500;transition:all 0.2s;white-space:nowrap}
-.btn-sm:hover{border-color:var(--border2);color:var(--text)}
-/* HAMBURGER MENU */
+
+/* HAMBURGER */
 .hamburger{width:38px;height:38px;background:transparent;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:all 0.2s;flex-shrink:0}
 .hamburger:hover{border-color:var(--accent);background:var(--card)}
 .hamburger span{display:block;width:14px;height:1.5px;background:var(--text2);border-radius:2px;transition:all 0.2s}
 .hamburger:hover span{background:var(--accent)}
+
+/* MENU TRAY */
 .menu-tray{position:fixed;top:0;right:0;bottom:0;width:260px;background:var(--surface);border-left:1px solid var(--border);z-index:999;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:-8px 0 32px rgba(0,0,0,0.3);display:flex;flex-direction:column}
 .menu-tray.open{transform:translateX(0)}
 .menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:998;opacity:0;pointer-events:none;transition:opacity 0.3s}
@@ -132,7 +119,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .menu-close{background:none;border:none;color:var(--text3);font-size:1.2rem;cursor:pointer;padding:4px;transition:color 0.2s;line-height:1}
 .menu-close:hover{color:var(--text)}
 .menu-user{padding:14px 18px;border-bottom:1px solid var(--border)}
-.menu-user-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:4px}
+.menu-user-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:6px}
 .menu-user-email{font-size:0.78rem;color:var(--text);word-break:break-all}
 .menu-items{flex:1;padding:12px 10px}
 .menu-item{display:flex;align-items:center;gap:12px;padding:12px 10px;border-radius:8px;cursor:pointer;transition:all 0.2s;border:none;background:none;width:100%;text-align:left;color:var(--text);font-family:'Inter',sans-serif;font-size:0.82rem;font-weight:500}
@@ -145,7 +132,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 /* MAIN */
 .main{padding:20px;max-width:860px;margin:0 auto}
 
-/* HERO STRIP */
+/* HERO */
 .hero-strip{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;overflow:hidden;position:relative;animation:slideUp 0.4s cubic-bezier(0.16,1,0.3,1) forwards}
 .hero-strip::before{content:'';position:absolute;right:-40px;top:-40px;width:180px;height:180px;background:var(--accent-glow);border-radius:50%;pointer-events:none}
 .hero-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:3px}
@@ -154,7 +141,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 
 /* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center;animation:slideUp 0.4s cubic-bezier(0.16,1,0.3,1) forwards;transition:border-color 0.2s,transform 0.2s}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 14px;text-align:center;transition:border-color 0.2s,transform 0.2s}
 .stat:hover{border-color:var(--border2);transform:translateY(-2px)}
 .stat-n{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent);display:block;line-height:1}
 .stat-l{font-size:0.6rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;display:block}
@@ -171,7 +158,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 
 /* STREAK */
 .streak-row{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:16px;gap:12px}
-.streak-left{}
 .streak-lbl{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:3px}
 .streak-num{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--accent)}
 .streak-num small{font-family:'Inter',sans-serif;font-size:0.7rem;color:var(--text3);font-weight:400;margin-left:4px}
@@ -182,65 +168,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .sec-label{font-size:0.62rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin:22px 0 12px;display:flex;align-items:center;gap:10px}
 .sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
 
-/* NOTIF */
-.notif-row{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all 0.2s}
-.notif-row:hover{border-color:var(--accent);background:var(--card)}
-.notif-text{font-size:0.8rem;font-weight:500}
-.notif-sub{font-size:0.65rem;color:var(--text3);margin-top:2px}
-.notif-arr{color:var(--accent);font-size:0.85rem;transition:transform 0.2s}
-.notif-row:hover .notif-arr{transform:translateX(3px)}
-
-/* ── ROLE ENGINE ── */
-.role-card{border-radius:12px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:10px;transition:all 0.3s cubic-bezier(0.16,1,0.3,1)}
-.role-card.qualified{border-color:var(--green);box-shadow:0 0 0 1px var(--green),0 8px 32px var(--green-glow)}
-.role-card.partial{border-color:var(--accent)}
-.role-card.locked{opacity:0.5}
-
-.role-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);cursor:pointer;user-select:none;transition:background 0.2s}
-.role-card.qualified .role-head{background:rgba(34,201,122,0.04)}
-.role-card.partial .role-head{background:var(--accent-glow)}
-.role-head:hover{background:var(--card)}
-
-.role-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.role-card.qualified .role-dot{background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
-.role-card.partial .role-dot{background:var(--accent)}
-.role-card.locked .role-dot{background:var(--border2)}
-
-.role-info{flex:1}
-.role-name{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;line-height:1.2}
-.role-card.qualified .role-name{color:var(--green)}
-.role-card.partial .role-name{color:var(--accent)}
-.role-card.locked .role-name{color:var(--text3)}
-.role-remote{font-size:0.62rem;color:var(--text3);margin-top:2px}
-
-.role-badge{font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 11px;border-radius:20px;white-space:nowrap}
-.rb-qualified{background:rgba(34,201,122,0.12);color:var(--green);border:1px solid rgba(34,201,122,0.25)}
-.rb-partial{background:var(--accent-glow);color:var(--accent);border:1px solid rgba(232,160,32,0.25)}
-.rb-locked{background:var(--card);color:var(--text3);border:1px solid var(--border)}
-
-.role-body{border-top:1px solid var(--border);padding:14px 16px;background:var(--card);display:none}
-.role-body.open{display:block;animation:fadeIn 0.25s ease forwards}
-
-.role-desc{font-size:0.75rem;color:var(--text2);line-height:1.6;margin-bottom:12px}
-.role-reqs-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:8px}
-.role-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
-.rtag{font-size:0.62rem;padding:4px 10px;border-radius:5px;display:flex;align-items:center;gap:5px;font-weight:500}
-.rtag-done{background:rgba(34,201,122,0.1);color:var(--green);border:1px solid rgba(34,201,122,0.2)}
-.rtag-miss{background:var(--surface);color:var(--text3);border:1px solid var(--border)}
-
-.role-salary{font-size:0.7rem;color:var(--text3);display:flex;align-items:center;gap:6px;margin-bottom:10px}
-.salary-n{color:var(--green);font-weight:600;font-family:'Syne',sans-serif}
-
-.certs-needed{background:var(--surface);border:1px solid rgba(232,160,32,0.2);border-radius:8px;padding:10px 13px;margin-top:6px}
-.cn-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:7px}
-.cn-item{font-size:0.72rem;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-.cn-item:last-child{border-bottom:none}
-.cn-item::before{content:'→';color:var(--accent);font-size:0.75rem}
-
-/* ── PHASE CARDS ── */
+/* PHASE CARDS */
 .phase-wrap{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;margin-bottom:12px;overflow:hidden;transition:border-color 0.2s}
 .phase-wrap:hover{border-color:var(--border2)}
-
 .phase-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;cursor:pointer;user-select:none;transition:background 0.2s}
 .phase-head:hover{background:var(--card)}
 .phase-left{display:flex;align-items:center;gap:11px}
@@ -249,7 +179,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .phase-sub{font-size:0.62rem;color:var(--text3);margin-top:1px}
 .phase-chev{font-size:0.7rem;color:var(--text3);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1)}
 .phase-chev.open{transform:rotate(180deg)}
-
 .phase-body{border-top:1px solid var(--border);padding:14px 18px;display:none}
 .phase-body.open{display:block}
 
@@ -266,7 +195,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .c-meta{font-size:0.65rem;color:var(--text3);margin-bottom:5px}
 .c-link{font-size:0.65rem;color:var(--accent);text-decoration:none;font-weight:500}
 .c-link:hover{text-decoration:underline}
-
 .phase-note{margin-top:12px;padding:10px 13px;border-radius:8px;font-size:0.7rem;line-height:1.5;font-weight:500}
 
 /* SKIP */
@@ -292,24 +220,79 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 .cb-goal{background:var(--accent-glow);color:var(--accent);border:1px solid rgba(232,160,32,0.2)}
 .cb-later{background:var(--card);color:var(--text3);border:1px solid var(--border)}
 
-/* ── AI CHAT ── */
-.ai-wrap{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px}
-.ai-top{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
-.ai-live{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0}
-.ai-title{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700}
-.ai-powered{font-size:0.6rem;color:var(--text3);margin-left:auto;background:var(--card);border:1px solid var(--border);padding:3px 8px;border-radius:4px}
-.ai-chat{padding:14px 18px}
-.ai-msgs{max-height:220px;overflow-y:auto;margin-bottom:12px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth}
-.ai-msgs:empty::after{content:'Ask me anything about SOC, Security+, TryHackMe, or your career path...';color:var(--text3);font-size:0.73rem;font-style:italic;display:block;text-align:center;padding:18px 0;line-height:1.5}
-.bubble{padding:9px 13px;border-radius:10px;font-size:0.77rem;line-height:1.65;max-width:93%;word-break:break-word}
-.bubble-u{background:var(--accent);color:#0A0B0F;align-self:flex-end;border-radius:10px 10px 3px 10px;font-weight:500}
-.bubble-ai{background:var(--card);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-radius:10px 10px 10px 3px}
+/* ROLE ENGINE */
+.roles-intro{font-size:0.72rem;color:var(--text3);margin:-6px 0 14px;line-height:1.5}
+.role-card{border-radius:12px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:10px;transition:all 0.35s cubic-bezier(0.16,1,0.3,1);background:var(--surface)}
+.role-card.qualified{border-color:var(--green);background:linear-gradient(135deg,var(--surface) 0%,rgba(34,201,122,0.04) 100%);box-shadow:0 0 0 1px var(--green),0 8px 32px var(--green-glow)}
+.role-card.partial{border-color:rgba(232,160,32,0.4);background:linear-gradient(135deg,var(--surface) 0%,var(--accent-glow) 100%)}
+.role-card.locked{opacity:0.45;filter:grayscale(0.3)}
+.role-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);cursor:pointer;user-select:none;transition:background 0.2s}
+.role-card.qualified .role-head{background:rgba(34,201,122,0.04)}
+.role-card.partial .role-head{background:var(--accent-glow)}
+.role-head:hover{background:var(--card)}
+.role-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.role-card.qualified .role-dot{background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
+.role-card.partial .role-dot{background:var(--accent)}
+.role-card.locked .role-dot{background:var(--border2)}
+.role-info{flex:1}
+.role-name{font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;line-height:1.2}
+.role-card.qualified .role-name{color:var(--green)}
+.role-card.partial .role-name{color:var(--accent)}
+.role-card.locked .role-name{color:var(--text3)}
+.role-remote{font-size:0.62rem;color:var(--text3);margin-top:2px}
+.role-badge{font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 11px;border-radius:20px;white-space:nowrap}
+.rb-qualified{background:rgba(34,201,122,0.12);color:var(--green);border:1px solid rgba(34,201,122,0.25)}
+.rb-partial{background:var(--accent-glow);color:var(--accent);border:1px solid rgba(232,160,32,0.25)}
+.rb-locked{background:var(--card);color:var(--text3);border:1px solid var(--border)}
+.role-body{border-top:1px solid var(--border);padding:14px 16px;background:var(--card);display:none}
+.role-body.open{display:block;animation:fadeIn 0.25s ease forwards}
+.role-desc{font-size:0.75rem;color:var(--text2);line-height:1.6;margin-bottom:12px}
+.role-reqs-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:8px}
+.role-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.rtag{font-size:0.62rem;padding:4px 10px;border-radius:5px;display:flex;align-items:center;gap:5px;font-weight:500}
+.rtag-done{background:rgba(34,201,122,0.1);color:var(--green);border:1px solid rgba(34,201,122,0.2)}
+.rtag-miss{background:var(--surface);color:var(--text3);border:1px solid var(--border)}
+.role-salary{font-size:0.7rem;color:var(--text3);display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.salary-n{color:var(--green);font-weight:600;font-family:'Syne',sans-serif}
+.certs-needed{background:var(--surface);border:1px solid rgba(232,160,32,0.2);border-radius:8px;padding:10px 13px;margin-top:6px}
+.cn-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:7px}
+.cn-item{font-size:0.72rem;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.cn-item:last-child{border-bottom:none}
+.cn-item::before{content:'→';color:var(--accent);font-size:0.75rem}
+
+/* AI FAB */
+.ai-fab{position:fixed;bottom:28px;right:22px;z-index:500;width:58px;height:58px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50%;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 20px var(--accent-glow);animation:fabPulse 3s ease-in-out infinite;transition:transform 0.2s cubic-bezier(0.16,1,0.3,1),box-shadow 0.2s;gap:1px}
+.ai-fab:hover{transform:scale(1.1) translateY(-2px);box-shadow:0 8px 32px var(--accent-glow),0 0 0 8px rgba(232,160,32,0.08)}
+.ai-fab:active{transform:scale(0.96)}
+.ai-fab-ring{position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--accent);opacity:0.4;animation:ringPulse 3s ease-in-out infinite}
+.ai-fab-ring2{inset:-12px;opacity:0.15;animation:ringPulse 3s ease-in-out infinite 0.6s}
+.ai-fab-icon{font-size:1.3rem;line-height:1;position:relative;z-index:1}
+.ai-fab-label{font-size:0.45rem;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:0.08em;text-transform:uppercase;color:rgba(10,11,15,0.8);position:relative;z-index:1;line-height:1}
+
+/* AI DRAWER */
+.ai-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:600;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(2px)}
+.ai-overlay.open{opacity:1;pointer-events:all}
+.ai-drawer{position:fixed;bottom:0;left:0;right:0;z-index:700;background:var(--surface);border-top:1px solid var(--border);border-radius:20px 20px 0 0;padding:0;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);box-shadow:0 -8px 40px rgba(0,0,0,0.4);display:flex;flex-direction:column;max-height:80vh}
+.ai-drawer.open{transform:translateY(0)}
+.ai-drawer-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:12px auto 0;flex-shrink:0}
+.ai-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.ai-drawer-title-wrap{display:flex;align-items:center;gap:10px}
+.ai-live-dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0}
+.ai-drawer-title{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700}
+.ai-drawer-sub{font-size:0.6rem;color:var(--text3);margin-top:1px}
+.ai-drawer-close{background:none;border:none;color:var(--text3);font-size:1.1rem;cursor:pointer;padding:6px;border-radius:6px;transition:all 0.2s;line-height:1}
+.ai-drawer-close:hover{background:var(--card);color:var(--text)}
+.ai-msgs{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth;min-height:120px;max-height:340px}
+.ai-msgs:empty::after{content:'Ask me anything about SOC, Security+, TryHackMe, or your career path...';color:var(--text3);font-size:0.73rem;font-style:italic;display:block;text-align:center;padding:24px 0;line-height:1.6}
+.bubble{padding:10px 14px;border-radius:12px;font-size:0.78rem;line-height:1.65;max-width:92%;word-break:break-word;animation:bubbleIn 0.25s cubic-bezier(0.16,1,0.3,1) forwards}
+.bubble-u{background:var(--accent);color:#0A0B0F;align-self:flex-end;border-radius:12px 12px 3px 12px;font-weight:500}
+.bubble-ai{background:var(--card);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-radius:12px 12px 12px 3px}
 .bubble-thinking{color:var(--text3);font-style:italic}
-.ai-row{display:flex;gap:8px}
-.ai-input{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:9px;padding:10px 13px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.78rem;outline:none;resize:none;transition:all 0.2s;line-height:1.4}
+.ai-drawer-input{padding:12px 16px 16px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
+.ai-input{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:10px 13px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.8rem;outline:none;resize:none;transition:all 0.2s;line-height:1.4}
 .ai-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
 .ai-input::placeholder{color:var(--text3)}
-.ai-btn{padding:10px 16px;background:var(--accent);color:#0A0B0F;border:none;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap;width:auto}
+.ai-btn{padding:10px 16px;background:var(--accent);color:#0A0B0F;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap;align-self:flex-end}
 .ai-btn:hover{background:var(--accent2);transform:translateY(-1px)}
 .ai-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
 
@@ -320,236 +303,37 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 /* TOAST */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#fff;padding:10px 20px;border-radius:8px;font-size:0.75rem;font-weight:600;z-index:999;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);white-space:nowrap;box-shadow:0 4px 20px var(--green-glow)}
 .toast.show{transform:translateX(-50%) translateY(0)}
-.pass-wrap{position:relative}
-.pass-wrap input{padding-right:44px;width:100%}
-.pass-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:0.95rem;color:var(--text3);padding:0;line-height:1}
-#themeBtn{z-index:9999}
 
-
-
-/* ── FLOATING AI FAB ── */
-.ai-fab{
-  position:fixed;
-  bottom:28px;
-  right:22px;
-  z-index:500;
-  width:58px;
-  height:58px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  border:none;
-  border-radius:50%;
-  cursor:pointer;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  box-shadow:0 4px 20px var(--accent-glow),0 0 0 0 var(--accent-glow);
-  animation:fabPulse 3s ease-in-out infinite;
-  transition:transform 0.2s cubic-bezier(0.16,1,0.3,1),box-shadow 0.2s;
-  gap:1px;
-}
-.ai-fab:hover{
-  transform:scale(1.1) translateY(-2px);
-  box-shadow:0 8px 32px var(--accent-glow),0 0 0 8px rgba(232,160,32,0.08);
-}
-.ai-fab:active{transform:scale(0.96)}
-.ai-fab-ring{
-  position:absolute;
-  inset:-6px;
-  border-radius:50%;
-  border:2px solid var(--accent);
-  opacity:0.4;
-  animation:ringPulse 3s ease-in-out infinite;
-}
-.ai-fab-ring2{
-  inset:-12px;
-  opacity:0.15;
-  animation:ringPulse 3s ease-in-out infinite 0.6s;
-}
-@keyframes ringPulse{
-  0%,100%{transform:scale(1);opacity:0.4}
-  50%{transform:scale(1.12);opacity:0.1}
-}
-@keyframes fabPulse{
-  0%,100%{box-shadow:0 4px 20px var(--accent-glow)}
-  50%{box-shadow:0 4px 32px var(--accent-glow),0 0 0 6px rgba(232,160,32,0.06)}
-}
-.ai-fab-icon{font-size:1.3rem;line-height:1;position:relative;z-index:1}
-.ai-fab-label{font-size:0.45rem;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:0.08em;text-transform:uppercase;color:rgba(10,11,15,0.8);position:relative;z-index:1;line-height:1}
-
-/* ── AI DRAWER ── */
-.ai-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:600;
-  opacity:0;pointer-events:none;transition:opacity 0.3s;
-  backdrop-filter:blur(2px);
-}
-.ai-overlay.open{opacity:1;pointer-events:all}
-.ai-drawer{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  z-index:700;
-  background:var(--surface);
-  border-top:1px solid var(--border);
-  border-radius:20px 20px 0 0;
-  padding:0;
-  transform:translateY(100%);
-  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
-  box-shadow:0 -8px 40px rgba(0,0,0,0.4);
-  display:flex;
-  flex-direction:column;
-  max-height:80vh;
-}
-.ai-drawer.open{transform:translateY(0)}
-.ai-drawer-handle{
-  width:36px;height:4px;
-  background:var(--border2);
-  border-radius:2px;
-  margin:12px auto 0;
-  flex-shrink:0;
-}
-.ai-drawer-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 18px 12px;
-  border-bottom:1px solid var(--border);
-  flex-shrink:0;
-}
-.ai-drawer-title-wrap{display:flex;align-items:center;gap:10px}
-.ai-live-dot{
-  width:8px;height:8px;
-  background:var(--green);
-  border-radius:50%;
-  animation:pulse 2s infinite;
-  flex-shrink:0;
-}
-.ai-drawer-title{font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700}
-.ai-drawer-sub{font-size:0.6rem;color:var(--text3);margin-top:1px}
-.ai-drawer-close{
-  background:none;border:none;
-  color:var(--text3);font-size:1.1rem;
-  cursor:pointer;padding:6px;
-  border-radius:6px;
-  transition:all 0.2s;line-height:1;
-}
-.ai-drawer-close:hover{background:var(--card);color:var(--text)}
-.ai-msgs{
-  flex:1;overflow-y:auto;
-  padding:14px 18px;
-  display:flex;flex-direction:column;gap:8px;
-  scroll-behavior:smooth;
-  min-height:120px;
-  max-height:340px;
-}
-.ai-msgs:empty::after{
-  content:'Ask me anything about SOC, Security+, TryHackMe, or your career path...';
-  color:var(--text3);font-size:0.73rem;font-style:italic;
-  display:block;text-align:center;padding:24px 0;line-height:1.6;
-}
-.bubble{padding:10px 14px;border-radius:12px;font-size:0.78rem;line-height:1.65;max-width:92%;word-break:break-word;animation:bubbleIn 0.25s cubic-bezier(0.16,1,0.3,1) forwards}
-.bubble-u{background:var(--accent);color:#0A0B0F;align-self:flex-end;border-radius:12px 12px 3px 12px;font-weight:500}
-.bubble-ai{background:var(--card);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-radius:12px 12px 12px 3px}
-.bubble-thinking{color:var(--text3);font-style:italic}
-.ai-drawer-input{
-  padding:12px 16px 16px;
-  border-top:1px solid var(--border);
-  display:flex;gap:8px;
-  flex-shrink:0;
-}
-.ai-input{
-  flex:1;background:var(--card);border:1.5px solid var(--border);
-  border-radius:10px;padding:10px 13px;color:var(--text);
-  font-family:'Inter',sans-serif;font-size:0.8rem;
-  outline:none;resize:none;transition:all 0.2s;line-height:1.4;
-}
-.ai-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-.ai-input::placeholder{color:var(--text3)}
-.ai-btn{
-  padding:10px 16px;background:var(--accent);color:#0A0B0F;
-  border:none;border-radius:10px;font-family:'Syne',sans-serif;
-  font-size:0.75rem;font-weight:700;cursor:pointer;
-  transition:all 0.2s;white-space:nowrap;width:auto;
-  align-self:flex-end;
-}
-.ai-btn:hover{background:var(--accent2);transform:translateY(-1px)}
-.ai-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
-
-/* ── ROLES INTRO ── */
-.roles-intro{
-  font-size:0.72rem;color:var(--text3);
-  margin:-6px 0 14px;line-height:1.5;
-}
-
-/* ── ROLE CARDS REDESIGNED ── */
-.role-card{
-  border-radius:12px;border:1.5px solid var(--border);
-  overflow:hidden;margin-bottom:10px;
-  transition:all 0.35s cubic-bezier(0.16,1,0.3,1);
-  background:var(--surface);
-}
-.role-card.qualified{
-  border-color:var(--green);
-  background:linear-gradient(135deg,var(--surface) 0%,rgba(34,201,122,0.04) 100%);
-  box-shadow:0 0 0 1px var(--green),0 8px 32px var(--green-glow);
-  animation:unlockCard 0.5s cubic-bezier(0.16,1,0.3,1);
-}
-.role-card.partial{
-  border-color:rgba(232,160,32,0.4);
-  background:linear-gradient(135deg,var(--surface) 0%,var(--accent-glow) 100%);
-}
-.role-card.locked{
-  opacity:0.45;
-  filter:grayscale(0.3);
-}
-
-/* ── FUNCTIONAL ANIMATIONS ── */
-/* Checkbox tick animation */
+/* ANIMATIONS */
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.85)}}
+@keyframes ringPulse{0%,100%{transform:scale(1);opacity:0.4}50%{transform:scale(1.12);opacity:0.1}}
+@keyframes fabPulse{0%,100%{box-shadow:0 4px 20px var(--accent-glow)}50%{box-shadow:0 4px 32px var(--accent-glow),0 0 0 6px rgba(232,160,32,0.06)}}
+@keyframes bubbleIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes checkPop{0%{transform:scale(0.6)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
-.cbox.checked,.cert-circle.checked{animation:checkPop 0.3s cubic-bezier(0.16,1,0.3,1)}
-
-/* Progress fill pulse on update */
-@keyframes progressPulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 12px var(--green)}}
-.progress-fill.pulse{animation:progressPulse 0.6s ease}
-
-/* Role card unlock animation */
-@keyframes unlockCard{0%{transform:translateX(-6px);opacity:0.6}100%{transform:translateX(0);opacity:1}}
-.role-card.qualified{animation:unlockCard 0.4s cubic-bezier(0.16,1,0.3,1)}
-
-/* Stat number bump */
 @keyframes numBump{0%{transform:scale(1)}50%{transform:scale(1.2);color:var(--green)}100%{transform:scale(1)}}
+@keyframes streakFire{0%{transform:scale(1)}40%{transform:scale(1.3) rotate(-5deg)}70%{transform:scale(0.95) rotate(3deg)}100%{transform:scale(1)}}
+@keyframes phaseOpen{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes unlockCard{0%{transform:translateX(-6px);opacity:0.6}100%{transform:translateX(0);opacity:1}}
+@keyframes progressPulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 12px var(--green)}}
+
+.cbox.checked,.cert-circle.checked{animation:checkPop 0.3s cubic-bezier(0.16,1,0.3,1)}
+.role-card.qualified{animation:unlockCard 0.4s cubic-bezier(0.16,1,0.3,1)}
+.phase-body.open{animation:phaseOpen 0.3s cubic-bezier(0.16,1,0.3,1)}
+.progress-fill.pulse{animation:progressPulse 0.6s ease}
 .stat-n.bump{animation:numBump 0.4s ease}
 
-/* Menu tray animation already handled by transition */
-/* AI bubble appear */
-@keyframes bubbleIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.bubble{animation:bubbleIn 0.25s cubic-bezier(0.16,1,0.3,1) forwards}
-
-/* Phase body open */
-@keyframes phaseOpen{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.phase-body.open{animation:phaseOpen 0.3s cubic-bezier(0.16,1,0.3,1)}
-
-/* Streak bump */
-@keyframes streakFire{0%{transform:scale(1)}40%{transform:scale(1.3) rotate(-5deg)}70%{transform:scale(0.95) rotate(3deg)}100%{transform:scale(1)}}
-.streak-num.fire{animation:streakFire 0.5s cubic-bezier(0.16,1,0.3,1)}
-
-/* Toast slide */
-/* Hero strip entrance */
-.hero-strip{animation:slideUp 0.4s cubic-bezier(0.16,1,0.3,1) forwards}
 .stats-grid .stat:nth-child(1){animation:slideUp 0.35s 0.05s both}
 .stats-grid .stat:nth-child(2){animation:slideUp 0.35s 0.1s both}
 .stats-grid .stat:nth-child(3){animation:slideUp 0.35s 0.15s both}
 .progress-card{animation:slideUp 0.35s 0.2s both}
 .streak-row{animation:slideUp 0.35s 0.25s both}
 
-/* ANIMATIONS */
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.85)}}
-
-/* SCROLLBAR */
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 
-/* RESPONSIVE */
 @media(max-width:480px){
   .stat-n{font-size:1.3rem}
   .auth-card{padding:22px 18px}
@@ -559,10 +343,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 </head>
 <body>
 
-<!-- GRID BG -->
 <div class="grid-bg"></div>
 
-<!-- ── AUTH ── -->
+<!-- ── AUTH PAGE ── -->
 <div id="authPage">
   <div class="auth-wrap">
     <div class="auth-brand">
@@ -587,27 +370,31 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
       </div>
       <div class="field">
         <label>Password</label>
-        <div class="pass-wrap"><input type="password" id="authPass" placeholder="••••••••"><button type="button" class="pass-eye" id="passEye" onclick="togglePass()">👁</button></div>
+        <div class="pass-wrap">
+          <input type="password" id="authPass" placeholder="••••••••">
+          <button type="button" class="pass-eye" id="passEye" onclick="togglePass()">👁</button>
+        </div>
       </div>
       <button class="btn-primary" id="authBtn" onclick="doAuth()">Login</button>
-
       <p class="auth-err" id="authErr"></p>
     </div>
   </div>
 </div>
 
-<!-- ── APP ── -->
+<!-- ── MAIN APP ── -->
 <div id="app">
-  <!-- MENU TRAY -->
+
+  <!-- MENU OVERLAY + TRAY -->
   <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
   <div class="menu-tray" id="menuTray">
     <div class="menu-head">
       <span class="menu-head-title">Menu</span>
       <button class="menu-close" onclick="closeMenu()">✕</button>
     </div>
+    <!-- ✅ FIX 1: Dedicated user block showing name + email -->
     <div class="menu-user">
       <div class="menu-user-label">Signed in as</div>
-      <div class="menu-user-email" id="menuEmail">—</div>
+      <div class="menu-user-email" id="menuUserBlock">—</div>
     </div>
     <div class="menu-items">
       <button class="menu-item" onclick="toggleTheme();closeMenu()">
@@ -631,6 +418,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
     </div>
   </div>
 
+  <!-- NAV -->
   <nav class="nav">
     <div class="nav-inner">
       <div class="nav-logo">
@@ -672,7 +460,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
       </div>
     </div>
 
-    <!-- PROGRESS -->
+    <!-- PROGRESS BAR -->
     <div class="progress-card">
       <div class="progress-top">
         <span class="progress-label">Overall Roadmap Progress</span>
@@ -685,13 +473,12 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
 
     <!-- STREAK -->
     <div class="streak-row">
-      <div class="streak-left">
+      <div>
         <div class="streak-lbl">Study Streak</div>
         <div class="streak-num" id="streakVal">0<small>days in a row</small></div>
       </div>
       <button class="btn-streak" onclick="markToday()">✓ Mark Today Done</button>
     </div>
-
 
     <!-- COURSES -->
     <div class="sec-label">Courses</div>
@@ -838,7 +625,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
             <div class="c-meta">Cisco Networking Academy · Free · Foundation for pentesting</div>
             <a class="c-link" href="https://www.netacad.com/courses/cybersecurity" target="_blank">Open Course ↗</a>
           </div>
-        </div>        <div class="course-row">
+        </div>
+        <div class="course-row">
           <div class="cbox" id="chk-12" onclick="toggleCourse(12)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-12">Hack The Box — Starting Point</div>
@@ -909,7 +697,8 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
         <a class="c-link" href="https://www.isc2.org/certifications/cissp" target="_blank">Official Exam Info ↗</a>
       </div>
       <span class="cbadge cb-later">Long-term</span>
-    </div>    <div class="cert-row">
+    </div>
+    <div class="cert-row">
       <div class="cert-circle" id="cert-4" onclick="toggleCert(4)"></div>
       <div class="cert-info">
         <div class="cert-n" id="cn-4">Certified in Risk and Information Systems Control (CRISC)</div>
@@ -928,8 +717,6 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
       <span class="cbadge cb-goal">SOC Path</span>
     </div>
 
-
-
     <!-- ROLE ENGINE -->
     <div class="sec-label">Career Unlock Status</div>
     <div class="roles-intro">Tick courses above to unlock roles. Updates live as you progress.</div>
@@ -938,7 +725,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
     <div class="footer"><span>Godson Uzoezie</span> · Port Harcourt, Nigeria 🇳🇬 · github.com/godsonomichael · 2026</div>
   </div>
 
-  <!-- ── FLOATING AI BUTTON ── -->
+  <!-- AI FAB -->
   <button class="ai-fab" id="aiFab" onclick="toggleAIDrawer()" aria-label="AI Assistant">
     <div class="ai-fab-ring"></div>
     <div class="ai-fab-ring ai-fab-ring2"></div>
@@ -946,7 +733,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
     <span class="ai-fab-label">Ask AI</span>
   </button>
 
-  <!-- ── AI DRAWER ── -->
+  <!-- AI DRAWER -->
   <div class="ai-overlay" id="aiOverlay" onclick="closeAIDrawer()"></div>
   <div class="ai-drawer" id="aiDrawer">
     <div class="ai-drawer-handle"></div>
@@ -967,13 +754,13 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
     </div>
   </div>
 
-</div>
+</div><!-- end #app -->
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ══════════════════════════════════════════
-// 🔥 FIREBASE CONFIG
+// FIREBASE CONFIG
 // ══════════════════════════════════════════
 const firebaseConfig = {
   apiKey:            "AIzaSyDe2ngASIsjK2lflmjcb-SoqkrxvH12mNI",
@@ -985,11 +772,7 @@ const firebaseConfig = {
 };
 
 // ══════════════════════════════════════════
-// 🤖 GEMINI API KEY
-// ══════════════════════════════════════════
-// ══════════════════════════════════════════
-// 🤖 GROQ API KEY — Free, no daily limits
-// Get yours free at console.groq.com
+// GROQ API KEY
 // ══════════════════════════════════════════
 const GROQ_KEY = "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";
 
@@ -997,14 +780,11 @@ const GROQ_KEY = "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";
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db   = firebase.firestore();
-const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-let uid         = null;
-let courses     = new Array(15).fill(false);
-let certs       = new Array(6).fill(false);
-let authMode    = 'login';
-let pendingName = '';
-let skipNextAuthLoad = false;
+let uid      = null;
+let courses  = new Array(15).fill(false);
+let certs    = new Array(6).fill(false);
+let authMode = 'login';
 
 // ── MENU ──
 function openMenu(){
@@ -1028,22 +808,31 @@ function applyThemeUI(theme){
 applyThemeUI(savedTheme);
 
 function toggleTheme(){
-  const cur = document.documentElement.getAttribute('data-theme');
+  const cur  = document.documentElement.getAttribute('data-theme');
   const next = cur === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('crp-theme', next);
   applyThemeUI(next);
 }
 
-// ── AUTH ──
+// ── AUTH TABS ──
 function setTab(m){
   authMode = m;
-  document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active',(m==='login'&&i===0)||(m==='signup'&&i===1)));
+  document.querySelectorAll('.auth-tab').forEach((t,i) =>
+    t.classList.toggle('active', (m==='login'&&i===0)||(m==='signup'&&i===1))
+  );
   document.getElementById('authBtn').textContent = m === 'login' ? 'Login' : 'Create Account';
   document.getElementById('authErr').textContent = '';
   document.getElementById('nameField').style.display = m === 'signup' ? 'block' : 'none';
   if(m === 'login') document.getElementById('authName').value = '';
 }
+
+// ══════════════════════════════════════════
+// ✅ FIX 2: ROBUST AUTH — signup writes to
+//    Firestore BEFORE onAuthStateChanged fires
+//    so loadData() always finds the name.
+// ══════════════════════════════════════════
+let signupInProgress = false;
 
 function doAuth(){
   const e    = document.getElementById('authEmail').value.trim();
@@ -1051,67 +840,70 @@ function doAuth(){
   const name = document.getElementById('authName').value.trim();
   const err  = document.getElementById('authErr');
   err.textContent = '';
-  if(!e||!p){ err.textContent = 'Please fill in all fields.'; return; }
-  if(authMode === 'signup' && !name){ err.textContent = 'Please enter your full name.'; return; }
+
+  if(!e || !p){ err.textContent = 'Please fill in all fields.'; return; }
+
   if(authMode === 'signup'){
-    pendingName = name;
-    skipNextAuthLoad = true; // prevent onAuthStateChanged from loading before name saves
-    let newUid = null;
-    auth.createUserWithEmailAndPassword(e,p)
+    if(!name){ err.textContent = 'Please enter your full name.'; return; }
+    signupInProgress = true;
+
+    auth.createUserWithEmailAndPassword(e, p)
       .then(cred => {
-        newUid = cred.user.uid;
-        return cred.user.updateProfile({ displayName: name });
+        // Write name + blank progress to Firestore atomically
+        return Promise.all([
+          cred.user.updateProfile({ displayName: name }),
+          db.collection('users').doc(cred.user.uid).set({
+            name:    name,
+            courses: new Array(15).fill(false),
+            certs:   new Array(6).fill(false),
+            streak:  0,
+            lastDay: ''
+          })
+        ]).then(() => cred.user.uid);
       })
-      .then(() => db.collection('users').doc(newUid).set({ name: name }, { merge: true }))
-      .then(() => {
-        skipNextAuthLoad = false;
+      .then(newUid => {
         uid = newUid;
-        loadData(); // now load with name guaranteed saved
+        signupInProgress = false;
+        // Show app manually — onAuthStateChanged will skip because uid already set
+        document.getElementById('authPage').style.display = 'none';
+        document.getElementById('app').style.display = 'block';
+        loadData();
       })
       .catch(ex => {
+        signupInProgress = false;
         err.textContent = ex.message;
-        pendingName = '';
-        skipNextAuthLoad = false;
       });
+
   } else {
-    auth.signInWithEmailAndPassword(e,p)
-      .catch(ex => err.textContent = ex.message);
+    // Normal login — onAuthStateChanged handles the rest
+    auth.signInWithEmailAndPassword(e, p)
+      .catch(ex => { err.textContent = ex.message; });
   }
 }
 
 function togglePass(){
-  const i = document.getElementById("authPass");
-  const e = document.getElementById("passEye");
-  if(i.type === "password"){ i.type = "text"; e.textContent = "🙈"; }
-  else { i.type = "password"; e.textContent = "👁"; }
+  const i = document.getElementById('authPass');
+  const e = document.getElementById('passEye');
+  if(i.type === 'password'){ i.type = 'text';     e.textContent = '🙈'; }
+  else                      { i.type = 'password'; e.textContent = '👁'; }
 }
 
-function doGoogle(){
-  const errEl = document.getElementById('authErr');
-  errEl.textContent = 'Opening Google sign-in...';
-  auth.signInWithPopup(googleProvider)
-    .then(() => { errEl.textContent = ''; })
-    .catch(ex => {
-      if(ex.code === 'auth/popup-blocked'){
-        errEl.innerHTML = 'Popup blocked by Chrome. <strong>Fix:</strong> Tap the address bar → lock icon 🔒 → Pop-ups → Allow. Then try again.';
-      } else if(ex.code === 'auth/popup-closed-by-user'){
-        errEl.textContent = 'Sign-in was closed. Tap "Continue with Google" again.';
-      } else if(ex.code === 'auth/network-request-failed' || ex.message.includes('ERR_QUIC')){
-        errEl.innerHTML = 'Google sign-in needs Firebase Hosting enabled. See setup guide or use Email sign-up instead.';
-      } else {
-        errEl.textContent = ex.message;
-      }
-    });
-}
+function doLogout(){ auth.signOut(); closeMenu(); }
 
-function doLogout(){ auth.signOut(); }
-
+// ══════════════════════════════════════════
+// ✅ FIX 3: onAuthStateChanged — skips if
+//    signup flow already handled the load,
+//    and skips if uid is already set (no
+//    double-load on token refresh).
+// ══════════════════════════════════════════
 auth.onAuthStateChanged(user => {
   if(user){
+    if(signupInProgress) return;  // signup flow owns this
+    if(uid === user.uid) return;  // already loaded (token refresh)
     uid = user.uid;
     document.getElementById('authPage').style.display = 'none';
     document.getElementById('app').style.display = 'block';
-    if(!skipNextAuthLoad) loadData();
+    loadData();
   } else {
     uid = null;
     document.getElementById('authPage').style.display = 'flex';
@@ -1119,35 +911,64 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-// ── DATA ──
+// ══════════════════════════════════════════
+// ✅ FIX 4: loadData — properly reads name,
+//    rebuilds arrays as exactly-sized booleans
+//    so progress always restores correctly.
+// ══════════════════════════════════════════
 function loadData(){
   db.collection('users').doc(uid).get().then(doc => {
     const d = doc.data() || {};
-    // Get name from Firestore (most reliable source)
-    const storedName = d.name || pendingName || auth.currentUser?.displayName || '';
-    const email = auth.currentUser?.email || '';
-    document.getElementById('navUser').textContent = storedName || email;
-    const menuEmailEl = document.getElementById('menuEmail');
-    if(menuEmailEl){
-      menuEmailEl.innerHTML = storedName
-        ? `<strong style="display:block;font-size:0.82rem;color:var(--text);margin-bottom:3px">${storedName}</strong><span style="font-size:0.68rem;color:var(--text3)">${email}</span>`
-        : `<span style="font-size:0.78rem">${email}</span>`;
+
+    // ── Display name in menu drawer ──
+    const storedName = d.name || auth.currentUser?.displayName || '';
+    const email      = auth.currentUser?.email || '';
+    const block      = document.getElementById('menuUserBlock');
+    if(block){
+      if(storedName){
+        block.innerHTML =
+          `<strong style="display:block;font-size:0.84rem;color:var(--text);margin-bottom:3px">${storedName}</strong>` +
+          `<span style="font-size:0.68rem;color:var(--text3)">${email}</span>`;
+      } else {
+        block.textContent = email;
+      }
     }
-    courses = d.courses || new Array(15).fill(false);
-    certs   = d.certs   || new Array(6).fill(false);
-    courses.forEach((_,i) => applyC(i));
-    certs.forEach((_,i)   => applyT(i));
+
+    // ── Restore courses — always exactly 15 booleans ──
+    const rawC = Array.isArray(d.courses) ? d.courses : [];
+    courses = Array.from({ length: 15 }, (_, i) => Boolean(rawC[i]));
+
+    // ── Restore certs — always exactly 6 booleans ──
+    const rawT = Array.isArray(d.certs) ? d.certs : [];
+    certs = Array.from({ length: 6 }, (_, i) => Boolean(rawT[i]));
+
+    // Apply checkboxes to UI
+    courses.forEach((_, i) => applyC(i));
+    certs.forEach((_, i)   => applyT(i));
+
+    // ── Restore streak ──
     const streak = d.streak || 0;
     document.getElementById('streakVal').innerHTML = `${streak}<small>days in a row</small>`;
     document.getElementById('statStreak').textContent = streak;
+
     updateProgress();
     renderRoles();
+  }).catch(err => {
+    console.error('loadData error:', err);
+    showToast('⚠️ Could not load your data. Check your connection.');
   });
 }
 
+// ══════════════════════════════════════════
+// ✅ FIX 5: save — writes full arrays so
+//    nothing gets lost between sessions.
+// ══════════════════════════════════════════
 function save(){
   if(!uid) return;
-  db.collection('users').doc(uid).set({ courses, certs }, { merge:true });
+  db.collection('users').doc(uid).set(
+    { courses: [...courses], certs: [...certs] },
+    { merge: true }
+  ).catch(err => console.error('Save error:', err));
 }
 
 // ── COURSES ──
@@ -1164,10 +985,9 @@ function toggleCourse(i){
     pulseFill();
   }
 }
-
 function applyC(i){
   document.getElementById('chk-'+i)?.classList.toggle('checked', courses[i]);
-  document.getElementById('nm-'+i)?.classList.toggle('done', courses[i]);
+  document.getElementById('nm-'+i)?.classList.toggle('done',    courses[i]);
 }
 
 // ── CERTS ──
@@ -1183,21 +1003,20 @@ function toggleCert(i){
     pulseFill();
   }
 }
-
 function applyT(i){
   document.getElementById('cert-'+i)?.classList.toggle('checked', certs[i]);
-  document.getElementById('cn-'+i)?.classList.toggle('done', certs[i]);
+  document.getElementById('cn-'+i)?.classList.toggle('done',      certs[i]);
 }
 
 // ── PROGRESS ──
 function updateProgress(){
   const total = courses.length + certs.length;
   const done  = courses.filter(Boolean).length + certs.filter(Boolean).length;
-  const pct   = total ? Math.round(done/total*100) : 0;
-  document.getElementById('progFill').style.width = pct+'%';
-  document.getElementById('progPct').textContent  = pct+'%';
-  document.getElementById('statPct').textContent  = pct+'%';
-  document.getElementById('statDone').textContent = done;
+  const pct   = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('progFill').style.width  = pct + '%';
+  document.getElementById('progPct').textContent   = pct + '%';
+  document.getElementById('statPct').textContent   = pct + '%';
+  document.getElementById('statDone').textContent  = done;
 }
 
 // ── STREAK ──
@@ -1208,8 +1027,8 @@ function markToday(){
     const d     = doc.data() || {};
     const today = new Date().toDateString();
     if(d.lastDay === today){ showToast('Already counted today ✅'); return; }
-    const streak = (d.streak||0) + 1;
-    ref.set({ streak, lastDay: today }, { merge:true });
+    const streak = (d.streak || 0) + 1;
+    ref.set({ streak, lastDay: today }, { merge: true });
     const sv = document.getElementById('streakVal');
     sv.innerHTML = `${streak}<small>days in a row</small>`;
     sv.classList.remove('fire'); void sv.offsetWidth; sv.classList.add('fire');
@@ -1231,8 +1050,8 @@ function togglePhase(id){
 function enableNotif(){
   if(!('Notification' in window)){ showToast('Not supported on this browser'); return; }
   Notification.requestPermission().then(p => {
-    if(p==='granted'){
-      new Notification('Cyber Roadmap Pro 🔐',{ body:'Study reminder enabled! Keep your streak going.' });
+    if(p === 'granted'){
+      new Notification('Cyber Roadmap Pro 🔐', { body: 'Study reminder enabled! Keep your streak going.' });
       showToast('🔔 Daily reminders enabled!');
     } else {
       showToast('Enable notifications in browser settings.');
@@ -1241,57 +1060,64 @@ function enableNotif(){
 }
 
 // ── ROLE ENGINE ──
-const CNAMES = ['Palo Alto Intro','Cisco Intro','Prof. Messer Security+','Google Cybersecurity','Palo Alto SOC','Palo Alto Network Sec','Microsoft Student SOC','TryHackMe','SC-200 Training','Cisco Threat Mgmt','Palo Alto Cloud Sec','Cisco Ethical Hacker','Hack The Box','CyberDefenders SOC','GRC Mastery'];
-const TNAMES = ['CompTIA Security+','SC-200','CompTIA CySA+','CISSP','CRISC','CyberDefenders Analyst'];
+const CNAMES = [
+  'Palo Alto Intro','Cisco Intro','Prof. Messer Security+','Google Cybersecurity',
+  'Palo Alto SOC','Palo Alto Network Sec','Microsoft Student SOC','TryHackMe',
+  'SC-200 Training','Cisco Threat Mgmt','Palo Alto Cloud Sec','Cisco Ethical Hacker',
+  'Hack The Box','CyberDefenders SOC','GRC Mastery'
+];
+const TNAMES = [
+  'CompTIA Security+','SC-200','CompTIA CySA+','CISSP','CRISC','CyberDefenders Analyst'
+];
 
 const ROLES = [
   {
-    title:'IT Helpdesk / Support Technician',
-    remote:'Mostly local · Entry point into tech',
-    desc:'First step into tech. Support users, troubleshoot systems, learn how IT infrastructure actually works.',
-    salary:'₦200K–₦400K/yr local · $35K–$55K remote',
-    fullC:[0,1,2,3], fullT:[],
-    certsToLand:['CompTIA A+ (helpful)','CompTIA Security+']
+    title: 'IT Helpdesk / Support Technician',
+    remote: 'Mostly local · Entry point into tech',
+    desc: 'First step into tech. Support users, troubleshoot systems, learn how IT infrastructure actually works.',
+    salary: '₦200K–₦400K/yr local · $35K–$55K remote',
+    fullC: [0,1,2,3], fullT: [],
+    certsToLand: ['CompTIA A+ (helpful)','CompTIA Security+']
   },
   {
-    title:'Junior GRC Analyst',
-    remote:'Good remote potential',
-    desc:'Help organizations comply with security frameworks. Documentation-heavy. Your HSE background transfers directly here.',
-    salary:'₦300K–₦600K/yr local · $58K–$78K remote',
-    fullC:[0,1,2,3], fullT:[0],
-    certsToLand:['CompTIA Security+','CISA (later stage)']
+    title: 'Junior GRC Analyst',
+    remote: 'Good remote potential',
+    desc: 'Help organizations comply with security frameworks. Documentation-heavy. Your HSE background transfers directly here.',
+    salary: '₦300K–₦600K/yr local · $58K–$78K remote',
+    fullC: [0,1,2,3], fullT: [0],
+    certsToLand: ['CompTIA Security+','CISA (later stage)']
   },
   {
-    title:'SOC Analyst Level 1 🎯 TARGET',
-    remote:'Excellent — strong remote demand globally',
-    desc:'Monitor security alerts, investigate threats, escalate incidents. Your primary target. Fastest path to paid cybersecurity work.',
-    salary:'₦350K–₦700K/yr local · $55K–$72K remote',
-    fullC:[0,1,2,3,4,5,6,7,8], fullT:[0],
-    certsToLand:['CompTIA Security+','SC-200 (bonus)']
+    title: 'SOC Analyst Level 1 🎯 TARGET',
+    remote: 'Excellent — strong remote demand globally',
+    desc: 'Monitor security alerts, investigate threats, escalate incidents. Your primary target. Fastest path to paid cybersecurity work.',
+    salary: '₦350K–₦700K/yr local · $55K–$72K remote',
+    fullC: [0,1,2,3,4,5,6,7,8], fullT: [0],
+    certsToLand: ['CompTIA Security+','SC-200 (bonus)']
   },
   {
-    title:'Cloud Security Analyst',
-    remote:'Excellent remote demand',
-    desc:'Secure cloud infrastructure. Your AWS Udacity background gives you a head start most candidates lack.',
-    salary:'₦400K–₦900K/yr local · $70K–$100K remote',
-    fullC:[0,1,2,3,4,5,10], fullT:[0],
-    certsToLand:['CompTIA Security+','AWS Security Specialty','SC-200']
+    title: 'Cloud Security Analyst',
+    remote: 'Excellent remote demand',
+    desc: 'Secure cloud infrastructure. Your AWS Udacity background gives you a head start most candidates lack.',
+    salary: '₦400K–₦900K/yr local · $70K–$100K remote',
+    fullC: [0,1,2,3,4,5,10], fullT: [0],
+    certsToLand: ['CompTIA Security+','AWS Security Specialty','SC-200']
   },
   {
-    title:'SOC Analyst Level 2',
-    remote:'Strong remote demand',
-    desc:'Advanced threat hunting, incident response leadership. Reached after 1–2 years as SOC L1.',
-    salary:'₦600K–₦1.2M/yr local · $75K–$110K remote',
-    fullC:[0,1,2,3,4,5,6,7,8,9], fullT:[0,1],
-    certsToLand:['CompTIA CySA+','SC-200','GCIA']
+    title: 'SOC Analyst Level 2',
+    remote: 'Strong remote demand',
+    desc: 'Advanced threat hunting, incident response leadership. Reached after 1–2 years as SOC L1.',
+    salary: '₦600K–₦1.2M/yr local · $75K–$110K remote',
+    fullC: [0,1,2,3,4,5,6,7,8,9], fullT: [0,1],
+    certsToLand: ['CompTIA CySA+','SC-200','GCIA']
   },
   {
-    title:'Penetration Tester / Ethical Hacker',
-    remote:'Good remote — very competitive',
-    desc:'Legally hack systems to find vulnerabilities before attackers do. Long-term path requiring deep technical proof.',
-    salary:'₦700K–₦1.5M/yr local · $80K–$130K remote',
-    fullC:[0,1,2,3,4,5,6,7,8,9,10,11], fullT:[0,2],
-    certsToLand:['CEH','eJPT','OSCP (advanced)']
+    title: 'Penetration Tester / Ethical Hacker',
+    remote: 'Good remote — very competitive',
+    desc: 'Legally hack systems to find vulnerabilities before attackers do. Long-term path requiring deep technical proof.',
+    salary: '₦700K–₦1.5M/yr local · $80K–$130K remote',
+    fullC: [0,1,2,3,4,5,6,7,8,9,10,11], fullT: [0,2],
+    certsToLand: ['CEH','eJPT','OSCP (advanced)']
   }
 ];
 
@@ -1299,19 +1125,15 @@ function getRoleStatus(r){
   const fc = r.fullC.every(i => courses[i]);
   const ft = r.fullT.length === 0 || r.fullT.every(i => certs[i]);
   if(fc && ft) return 'qualified';
-  const doneC = r.fullC.filter(i => courses[i]).length;
-  if(doneC > 0) return 'partial';
+  if(r.fullC.some(i => courses[i])) return 'partial';
   return 'locked';
 }
 
 function renderRoles(){
   const wrap = document.getElementById('rolesWrap');
   wrap.innerHTML = '';
-  ROLES.forEach((role,ri) => {
+  ROLES.forEach((role, ri) => {
     const status = getRoleStatus(role);
-    const missingC = role.fullC.filter(i => !courses[i]);
-    const missingT = role.fullT.filter(i => !certs[i]);
-
     const badgeText  = status==='qualified' ? '✓ You Qualify' : status==='partial' ? '⚡ In Progress' : '🔒 Not Yet';
     const badgeClass = status==='qualified' ? 'rb-qualified' : status==='partial' ? 'rb-partial' : 'rb-locked';
 
@@ -1320,7 +1142,7 @@ function renderRoles(){
       tags += `<span class="rtag ${courses[i]?'rtag-done':'rtag-miss'}">${courses[i]?'✓':'○'} ${CNAMES[i]}</span>`;
     });
     if(role.fullC.length > 4){
-      const extra = role.fullC.length - 4;
+      const extra     = role.fullC.length - 4;
       const doneExtra = role.fullC.slice(4).filter(i => courses[i]).length;
       tags += `<span class="rtag ${doneExtra===extra?'rtag-done':'rtag-miss'}">+${extra} more courses</span>`;
     }
@@ -1358,11 +1180,10 @@ function renderRoles(){
 }
 
 function toggleRole(i){
-  const body = document.getElementById('rbody-'+i);
-  body.classList.toggle('open');
+  document.getElementById('rbody-'+i)?.classList.toggle('open');
 }
 
-// ── GEMINI AI ──
+// ── GROQ AI ──
 async function askGroq(){
   const input = document.getElementById('aiInput');
   const btn   = document.getElementById('aiBtn');
@@ -1371,70 +1192,69 @@ async function askGroq(){
   if(!q) return;
 
   const uBubble = document.createElement('div');
-  uBubble.className = 'bubble bubble-u';
+  uBubble.className   = 'bubble bubble-u';
   uBubble.textContent = q;
   msgs.appendChild(uBubble);
 
   const aiBubble = document.createElement('div');
-  aiBubble.className = 'bubble bubble-ai bubble-thinking';
+  aiBubble.className   = 'bubble bubble-ai bubble-thinking';
   aiBubble.textContent = 'Thinking...';
   msgs.appendChild(aiBubble);
 
-  input.value = '';
+  input.value  = '';
   btn.disabled = true;
   msgs.scrollTop = msgs.scrollHeight;
 
   try {
-    const prompt = `You are a cybersecurity career mentor for Godson Uzoezie, a beginner in Port Harcourt Nigeria targeting SOC Analyst Level 1. He has two Udacity AWS AI certifications. Be practical, concise, and encouraging. User asks: ${q}`;
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${GROQ_KEY}`
       },
       body: JSON.stringify({
         model: 'llama-3.1-8b-instant',
         max_tokens: 600,
-        messages:[
-          { role:'system', content:'You are a cybersecurity career mentor for Godson Uzoezie, a beginner in Port Harcourt Nigeria targeting SOC Analyst Level 1. He has two Udacity AWS AI certifications and is learning through Power Learn Project. Be practical, concise, and encouraging. Keep answers under 150 words.' },
-          { role:'user', content: q }
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a cybersecurity career mentor for Godson Uzoezie, a beginner in Port Harcourt Nigeria targeting SOC Analyst Level 1. He has two Udacity AWS AI certifications and is learning through Power Learn Project. Be practical, concise, and encouraging. Keep answers under 150 words.'
+          },
+          { role: 'user', content: q }
         ]
       })
     });
+
     const data = await res.json();
+
     if(res.status === 429){
       aiBubble.className = 'bubble bubble-ai';
-      aiBubble.innerHTML = `<strong>⚠️ Rate limit hit.</strong> Wait 1 minute and try again. Groq free tier is generous but has per-minute limits.<br><br>
-<strong>Study while waiting:</strong><br>
-• <a href="https://www.youtube.com/@professormesser" target="_blank" style="color:var(--accent)">Professor Messer ↗</a><br>
-• <a href="https://tryhackme.com" target="_blank" style="color:var(--accent)">TryHackMe ↗</a>`;
+      aiBubble.innerHTML = `<strong>⚠️ Rate limit hit.</strong> Wait 1 minute and try again.<br><br>
+        <strong>Study while waiting:</strong><br>
+        • <a href="https://www.youtube.com/@professormesser" target="_blank" style="color:var(--accent)">Professor Messer ↗</a><br>
+        • <a href="https://tryhackme.com" target="_blank" style="color:var(--accent)">TryHackMe ↗</a>`;
     } else if(res.status === 401){
       aiBubble.className = 'bubble bubble-ai';
       aiBubble.innerHTML = '⚠️ API key invalid. Get your free key at <a href="https://console.groq.com" target="_blank" style="color:var(--accent)">console.groq.com ↗</a>';
     } else if(!res.ok){
-      aiBubble.className = 'bubble bubble-ai';
+      aiBubble.className   = 'bubble bubble-ai';
       aiBubble.textContent = `⚠️ Error ${res.status}. Try again in a moment.`;
     } else {
-      const text = data.choices?.[0]?.message?.content || 'No response. Please try again.';
-      aiBubble.className = 'bubble bubble-ai';
-      aiBubble.textContent = text;
+      aiBubble.className   = 'bubble bubble-ai';
+      aiBubble.textContent = data.choices?.[0]?.message?.content || 'No response. Please try again.';
     }
   } catch(e){
-    aiBubble.className = 'bubble bubble-ai';
+    aiBubble.className   = 'bubble bubble-ai';
     aiBubble.textContent = '⚠️ No internet connection. Check your network and try again.';
   }
 
-  btn.disabled = false;
+  btn.disabled   = false;
   msgs.scrollTop = msgs.scrollHeight;
 }
 
 // ── AI DRAWER ──
 let aiDrawerOpen = false;
-
-function toggleAIDrawer(){
-  aiDrawerOpen ? closeAIDrawer() : openAIDrawer();
-}
-
+function toggleAIDrawer(){ aiDrawerOpen ? closeAIDrawer() : openAIDrawer(); }
 function openAIDrawer(){
   aiDrawerOpen = true;
   document.getElementById('aiDrawer').classList.add('open');
@@ -1442,7 +1262,6 @@ function openAIDrawer(){
   document.getElementById('aiFab').style.transform = 'scale(0.9)';
   setTimeout(() => document.getElementById('aiInput')?.focus(), 400);
 }
-
 function closeAIDrawer(){
   aiDrawerOpen = false;
   document.getElementById('aiDrawer').classList.remove('open');
@@ -1454,18 +1273,13 @@ function closeAIDrawer(){
 function bumpStat(id){
   const el = document.getElementById(id);
   if(!el) return;
-  el.classList.remove('bump');
-  void el.offsetWidth;
-  el.classList.add('bump');
+  el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
   setTimeout(() => el.classList.remove('bump'), 400);
 }
-
 function pulseFill(){
   const el = document.getElementById('progFill');
   if(!el) return;
-  el.classList.remove('pulse');
-  void el.offsetWidth;
-  el.classList.add('pulse');
+  el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse');
   setTimeout(() => el.classList.remove('pulse'), 600);
 }
 
@@ -1477,13 +1291,13 @@ function showToast(msg){
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// ── KEYBOARD ──
-document.addEventListener('DOMContentLoaded',() => {
-  document.getElementById('aiInput').addEventListener('keydown', e => {
-    if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); askGroq(); }
+// ── KEYBOARD SHORTCUTS ──
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('aiInput')?.addEventListener('keydown', e => {
+    if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); askGroq(); }
   });
-  document.getElementById('authPass').addEventListener('keydown', e => {
-    if(e.key==='Enter') doAuth();
+  document.getElementById('authPass')?.addEventListener('keydown', e => {
+    if(e.key === 'Enter') doAuth();
   });
   renderRoles();
 });
