@@ -813,6 +813,7 @@ let uid         = null;
 let courses     = new Array(15).fill(false);
 let certs       = new Array(6).fill(false);
 let authMode    = 'login';
+let pendingName = '';
 
 // ── MENU ──
 function openMenu(){
@@ -862,6 +863,7 @@ function doAuth(){
   if(!e||!p){ err.textContent = 'Please fill in all fields.'; return; }
   if(authMode === 'signup' && !name){ err.textContent = 'Please enter your full name.'; return; }
   if(authMode === 'signup'){
+    pendingName = name; // store before async so loadData can use it immediately
     let newUid = null;
     auth.createUserWithEmailAndPassword(e,p)
       .then(cred => {
@@ -869,10 +871,10 @@ function doAuth(){
         return cred.user.updateProfile({ displayName: name });
       })
       .then(() => {
-        // Also save name to Firestore for reliable retrieval
         return db.collection('users').doc(newUid).set({ name: name }, { merge: true });
       })
-      .catch(ex => err.textContent = ex.message);
+      .then(() => pendingName = '')
+      .catch(ex => { err.textContent = ex.message; pendingName = ''; });
   } else {
     auth.signInWithEmailAndPassword(e,p)
       .catch(ex => err.textContent = ex.message);
@@ -924,7 +926,7 @@ function loadData(){
   db.collection('users').doc(uid).get().then(doc => {
     const d = doc.data() || {};
     // Get name from Firestore (most reliable source)
-    const storedName = d.name || auth.currentUser?.displayName || '';
+    const storedName = d.name || pendingName || auth.currentUser?.displayName || '';
     const email = auth.currentUser?.email || '';
     document.getElementById('navUser').textContent = storedName || email;
     const menuEmailEl = document.getElementById('menuEmail');
