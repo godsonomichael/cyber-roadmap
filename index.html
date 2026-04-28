@@ -401,9 +401,9 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
         <span class="menu-item-icon" id="themeBtn">🌙</span>
         <span id="themeLabel">Switch to Light Mode</span>
       </button>
-      <button class="menu-item" onclick="enableNotif();closeMenu()">
+      <button class="menu-item" onclick="showNotifSetup();closeMenu()">
         <span class="menu-item-icon">🔔</span>
-        Daily Study Reminder
+        <span>Daily Study Reminder</span>
       </button>
       <button class="menu-item" onclick="markToday();closeMenu()">
         <span class="menu-item-icon">🔥</span>
@@ -650,6 +650,14 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
             <a class="c-link" href="https://www.udemy.com/courses/search/?q=grc+governance+risk+compliance" target="_blank">Search on Udemy ↗</a>
           </div>
         </div>
+        <div class="course-row">
+          <div class="cbox" id="chk-15" onclick="toggleCourse(15)"></div>
+          <div class="c-info">
+            <div class="c-name" id="nm-15">Cisco CyberOps Associate (200-201 CBROPS)</div>
+            <div class="c-meta">Cisco Networking Academy · Free · Validates SOC analyst skills · Exam-ready path</div>
+            <a class="c-link" href="https://www.netacad.com/courses/cybersecurity/cyberops-associate" target="_blank">Start CyberOps Associate ↗</a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -716,6 +724,15 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
       </div>
       <span class="cbadge cb-goal">SOC Path</span>
     </div>
+    <div class="cert-row">
+      <div class="cert-circle" id="cert-6" onclick="toggleCert(6)"></div>
+      <div class="cert-info">
+        <div class="cert-n" id="cn-6">Cisco CyberOps Associate (200-201 CBROPS)</div>
+        <div class="cert-t">Cisco · Validates SOC L1 skills · Strong employer recognition</div>
+        <a class="c-link" href="https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/cyberops-associate.html" target="_blank">Official Exam Info ↗</a>
+      </div>
+      <span class="cbadge cb-now">SOC Cert</span>
+    </div>
 
     <!-- ROLE ENGINE -->
     <div class="sec-label">Career Unlock Status</div>
@@ -754,6 +771,25 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-h
     </div>
   </div>
 
+  <!-- NOTIFICATION SETUP MODAL -->
+  <div id="notifModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:800;align-items:flex-end;justify-content:center">
+    <div style="background:var(--surface);border-radius:20px 20px 0 0;padding:24px 20px 32px;width:100%;border-top:1px solid var(--border);box-shadow:0 -8px 40px rgba(0,0,0,0.4);max-width:500px;margin:0 auto">
+      <div style="width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 18px"></div>
+      <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:6px">🔔 Daily Study Reminder</div>
+      <div style="font-size:0.72rem;color:var(--text3);margin-bottom:18px;line-height:1.5">
+        Pick a time to get a notification every day while the app is open.<br>
+        <strong style="color:var(--accent)">For true background notifications</strong> — enable them in your phone's <em>Settings → Apps → Cyber Roadmap → Notifications</em>.
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:8px">Reminder Time</label>
+        <input type="time" id="notifTime" value="08:00"
+          style="width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:9px;padding:12px 14px;color:var(--text);font-family:'Inter',sans-serif;font-size:1rem;outline:none">
+      </div>
+      <button onclick="saveNotifTime()" style="width:100%;padding:13px;background:var(--accent);color:#0A0B0F;border:none;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;margin-bottom:10px">Enable Reminder</button>
+      <button onclick="closeNotifModal()" style="width:100%;padding:11px;background:transparent;color:var(--text3);border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:0.82rem;cursor:pointer">Cancel</button>
+    </div>
+  </div>
+
 </div><!-- end #app -->
 
 <div class="toast" id="toast"></div>
@@ -782,8 +818,8 @@ const auth = firebase.auth();
 const db   = firebase.firestore();
 
 let uid      = null;
-let courses  = new Array(15).fill(false);
-let certs    = new Array(6).fill(false);
+let courses  = new Array(16).fill(false);
+let certs    = new Array(7).fill(false);
 let authMode = 'login';
 
 // ── MENU ──
@@ -854,8 +890,8 @@ function doAuth(){
           cred.user.updateProfile({ displayName: name }),
           db.collection('users').doc(cred.user.uid).set({
             name:    name,
-            courses: new Array(15).fill(false),
-            certs:   new Array(6).fill(false),
+            courses: new Array(16).fill(false),
+            certs:   new Array(7).fill(false),
             streak:  0,
             lastDay: ''
           })
@@ -936,11 +972,11 @@ function loadData(){
 
     // ── Restore courses — always exactly 15 booleans ──
     const rawC = Array.isArray(d.courses) ? d.courses : [];
-    courses = Array.from({ length: 15 }, (_, i) => Boolean(rawC[i]));
+    courses = Array.from({ length: 16 }, (_, i) => Boolean(rawC[i]));
 
     // ── Restore certs — always exactly 6 booleans ──
     const rawT = Array.isArray(d.certs) ? d.certs : [];
-    certs = Array.from({ length: 6 }, (_, i) => Boolean(rawT[i]));
+    certs = Array.from({ length: 7 }, (_, i) => Boolean(rawT[i]));
 
     // Apply checkboxes to UI
     courses.forEach((_, i) => applyC(i));
@@ -1038,15 +1074,29 @@ function markToday(){
   ref.get().then(doc => {
     const d     = doc.data() || {};
     const today = new Date().toDateString();
-    if(d.lastDay === today){ showToast('Already counted today ✅'); return; }
-    const streak = (d.streak || 0) + 1;
-    ref.set({ streak, lastDay: today }, { merge: true });
-    const sv = document.getElementById('streakVal');
-    sv.innerHTML = `${streak}<small>days in a row</small>`;
-    sv.classList.remove('fire'); void sv.offsetWidth; sv.classList.add('fire');
-    document.getElementById('statStreak').textContent = streak;
-    bumpStat('statStreak');
-    showToast(`🔥 ${streak} day streak!`);
+    const btn   = document.getElementById('streakBtn');
+    if(d.lastDay === today){
+      // UNMARK: tap again to undo today's mark
+      const streak = Math.max((d.streak || 1) - 1, 0);
+      ref.set({ streak: streak, lastDay: '' }, { merge: true });
+      const sv = document.getElementById('streakVal');
+      sv.innerHTML = streak + '<small>days in a row</small>';
+      document.getElementById('statStreak').textContent = streak;
+      bumpStat('statStreak');
+      if(btn){ btn.textContent = '✓ Mark Today Done'; btn.style.background = ''; }
+      showToast('↩ Today unmarked — streak adjusted');
+    } else {
+      // MARK: log today as studied
+      const streak = (d.streak || 0) + 1;
+      ref.set({ streak: streak, lastDay: today }, { merge: true });
+      const sv = document.getElementById('streakVal');
+      sv.innerHTML = streak + '<small>days in a row</small>';
+      sv.classList.remove('fire'); void sv.offsetWidth; sv.classList.add('fire');
+      document.getElementById('statStreak').textContent = streak;
+      bumpStat('statStreak');
+      if(btn){ btn.textContent = '✕ Unmark Today'; btn.style.background = 'var(--red)'; }
+      showToast('🔥 ' + streak + ' day streak!');
+    }
   });
 }
 
@@ -1059,16 +1109,57 @@ function togglePhase(id){
 }
 
 // ── NOTIFICATIONS ──
+// NOTE: True background daily notifications require a native app (PWA with service worker
+// or a native APK). In a WebView/APK via Kodular, the Web Notifications API only fires
+// while the app is open. The function below:
+//   1. Requests permission
+//   2. Saves a preferred reminder time to Firestore
+//   3. Uses a foreground interval to fire while the app is open
+//   4. Shows instructions for enabling real OS notifications via Kodular's push plugin
 function enableNotif(){
-  if(!('Notification' in window)){ showToast('Not supported on this browser'); return; }
+  if(!('Notification' in window)){
+    showToast('Notifications not supported on this browser');
+    return;
+  }
   Notification.requestPermission().then(p => {
     if(p === 'granted'){
-      new Notification('Cyber Roadmap Pro 🔐', { body: 'Study reminder enabled! Keep your streak going.' });
+      // Store preference in Firestore
+      if(uid){
+        db.collection('users').doc(uid).set({ notifEnabled: true }, { merge: true });
+      }
+      // Fire an immediate confirmation notification
+      new Notification('Cyber Roadmap Pro 🔐', {
+        body: 'Daily reminder set! Open the app each day to keep your streak going.',
+        icon: ''
+      });
       showToast('🔔 Daily reminders enabled!');
+      // Schedule a repeating check every hour while app is open
+      startReminderLoop();
+    } else if(p === 'denied'){
+      showToast('Permission denied. Enable in phone Settings → App → Notifications.');
     } else {
-      showToast('Enable notifications in browser settings.');
+      showToast('Tap Allow when the permission prompt appears.');
     }
   });
+}
+
+let reminderInterval = null;
+function startReminderLoop(){
+  if(reminderInterval) return; // already running
+  reminderInterval = setInterval(() => {
+    const now = new Date();
+    const h = now.getHours();
+    const m = now.getMinutes();
+    // Fire at 8:00 AM every day while app is open
+    if(h === 8 && m === 0){
+      if(Notification.permission === 'granted'){
+        new Notification('Time to Study! 📚', {
+          body: 'Keep your Cyber Roadmap streak alive — study for 30 minutes today!',
+          icon: ''
+        });
+      }
+    }
+  }, 60000); // check every minute
 }
 
 // ── ROLE ENGINE ──
@@ -1076,10 +1167,11 @@ const CNAMES = [
   'Palo Alto Intro','Cisco Intro','Prof. Messer Security+','Google Cybersecurity',
   'Palo Alto SOC','Palo Alto Network Sec','Microsoft Student SOC','TryHackMe',
   'SC-200 Training','Cisco Threat Mgmt','Palo Alto Cloud Sec','Cisco Ethical Hacker',
-  'Hack The Box','CyberDefenders SOC','GRC Mastery'
+  'Hack The Box','CyberDefenders SOC','GRC Mastery','Cisco CyberOps Associate'
 ];
 const TNAMES = [
-  'CompTIA Security+','SC-200','CompTIA CySA+','CISSP','CRISC','CyberDefenders Analyst'
+  'CompTIA Security+','SC-200','CompTIA CySA+','CISSP','CRISC','CyberDefenders Analyst',
+  'Cisco CyberOps Associate (200-201)'
 ];
 
 const ROLES = [
@@ -1302,6 +1394,69 @@ function showToast(msg){
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
+
+// ── NOTIFICATION MODAL ──
+function showNotifSetup(){
+  const modal = document.getElementById('notifModal');
+  modal.style.display = 'flex';
+  // Restore saved time if any
+  if(uid){
+    db.collection('users').doc(uid).get().then(doc => {
+      const d = doc.data() || {};
+      if(d.notifTime) document.getElementById('notifTime').value = d.notifTime;
+    });
+  }
+}
+function closeNotifModal(){
+  document.getElementById('notifModal').style.display = 'none';
+}
+function saveNotifTime(){
+  if(!('Notification' in window)){
+    showToast('Notifications not supported on this browser');
+    closeNotifModal(); return;
+  }
+  Notification.requestPermission().then(p => {
+    if(p === 'granted'){
+      const t = document.getElementById('notifTime').value || '08:00';
+      if(uid){
+        db.collection('users').doc(uid).set({ notifEnabled: true, notifTime: t }, { merge: true });
+      }
+      localStorage.setItem('crp-notif-time', t);
+      new Notification('Reminder Set! 🔔', {
+        body: 'You will be reminded at ' + t + ' every day while the app is open.'
+      });
+      showToast('🔔 Reminder set for ' + t + ' daily!');
+      startReminderLoop(t);
+      closeNotifModal();
+    } else if(p === 'denied'){
+      showToast('Blocked. Go to phone Settings → App → Notifications to allow.');
+      closeNotifModal();
+    } else {
+      showToast('Please tap Allow on the permission prompt.');
+    }
+  });
+}
+
+let reminderInterval = null;
+function startReminderLoop(targetTime){
+  if(reminderInterval) clearInterval(reminderInterval);
+  const [targetH, targetM] = (targetTime || localStorage.getItem('crp-notif-time') || '08:00').split(':').map(Number);
+  reminderInterval = setInterval(() => {
+    const now = new Date();
+    if(now.getHours() === targetH && now.getMinutes() === targetM){
+      if(Notification.permission === 'granted'){
+        new Notification('Time to Study! 📚', {
+          body: 'Keep your Cyber Roadmap streak alive — study for 30 min today!'
+        });
+      }
+    }
+  }, 60000); // check every minute
+}
+// Auto-start reminder loop if previously enabled
+(function(){
+  const saved = localStorage.getItem('crp-notif-time');
+  if(saved && Notification.permission === 'granted') startReminderLoop(saved);
+})();
 
 // ── KEYBOARD SHORTCUTS ──
 document.addEventListener('DOMContentLoaded', () => {
