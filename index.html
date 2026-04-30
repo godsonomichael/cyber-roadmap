@@ -15,7 +15,7 @@
   --border:#272B38;--border2:#323748;--text:#F0F2F8;--text2:#9BA3BC;--text3:#5C6480;
   --accent:#E8A020;--accent2:#C8861A;--accent-glow:rgba(232,160,32,0.15);
   --green:#22C97A;--green-glow:rgba(34,201,122,0.12);--blue:#4F8EF7;--red:#F05A5A;
-  --phase1:#7C6FF7;--phase2:#3BBFD9;--phase3:#A855F7;--phase4:#F97316;
+  --phase1:#7C6FF7;--phase2:#3BBFD9;--phase3:#A855F7;--phase4:#F97316;--phase5:#EC4899;
   --shadow:0 4px 24px rgba(0,0,0,0.4);--shadow-sm:0 2px 8px rgba(0,0,0,0.3);
 }
 [data-theme="light"]{
@@ -23,7 +23,7 @@
   --border:#E2DDD6;--border2:#CCC7BE;--text:#1A1816;--text2:#5C5650;--text3:#9C968E;
   --accent:#C07010;--accent2:#A05C0A;--accent-glow:rgba(192,112,16,0.1);
   --green:#18A362;--green-glow:rgba(24,163,98,0.1);--blue:#2E6FD4;--red:#D94040;
-  --phase1:#5850D6;--phase2:#1B9AB8;--phase3:#8B35D6;--phase4:#C2410C;
+  --phase1:#5850D6;--phase2:#1B9AB8;--phase3:#8B35D6;--phase4:#C2410C;--phase5:#BE185D;
   --shadow:0 4px 24px rgba(0,0,0,0.08);--shadow-sm:0 2px 8px rgba(0,0,0,0.06);
 }
 html{scroll-behavior:smooth}
@@ -37,7 +37,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 .auth-wrap{width:100%;max-width:400px;animation:slideUp 0.5s cubic-bezier(0.16,1,0.3,1) forwards}
 .auth-brand{text-align:center;margin-bottom:32px}
 .auth-brand-mark{display:inline-flex;align-items:center;gap:10px;margin-bottom:12px}
-.auth-brand-icon{width:40px;height:40px;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.auth-brand-icon{width:40px;height:40px;border-radius:10px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px}
 .auth-brand-name{font-family:"Syne",sans-serif;font-size:1.3rem;font-weight:800;color:var(--text)}
 .auth-brand p{font-size:0.72rem;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase}
 .auth-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;box-shadow:var(--shadow)}
@@ -62,9 +62,9 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 /* NAV */
 .nav{position:sticky;top:0;z-index:100;background:rgba(10,11,15,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 20px}
 [data-theme="light"] .nav{background:rgba(245,244,240,0.88)}
-.nav-inner{max-width:900px;margin:0 auto;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-inner{max-width:960px;margin:0 auto;height:56px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{display:flex;align-items:center;gap:10px}
-.nav-logo-icon{width:30px;height:30px;border-radius:7px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.nav-logo-icon{width:30px;height:30px;border-radius:7px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:15px}
 .nav-logo-text{font-family:"Syne",sans-serif;font-size:0.9rem;font-weight:800;color:var(--text)}
 .hamburger{width:38px;height:38px;background:transparent;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:all 0.2s}
 .hamburger:hover{border-color:var(--accent);background:var(--card)}
@@ -72,7 +72,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 .hamburger:hover span{background:var(--accent)}
 
 /* MENU TRAY */
-.menu-tray{position:fixed;top:0;right:0;bottom:0;width:260px;background:var(--surface);border-left:1px solid var(--border);z-index:999;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:-8px 0 32px rgba(0,0,0,0.3);display:flex;flex-direction:column}
+.menu-tray{position:fixed;top:0;right:0;bottom:0;width:270px;background:var(--surface);border-left:1px solid var(--border);z-index:999;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:-8px 0 32px rgba(0,0,0,0.3);display:flex;flex-direction:column}
 .menu-tray.open{transform:translateX(0)}
 .menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:998;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .menu-overlay.open{opacity:1;pointer-events:all}
@@ -82,7 +82,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 .menu-close:hover{color:var(--text)}
 .menu-user{padding:14px 18px;border-bottom:1px solid var(--border)}
 .menu-user-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:6px}
-.menu-items{flex:1;padding:12px 10px}
+.menu-items{flex:1;padding:12px 10px;overflow-y:auto}
 .menu-item{display:flex;align-items:center;gap:12px;padding:12px 10px;border-radius:8px;cursor:pointer;transition:all 0.2s;border:none;background:none;width:100%;text-align:left;color:var(--text);font-family:"Inter",sans-serif;font-size:0.82rem;font-weight:500}
 .menu-item:hover{background:var(--card);color:var(--accent)}
 .menu-item-icon{font-size:1rem;width:24px;text-align:center;flex-shrink:0}
@@ -91,7 +91,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 .menu-item-danger:hover{background:rgba(240,90,90,0.08);color:var(--red)}
 
 /* MAIN */
-.main{padding:20px;max-width:900px;margin:0 auto}
+.main{padding:20px;max-width:960px;margin:0 auto}
 
 /* HERO */
 .hero-strip{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;overflow:hidden;position:relative}
@@ -148,11 +148,16 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 .phase-pip{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .phase-title{font-family:"Syne",sans-serif;font-size:0.88rem;font-weight:700}
 .phase-sub{font-size:0.62rem;color:var(--text3);margin-top:1px}
+.phase-right{display:flex;align-items:center;gap:10px}
+.phase-count{font-size:0.72rem;font-weight:700;padding:3px 9px;border-radius:12px;background:var(--card);border:1px solid var(--border)}
 .phase-chev{font-size:0.7rem;color:var(--text3);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1)}
 .phase-chev.open{transform:rotate(180deg)}
 .phase-body{border-top:1px solid var(--border);padding:14px 18px;display:none}
 .phase-body.open{display:block}
 .phase-note{margin-top:12px;padding:10px 13px;border-radius:8px;font-size:0.7rem;line-height:1.5;font-weight:500}
+
+/* NEW BADGE on course */
+.new-badge{font-size:0.5rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:var(--green);color:#0A0B0F;padding:2px 6px;border-radius:3px;margin-left:6px;vertical-align:middle}
 
 /* COURSE ROW */
 .course-row{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
@@ -165,7 +170,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 .c-name{font-size:0.82rem;font-weight:500;margin-bottom:3px;transition:all 0.2s;line-height:1.3}
 .c-name.done{color:var(--text3);text-decoration:line-through}
 .c-meta{font-size:0.65rem;color:var(--text3);margin-bottom:5px}
-.c-link{font-size:0.65rem;color:var(--accent);text-decoration:none;font-weight:500}
+.c-link{font-size:0.65rem;color:var(--accent);text-decoration:none;font-weight:500;margin-right:10px}
 .c-link:hover{text-decoration:underline}
 
 /* SKIP */
@@ -185,7 +190,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 .cert-info{flex:1}
 .cert-n{font-size:0.8rem;font-weight:500;transition:all 0.2s}
 .cert-n.done{color:var(--text3);text-decoration:line-through}
-.cert-t{font-size:0.62rem;color:var(--text3);margin-top:2px}
+.cert-t{font-size:0.62rem;color:var(--text3);margin-top:2px;margin-bottom:4px}
 .cbadge{font-size:0.58rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;padding:4px 9px;border-radius:4px;white-space:nowrap}
 .cb-now{background:rgba(34,201,122,0.1);color:var(--green);border:1px solid rgba(34,201,122,0.2)}
 .cb-goal{background:var(--accent-glow);color:var(--accent);border:1px solid rgba(232,160,32,0.2)}
@@ -221,6 +226,12 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 .rtag{font-size:0.62rem;padding:4px 10px;border-radius:5px;display:flex;align-items:center;gap:5px;font-weight:500}
 .rtag-done{background:rgba(34,201,122,0.1);color:var(--green);border:1px solid rgba(34,201,122,0.2)}
 .rtag-miss{background:var(--surface);color:var(--text3);border:1px solid var(--border)}
+.role-skills-needed{margin-bottom:10px}
+.role-skills-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:6px}
+.role-skill-tags{display:flex;flex-wrap:wrap;gap:5px}
+.rsk{font-size:0.62rem;padding:4px 9px;border-radius:5px;font-weight:500}
+.rsk-have{background:rgba(34,201,122,0.1);color:var(--green);border:1px solid rgba(34,201,122,0.2)}
+.rsk-need{background:var(--surface);color:var(--text3);border:1px solid var(--border)}
 .role-salary{font-size:0.7rem;color:var(--text3);display:flex;align-items:center;gap:6px;margin-bottom:10px}
 .salary-n{color:var(--green);font-weight:600;font-family:"Syne",sans-serif}
 .certs-needed{background:var(--surface);border:1px solid rgba(232,160,32,0.2);border-radius:8px;padding:10px 13px;margin-top:6px}
@@ -228,165 +239,161 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 .cn-item{font-size:0.72rem;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
 .cn-item:last-child{border-bottom:none}
 .cn-item::before{content:"→";color:var(--accent);font-size:0.75rem}
-.role-skills-needed{margin-top:8px}
-.role-skills-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:6px}
-.role-skill-tags{display:flex;flex-wrap:wrap;gap:5px}
-.rsk{font-size:0.6rem;padding:3px 8px;border-radius:4px;font-weight:500}
-.rsk-have{background:rgba(34,201,122,0.1);color:var(--green);border:1px solid rgba(34,201,122,0.2)}
-.rsk-need{background:var(--surface);color:var(--text3);border:1px solid var(--border)}
 
 /* AI FAB */
-.ai-fab{position:fixed;bottom:28px;right:22px;z-index:500;width:58px;height:58px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:50%;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 20px var(--accent-glow);animation:fabPulse 3s ease-in-out infinite;transition:transform 0.2s,box-shadow 0.2s;gap:1px}
-.ai-fab:hover{transform:scale(1.1) translateY(-2px)}
-.ai-fab:active{transform:scale(0.96)}
-.ai-fab-ring{position:absolute;inset:-6px;border-radius:50%;border:2px solid var(--accent);opacity:0.4;animation:ringPulse 3s ease-in-out infinite}
-.ai-fab-ring2{inset:-12px;opacity:0.15;animation:ringPulse 3s ease-in-out infinite 0.6s}
-.ai-fab-icon{font-size:1.3rem;line-height:1;position:relative;z-index:1}
-.ai-fab-label{font-size:0.45rem;font-weight:700;font-family:"Syne",sans-serif;letter-spacing:0.08em;text-transform:uppercase;color:rgba(10,11,15,0.8);position:relative;z-index:1;line-height:1}
+.ai-fab{position:fixed;bottom:24px;right:20px;z-index:500;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0A0B0F;border:none;border-radius:28px;padding:14px 20px;display:flex;align-items:center;gap:10px;cursor:pointer;box-shadow:0 8px 32px var(--accent-glow);transition:all 0.3s cubic-bezier(0.16,1,0.3,1);font-family:"Syne",sans-serif}
+.ai-fab:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 12px 40px var(--accent-glow)}
+.ai-fab-ring{position:absolute;inset:-6px;border-radius:34px;border:2px solid var(--accent);opacity:0.3;animation:ripple 2.5s infinite}
+.ai-fab-ring2{animation-delay:1.25s}
+.ai-fab-icon{font-size:1.2rem;position:relative;z-index:1}
+.ai-fab-label{font-size:0.75rem;font-weight:700;position:relative;z-index:1}
 
 /* AI DRAWER */
-.ai-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:600;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(2px)}
+.ai-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:600;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(4px)}
 .ai-overlay.open{opacity:1;pointer-events:all}
-.ai-drawer{position:fixed;bottom:0;left:0;right:0;z-index:700;background:var(--surface);border-top:1px solid var(--border);border-radius:20px 20px 0 0;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);box-shadow:0 -8px 40px rgba(0,0,0,0.4);display:flex;flex-direction:column;max-height:80vh}
+.ai-drawer{position:fixed;bottom:0;left:0;right:0;max-width:600px;margin:0 auto;background:var(--surface);border-radius:24px 24px 0 0;border:1px solid var(--border);border-bottom:none;z-index:700;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);max-height:85vh;display:flex;flex-direction:column}
 .ai-drawer.open{transform:translateY(0)}
-.ai-drawer-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:12px auto 0;flex-shrink:0}
-.ai-drawer-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.ai-drawer-handle{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:12px auto 0}
+.ai-drawer-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .ai-drawer-title-wrap{display:flex;align-items:center;gap:10px}
-.ai-live-dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;flex-shrink:0}
-.ai-drawer-title{font-family:"Syne",sans-serif;font-size:0.9rem;font-weight:700}
-.ai-drawer-sub{font-size:0.6rem;color:var(--text3);margin-top:1px}
-.ai-drawer-close{background:none;border:none;color:var(--text3);font-size:1.1rem;cursor:pointer;padding:6px;border-radius:6px;transition:all 0.2s;line-height:1}
-.ai-drawer-close:hover{background:var(--card);color:var(--text)}
-.ai-msgs{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:8px;scroll-behavior:smooth;min-height:120px;max-height:340px}
-.ai-msgs:empty::after{content:"Ask about SOC roles, Nigerian employers, Security+, salary, career path...";color:var(--text3);font-size:0.73rem;font-style:italic;display:block;text-align:center;padding:24px 0;line-height:1.6}
-.bubble{padding:10px 14px;border-radius:12px;font-size:0.78rem;line-height:1.65;max-width:92%;word-break:break-word;animation:bubbleIn 0.25s cubic-bezier(0.16,1,0.3,1) forwards}
-.bubble-u{background:var(--accent);color:#0A0B0F;align-self:flex-end;border-radius:12px 12px 3px 12px;font-weight:500}
-.bubble-ai{background:var(--card);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-radius:12px 12px 12px 3px}
+.ai-live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
+.ai-drawer-title{font-family:"Syne",sans-serif;font-size:0.95rem;font-weight:700}
+.ai-drawer-sub{font-size:0.65rem;color:var(--text3);margin-top:2px}
+.ai-drawer-close{background:none;border:none;color:var(--text3);font-size:1.1rem;cursor:pointer;padding:6px;transition:color 0.2s}
+.ai-drawer-close:hover{color:var(--text)}
+.ai-msgs{flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:10px}
+.bubble{max-width:88%;padding:10px 14px;border-radius:12px;font-size:0.82rem;line-height:1.55;animation:fadeIn 0.2s ease}
+.bubble-u{background:var(--accent);color:#0A0B0F;align-self:flex-end;border-bottom-right-radius:3px}
+.bubble-ai{background:var(--card);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
 .bubble-thinking{color:var(--text3);font-style:italic}
-.ai-drawer-input{padding:12px 16px 16px;border-top:1px solid var(--border);display:flex;gap:8px;flex-shrink:0}
-.ai-input{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:10px 13px;color:var(--text);font-family:"Inter",sans-serif;font-size:0.8rem;outline:none;resize:none;transition:all 0.2s;line-height:1.4}
-.ai-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.ai-suggestions{display:flex;flex-wrap:wrap;gap:7px;padding:0 20px 14px}
+.ai-sug{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-size:0.72rem;color:var(--text2);cursor:pointer;transition:all 0.2s;font-family:"Inter",sans-serif}
+.ai-sug:hover{border-color:var(--accent);color:var(--accent)}
+.ai-drawer-input{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-end}
+.ai-input{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:11px 14px;color:var(--text);font-family:"Inter",sans-serif;font-size:0.82rem;outline:none;resize:none;line-height:1.45;max-height:100px;transition:border-color 0.2s}
+.ai-input:focus{border-color:var(--accent)}
 .ai-input::placeholder{color:var(--text3)}
-.ai-btn{padding:10px 16px;background:var(--accent);color:#0A0B0F;border:none;border-radius:10px;font-family:"Syne",sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap;align-self:flex-end}
-.ai-btn:hover{background:var(--accent2);transform:translateY(-1px)}
-.ai-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none}
-
-/* FOOTER */
-.footer{text-align:center;padding:28px 20px 80px;font-size:0.65rem;color:var(--text3);border-top:1px solid var(--border);letter-spacing:0.06em}
-.footer span{color:var(--accent)}
+.ai-btn{background:var(--accent);color:#0A0B0F;border:none;border-radius:10px;padding:11px 16px;font-family:"Syne",sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.ai-btn:hover{background:var(--accent2)}
+.ai-btn:disabled{opacity:0.5;cursor:not-allowed}
 
 /* TOAST */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#fff;padding:10px 20px;border-radius:8px;font-size:0.75rem;font-weight:600;z-index:9999;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);white-space:nowrap;box-shadow:0 4px 20px var(--green-glow)}
-.toast.show{transform:translateX(-50%) translateY(0)}
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;padding:10px 20px;border-radius:8px;font-size:0.78rem;font-weight:600;opacity:0;pointer-events:none;transition:all 0.3s;z-index:900;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ANIMATIONS */
+/* BUMP/PULSE ANIMATIONS */
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.85)}}
-@keyframes ringPulse{0%,100%{transform:scale(1);opacity:0.4}50%{transform:scale(1.12);opacity:0.1}}
-@keyframes fabPulse{0%,100%{box-shadow:0 4px 20px var(--accent-glow)}50%{box-shadow:0 4px 32px var(--accent-glow)}}
-@keyframes bubbleIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@keyframes checkPop{0%{transform:scale(0.6)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
-@keyframes numBump{0%{transform:scale(1)}50%{transform:scale(1.2);color:var(--green)}100%{transform:scale(1)}}
-@keyframes streakFire{0%{transform:scale(1)}40%{transform:scale(1.3) rotate(-5deg)}70%{transform:scale(0.95) rotate(3deg)}100%{transform:scale(1)}}
-.cbox.checked,.cert-circle.checked{animation:checkPop 0.3s cubic-bezier(0.16,1,0.3,1)}
-.stat-n.bump{animation:numBump 0.4s ease}
-.progress-fill.pulse{animation:progressPulse 0.6s ease}
-@keyframes progressPulse{0%,100%{box-shadow:none}50%{box-shadow:0 0 12px var(--green)}}
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-@media(max-width:480px){.stat-n{font-size:1.3rem}.hero-strip{flex-direction:column;align-items:flex-start;gap:10px}.skills-grid{grid-template-columns:1fr}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,201,122,0.4)}50%{box-shadow:0 0 0 6px rgba(34,201,122,0)}}
+@keyframes ripple{0%{transform:scale(1);opacity:0.3}100%{transform:scale(1.3);opacity:0}}
+@keyframes bump{0%,100%{transform:scale(1)}50%{transform:scale(1.22)}}
+.bump{animation:bump 0.35s cubic-bezier(0.36,0.07,0.19,0.97)}
+
+/* FOOTER */
+.footer{margin-top:32px;padding:20px;text-align:center;font-size:0.68rem;color:var(--text3);border-top:1px solid var(--border);line-height:2}
+
+/* NOTIF MODAL */
+#notifModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:800;align-items:flex-end;justify-content:center}
+#notifModal.show{display:flex}
+.notif-sheet{background:var(--surface);border-radius:20px 20px 0 0;padding:24px 20px 32px;width:100%;border-top:1px solid var(--border);box-shadow:0 -8px 40px rgba(0,0,0,0.4);max-width:500px}
+
+/* SPL QUERY BLOCK */
+.spl-block{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin:6px 0;font-family:monospace;font-size:0.72rem;color:var(--blue);line-height:1.6;position:relative;overflow-x:auto}
+.spl-label{font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.spl-copy{position:absolute;top:8px;right:8px;background:var(--border);border:none;border-radius:4px;padding:3px 8px;font-size:0.58rem;color:var(--text2);cursor:pointer;transition:all 0.2s}
+.spl-copy:hover{background:var(--accent);color:#0A0B0F}
+
+/* RESPONSIVE */
+@media(max-width:520px){
+  .skills-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(3,1fr)}
+  .ai-fab-label{display:none}
+  .ai-fab{border-radius:50%;width:56px;height:56px;padding:0;justify-content:center}
+}
 </style>
 </head>
 <body>
 <div class="grid-bg"></div>
 
-<!-- AUTH -->
+<!-- AUTH PAGE -->
 <div id="authPage">
   <div class="auth-wrap">
     <div class="auth-brand">
       <div class="auth-brand-mark">
-        <div class="auth-brand-icon"><img src="data:image/jpeg;base64,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" style="width:40px;height:40px;object-fit:cover;border-radius:10px;display:block"></div>
-        <span class="auth-brand-name">Cyber Roadmap Pro</span>
+        <div class="auth-brand-icon">🛡️</div>
+        <div class="auth-brand-name">Cyber Roadmap Pro</div>
       </div>
-      <p>Godson Uzoezie · SOC Analyst Path</p>
+      <p>Godson Uzoezie · SOC Analyst Path · 2026</p>
     </div>
     <div class="auth-card">
       <div class="auth-tabs">
         <button class="auth-tab active" onclick="setTab('login')">Login</button>
         <button class="auth-tab" onclick="setTab('signup')">Sign Up</button>
       </div>
-      <div class="field" id="nameField" style="display:none">
+      <div id="nameField" class="field" style="display:none">
         <label>Full Name</label>
-        <input type="text" id="authName" placeholder="e.g. Godson Uzoezie">
+        <input type="text" id="authName" placeholder="e.g. Godson Uzoezie" autocomplete="name">
       </div>
       <div class="field">
         <label>Email</label>
-        <input type="email" id="authEmail" placeholder="your@email.com">
+        <input type="email" id="authEmail" placeholder="your@email.com" autocomplete="email">
       </div>
       <div class="field">
         <label>Password</label>
         <div class="pass-wrap">
-          <input type="password" id="authPass" placeholder="••••••••">
-          <button type="button" class="pass-eye" id="passEye" onclick="togglePass()">👁</button>
+          <input type="password" id="authPass" placeholder="••••••••" autocomplete="current-password">
+          <button class="pass-eye" id="passEye" onclick="togglePass()" type="button">👁</button>
         </div>
       </div>
       <button class="btn-primary" id="authBtn" onclick="doAuth()">Login</button>
-      <p class="auth-err" id="authErr"></p>
+      <div class="auth-err" id="authErr"></div>
     </div>
   </div>
 </div>
 
-<!-- APP -->
+<!-- MAIN APP -->
 <div id="app">
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <div class="nav-logo-icon">🛡️</div>
+        <span class="nav-logo-text">Cyber Roadmap</span>
+      </div>
+      <button class="hamburger" onclick="openMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MENU TRAY -->
   <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
   <div class="menu-tray" id="menuTray">
     <div class="menu-head">
-      <span class="menu-head-title">Menu</span>
+      <span class="menu-head-title">🛡️ Cyber Roadmap Pro</span>
       <button class="menu-close" onclick="closeMenu()">✕</button>
     </div>
     <div class="menu-user">
       <div class="menu-user-label">Signed in as</div>
-      <div id="menuUserBlock">—</div>
+      <div id="menuUserBlock"></div>
     </div>
     <div class="menu-items">
-      <button class="menu-item" onclick="toggleTheme();closeMenu()">
-        <span class="menu-item-icon" id="themeBtn">🌙</span>
-        <span id="themeLabel">Switch to Light Mode</span>
-      </button>
-      <button class="menu-item" onclick="showNotifSetup();closeMenu()">
-        <span class="menu-item-icon">🔔</span>
-        <span>Daily Study Reminder</span>
-      </button>
-      <button class="menu-item" onclick="markToday();closeMenu()">
-        <span class="menu-item-icon">🔥</span>
-        Mark Today as Studied
-      </button>
+      <button class="menu-item" onclick="closeMenu();scrollTo(0,0)"><span class="menu-item-icon">🏠</span>Dashboard</button>
+      <button class="menu-item" onclick="closeMenu();document.getElementById('sec-skills').scrollIntoView({behavior:'smooth'})"><span class="menu-item-icon">⚡</span>Skills Tracker</button>
+      <button class="menu-item" onclick="closeMenu();document.getElementById('sec-courses').scrollIntoView({behavior:'smooth'})"><span class="menu-item-icon">📚</span>Courses</button>
+      <button class="menu-item" onclick="closeMenu();document.getElementById('sec-splunk').scrollIntoView({behavior:'smooth'})"><span class="menu-item-icon">🔍</span>Splunk SPL Queries</button>
+      <button class="menu-item" onclick="closeMenu();document.getElementById('sec-siem').scrollIntoView({behavior:'smooth'})"><span class="menu-item-icon">🛡️</span>SIEM Platform Courses</button>
+      <button class="menu-item" onclick="closeMenu();document.getElementById('sec-certs').scrollIntoView({behavior:'smooth'})"><span class="menu-item-icon">🏅</span>Certifications</button>
+      <button class="menu-item" onclick="closeMenu();document.getElementById('sec-roles').scrollIntoView({behavior:'smooth'})"><span class="menu-item-icon">🎯</span>Career Unlock</button>
+      <button class="menu-item" onclick="openNotifModal();closeMenu()"><span class="menu-item-icon">🔔</span>Study Reminder</button>
+      <button class="menu-item" onclick="toggleTheme();closeMenu()"><span class="menu-item-icon" id="themeBtn">☀️</span><span id="themeLabel">Switch to Light Mode</span></button>
     </div>
     <div class="menu-bottom">
-      <button class="menu-item menu-item-danger" onclick="doLogout()">
-        <span class="menu-item-icon">→</span>
-        Sign Out
-      </button>
+      <button class="menu-item menu-item-danger" onclick="doLogout()"><span class="menu-item-icon">🚪</span>Sign Out</button>
     </div>
   </div>
 
-  <nav class="nav">
-    <div class="nav-inner">
-      <div class="nav-logo">
-        <div class="nav-logo-icon"><img src="data:image/jpeg;base64,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" style="width:30px;height:30px;object-fit:cover;border-radius:7px;display:block"></div>
-        <span class="nav-logo-text">Cyber Roadmap</span>
-      </div>
-      <div class="nav-right">
-        <button class="hamburger" onclick="openMenu()" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </nav>
-
   <div class="main">
+    <!-- HERO -->
     <div class="hero-strip">
       <div>
         <div class="hero-title">Your Cybersecurity Career Path</div>
@@ -395,12 +402,14 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
       <div class="hero-target">🎯 Target: SOC L1</div>
     </div>
 
+    <!-- STATS -->
     <div class="stats-grid">
       <div class="stat"><span class="stat-n" id="statDone">0</span><span class="stat-l">Completed</span></div>
       <div class="stat"><span class="stat-n" id="statStreak">0</span><span class="stat-l">🔥 Streak</span></div>
       <div class="stat"><span class="stat-n" id="statPct">0%</span><span class="stat-l">Progress</span></div>
     </div>
 
+    <!-- PROGRESS -->
     <div class="progress-card">
       <div class="progress-top">
         <span class="progress-label">Overall Roadmap Progress</span>
@@ -409,6 +418,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
       <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
     </div>
 
+    <!-- STREAK -->
     <div class="streak-row">
       <div>
         <div class="streak-lbl">Study Streak</div>
@@ -417,42 +427,52 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
       <button class="btn-streak" id="streakBtn" onclick="markToday()">✓ Mark Today Done</button>
     </div>
 
-    <!-- SKILLS SECTION -->
-    <div class="sec-label">Skills Tracker</div>
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- SKILLS -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="sec-label" id="sec-skills">Skills Tracker</div>
     <div class="skills-note">
       ✅ Tick skills you have hands-on experience with. Role unlock checks these <strong>plus</strong> your courses — matching 2026 Nigerian employer requirements (SIEM in 78% of postings, AI/automation in 64%).
     </div>
     <div class="skills-grid" id="skillsGrid"></div>
 
+    <!-- ═══════════════════════════════════════════════ -->
     <!-- COURSES -->
-    <div class="sec-label">Courses</div>
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="sec-label" id="sec-courses">Courses</div>
 
-    <!-- PHASE 1 -->
+    <!-- PHASE 1 — Foundation -->
     <div class="phase-wrap">
       <div class="phase-head" onclick="togglePhase('p1')">
         <div class="phase-left">
           <div class="phase-pip" style="background:var(--phase1)"></div>
           <div><div class="phase-title">Phase 1 — Foundation</div><div class="phase-sub">Months 1–2 · Start Here</div></div>
         </div>
-        <span class="phase-chev open" id="chev-p1">▼</span>
+        <div class="phase-right">
+          <span class="phase-count" id="cnt-p1" style="color:var(--phase1)">0/8</span>
+          <span class="phase-chev open" id="chev-p1">▼</span>
+        </div>
       </div>
       <div class="phase-body open" id="body-p1">
+
         <div class="course-row">
           <div class="cbox" id="chk-0" onclick="toggleCourse(0)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-0">Palo Alto — Introduction to Cybersecurity</div>
-            <div class="c-meta">Palo Alto Networks · Free · Core concepts</div>
+            <div class="c-meta">Palo Alto Networks · Free · Core cybersecurity concepts</div>
             <a class="c-link" href="https://www.paloaltonetworks.com/cybersecurity-academy" target="_blank">Open Course ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-1" onclick="toggleCourse(1)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-1">Cisco — Introduction to Cybersecurity</div>
-            <div class="c-meta">Cisco NetAcad · Free · Core concepts</div>
-            <a class="c-link" href="https://www.netacad.com/courses/cybersecurity" target="_blank">Open Course ↗</a>
+            <div class="c-meta">Cisco NetAcad · Free · Core concepts · Digital badge on completion</div>
+            <a class="c-link" href="https://www.netacad.com/courses/cybersecurity/introduction-cybersecurity" target="_blank">Start on NetAcad ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-2" onclick="toggleCourse(2)"></div>
           <div class="c-info">
@@ -461,6 +481,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
             <a class="c-link" href="https://www.netacad.com/courses/networking-basics" target="_blank">Start Networking Basics ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-3" onclick="toggleCourse(3)"></div>
           <div class="c-info">
@@ -469,46 +490,76 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
             <a class="c-link" href="https://www.netacad.com/courses/linux-essentials" target="_blank">Start Linux Essentials ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-4" onclick="toggleCourse(4)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-4">Professor Messer — Security+ (SY0-701) Videos</div>
-            <div class="c-meta">YouTube · Free · Watch throughout all phases</div>
+            <div class="c-meta">YouTube · Free · Watch throughout all phases alongside everything else</div>
             <a class="c-link" href="https://www.youtube.com/@professormesser" target="_blank">YouTube Channel ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-5" onclick="toggleCourse(5)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-5">Google Cybersecurity Certificate</div>
-            <div class="c-meta">Coursera · Financial aid available · Includes SIEM intro</div>
-            <a class="c-link" href="https://www.coursera.org/professional-certificates/google-cybersecurity" target="_blank">Open Course ↗</a>
+            <div class="c-meta">Coursera · Financial aid available · Includes SIEM intro + AI for cybersecurity module (2025 update)</div>
+            <a class="c-link" href="https://www.coursera.org/professional-certificates/google-cybersecurity" target="_blank">Enroll on Coursera ↗</a>
+            <a class="c-link" href="https://grow.google/certificates/cybersecurity/" target="_blank">Google Official Page ↗</a>
           </div>
         </div>
+
+        <!-- NEW: LabEx -->
+        <div class="course-row">
+          <div class="cbox" id="chk-22" onclick="toggleCourse(22)"></div>
+          <div class="c-info">
+            <div class="c-name" id="nm-22">LabEx — Cybersecurity Fundamentals (Hands-on Labs) <span class="new-badge">NEW</span></div>
+            <div class="c-meta">LabEx.io · Free tier · 20 interactive labs · Wireshark, Nmap, Hydra, OpenSSL, Nmap — browser-based, no install needed</div>
+            <a class="c-link" href="https://labex.io/learn/cybersecurity" target="_blank">Start Free Labs ↗</a>
+            <a class="c-link" href="https://labex.io/free-labs/cybersecurity" target="_blank">Free Lab Catalog ↗</a>
+          </div>
+        </div>
+
+        <!-- NEW: Cisco Endpoint Security -->
+        <div class="course-row">
+          <div class="cbox" id="chk-23" onclick="toggleCourse(23)"></div>
+          <div class="c-info">
+            <div class="c-name" id="nm-23">Cisco — Endpoint Security <span class="new-badge">NEW</span></div>
+            <div class="c-meta">Cisco NetAcad · Free · Part of CCST Cybersecurity path · Secures endpoints, EDR concepts — Nigeria Cyber Challenge 2025 course</div>
+            <a class="c-link" href="https://www.netacad.com/courses/cybersecurity" target="_blank">NetAcad Cybersecurity ↗</a>
+          </div>
+        </div>
+
         <div class="phase-note" style="background:rgba(124,111,247,0.07);border:1px solid rgba(124,111,247,0.18);color:#A5B4FC;">
-          ⚡ Move to Phase 2 after 6–8 weeks even if you feel unready. Momentum beats perfection.
+          ⚡ Move to Phase 2 after 6–8 weeks even if you feel unready. Momentum beats perfection. LabEx is the fastest hands-on practice — use it daily in browser.
         </div>
       </div>
     </div>
 
-    <!-- PHASE 2 -->
+    <!-- PHASE 2 — SOC Core + SIEM -->
     <div class="phase-wrap">
       <div class="phase-head" onclick="togglePhase('p2')">
         <div class="phase-left">
           <div class="phase-pip" style="background:var(--phase2)"></div>
           <div><div class="phase-title">Phase 2 — SOC Core + SIEM</div><div class="phase-sub">Months 3–4 · Core SOC &amp; Tool Skills</div></div>
         </div>
-        <span class="phase-chev open" id="chev-p2">▼</span>
+        <div class="phase-right">
+          <span class="phase-count" id="cnt-p2" style="color:var(--phase2)">0/9</span>
+          <span class="phase-chev open" id="chev-p2">▼</span>
+        </div>
       </div>
       <div class="phase-body open" id="body-p2">
+
         <div class="course-row">
           <div class="cbox" id="chk-6" onclick="toggleCourse(6)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-6">Palo Alto — Fundamentals of SOC</div>
-            <div class="c-meta">Palo Alto Networks · Free · Directly for SOC L1 roles</div>
+            <div class="c-meta">Palo Alto Networks · Free · Built directly for SOC L1 roles</div>
             <a class="c-link" href="https://www.paloaltonetworks.com/cybersecurity-academy" target="_blank">Open Course ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-7" onclick="toggleCourse(7)"></div>
           <div class="c-info">
@@ -517,78 +568,113 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
             <a class="c-link" href="https://www.paloaltonetworks.com/cybersecurity-academy" target="_blank">Open Course ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-8" onclick="toggleCourse(8)"></div>
           <div class="c-info">
-            <div class="c-name" id="nm-8">Splunk Free Training — SIEM Fundamentals</div>
-            <div class="c-meta">Splunk · Free · SIEM in 78% of Nigerian SOC job postings</div>
-            <a class="c-link" href="https://www.splunk.com/en_us/training/free-courses/splunk-fundamentals-1.html" target="_blank">Start Free Splunk Training ↗</a>
+            <div class="c-name" id="nm-8">Splunk — Free Training Courses (Fundamentals 1 + Blue Team Academy)</div>
+            <div class="c-meta">Splunk · Free · SIEM in 78% of Nigerian SOC postings · Includes SOC Operations &amp; Defense Analyst path · Splunk search, alerts, dashboards</div>
+            <a class="c-link" href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank">Free Courses ↗</a>
+            <a class="c-link" href="https://www.splunk.com/en_us/training/splunk-fundamentals.html" target="_blank">Fundamentals 1 ↗</a>
+            <a class="c-link" href="https://www.splunk.com/en_us/training/course-catalog.html" target="_blank">Full Catalog ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-9" onclick="toggleCourse(9)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-9">Microsoft Student SOC + Sentinel</div>
-            <div class="c-meta">Microsoft · Free · Sentinel SIEM — used in real SOC jobs</div>
+            <div class="c-meta">Microsoft · Free · Sentinel SIEM — used in real SOC jobs at Access Bank, Flutterwave</div>
             <a class="c-link" href="https://microsoft.github.io/SOC/source/content/#/lessons/j362x-_7A1SESGqKqzF2uu5BRMAmkBTH" target="_blank">Start Microsoft SOC ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-10" onclick="toggleCourse(10)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-10">SC-200: Microsoft Security Operations</div>
-            <div class="c-meta">Microsoft Learn · Free · Sentinel + Defender training</div>
+            <div class="c-meta">Microsoft Learn · Free · Sentinel + Defender training · Strong in fintech/banking sector</div>
             <a class="c-link" href="https://learn.microsoft.com/en-us/training/paths/sc-200-mitigate-threats-using-microsoft-defender/" target="_blank">Start SC-200 Training ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-11" onclick="toggleCourse(11)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-11">TryHackMe — SOC Level 1 Path</div>
-            <div class="c-meta">TryHackMe.com · Free tier · Hands-on labs · Do daily</div>
+            <div class="c-meta">TryHackMe.com · Free tier · Hands-on browser labs · Do at least 30 min daily</div>
             <a class="c-link" href="https://tryhackme.com/path/outline/soclevel1" target="_blank">Start SOC Path ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-12" onclick="toggleCourse(12)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-12">Wireshark — Packet Analysis (Chris Greer)</div>
-            <div class="c-meta">YouTube · Free · Wireshark appears in Nigerian SOC job specs</div>
-            <a class="c-link" href="https://www.youtube.com/@ChrisGreer" target="_blank">Start Wireshark Course ↗</a>
+            <div class="c-meta">YouTube · Free · Wireshark appears in Nigerian SOC job specs — essential skill</div>
+            <a class="c-link" href="https://www.youtube.com/@ChrisGreer" target="_blank">YouTube Channel ↗</a>
           </div>
         </div>
+
+        <!-- NEW: LabEx Linux/Network labs -->
+        <div class="course-row">
+          <div class="cbox" id="chk-24" onclick="toggleCourse(24)"></div>
+          <div class="c-info">
+            <div class="c-name" id="nm-24">LabEx — Linux for Security &amp; Network Analysis Labs <span class="new-badge">NEW</span></div>
+            <div class="c-meta">LabEx.io · Free · Browser-based Linux terminal · Practice grep, awk, netstat, tcpdump — skills tested in every Nigerian SOC interview</div>
+            <a class="c-link" href="https://labex.io/learn" target="_blank">LabEx Learn Hub ↗</a>
+            <a class="c-link" href="https://labex.io/free-labs/cybersecurity" target="_blank">Free Security Labs ↗</a>
+          </div>
+        </div>
+
+        <!-- NEW: Cisco Network Defense -->
+        <div class="course-row">
+          <div class="cbox" id="chk-25" onclick="toggleCourse(25)"></div>
+          <div class="c-info">
+            <div class="c-name" id="nm-25">Cisco — Network Defense <span class="new-badge">NEW</span></div>
+            <div class="c-meta">Cisco NetAcad · Free · Monitor networks, evaluate security alerts, access control, firewalls, cloud security, cryptography · CCST Cybersecurity path</div>
+            <a class="c-link" href="https://www.netacad.com/catalogs/learn/cybersecurity" target="_blank">NetAcad Cybersecurity ↗</a>
+          </div>
+        </div>
+
         <div class="phase-note" style="background:rgba(59,191,217,0.06);border:1px solid rgba(59,191,217,0.18);color:#7DD3FC;">
-          ⚡ Splunk + Sentinel are the two SIEMs appearing in 78% of Nigerian SOC postings. Do both.
+          ⚡ Splunk + Sentinel are the two SIEMs appearing in 78% of Nigerian SOC postings. Do both. The Splunk Blue Team Academy is free and builds an actual SOC analyst portfolio.
         </div>
       </div>
     </div>
 
-    <!-- PHASE 3 -->
+    <!-- PHASE 3 — Certifications + Apply -->
     <div class="phase-wrap">
       <div class="phase-head" onclick="togglePhase('p3')">
         <div class="phase-left">
           <div class="phase-pip" style="background:var(--phase3)"></div>
           <div><div class="phase-title">Phase 3 — Certifications + Apply</div><div class="phase-sub">Months 5–6 · Exam Prep &amp; Job Hunt</div></div>
         </div>
-        <span class="phase-chev open" id="chev-p3">▼</span>
+        <div class="phase-right">
+          <span class="phase-count" id="cnt-p3" style="color:var(--phase3)">0/7</span>
+          <span class="phase-chev open" id="chev-p3">▼</span>
+        </div>
       </div>
       <div class="phase-body open" id="body-p3">
+
         <div class="course-row">
           <div class="cbox" id="chk-13" onclick="toggleCourse(13)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-13">Cisco CyberOps Associate (200-201 CBROPS)</div>
-            <div class="c-meta">Cisco NetAcad · Free study · SOC-specific cert · Strong employer recognition</div>
+            <div class="c-meta">Cisco NetAcad · Free study materials · SOC-specific cert · Strong employer recognition in Nigeria</div>
             <a class="c-link" href="https://www.netacad.com/courses/cybersecurity/cyberops-associate" target="_blank">Start CyberOps Associate ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-14" onclick="toggleCourse(14)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-14">CyberDefenders — SOC Analyst L1 Path</div>
-            <div class="c-meta">CyberDefenders.org · Free + Paid · Real blue team labs</div>
+            <div class="c-meta">CyberDefenders.org · Free + Paid · Real blue team labs · Builds portfolio employers actually look at</div>
             <a class="c-link" href="https://cyberdefenders.org/blueteam-ctf-challenges/" target="_blank">Start Blue Team Labs ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-15" onclick="toggleCourse(15)"></div>
           <div class="c-info">
@@ -597,6 +683,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
             <a class="c-link" href="https://nitda.gov.ng/nit/ndpr/" target="_blank">Read NDPR Framework ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-16" onclick="toggleCourse(16)"></div>
           <div class="c-info">
@@ -605,152 +692,573 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
             <a class="c-link" href="https://www.nist.gov/cyberframework" target="_blank">NIST Cyber Framework ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-17" onclick="toggleCourse(17)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-17">Cisco — Cyber Threat Management</div>
-            <div class="c-meta">Cisco NetAcad · Free · Deeper threat analysis skills</div>
-            <a class="c-link" href="https://www.netacad.com/courses/cybersecurity" target="_blank">Open Course ↗</a>
+            <div class="c-meta">Cisco NetAcad · Free · Governance, threat analysis, compliance frameworks · Nigeria Cyber Challenge 2025 course</div>
+            <a class="c-link" href="https://www.netacad.com/courses/cybersecurity" target="_blank">NetAcad Cybersecurity ↗</a>
           </div>
         </div>
+
+        <!-- NEW: Cybrary SOC -->
+        <div class="course-row">
+          <div class="cbox" id="chk-26" onclick="toggleCourse(26)"></div>
+          <div class="c-info">
+            <div class="c-name" id="nm-26">Cybrary — SOC Analyst Career Path (Free) <span class="new-badge">NEW</span></div>
+            <div class="c-meta">Cybrary.it · Free account · SOC-focused career path, Security+ prep, hands-on virtual labs — foundational defensive security</div>
+            <a class="c-link" href="https://www.cybrary.it/free-content" target="_blank">Free Cybrary Content ↗</a>
+          </div>
+        </div>
+
+        <!-- NEW: Splunk SIEM Udemy -->
+        <div class="course-row">
+          <div class="cbox" id="chk-27" onclick="toggleCourse(27)"></div>
+          <div class="c-info">
+            <div class="c-name" id="nm-27">Splunk SIEM — SOC Analyst Training (Udemy) <span class="new-badge">NEW</span></div>
+            <div class="c-meta">Udemy · ~₦3,000–₦6,000 on sale · 60hrs · Hands-on SPL queries, dashboards, alerts, incident triage — real SOC workflows</div>
+            <a class="c-link" href="https://www.udemy.com/course/cyber-security-soc-analyst-training-siem-splunk-60-hrs/" target="_blank">Splunk SOC Course ↗</a>
+          </div>
+        </div>
+
         <div class="phase-note" style="background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.18);color:#D8B4FE;">
-          ⚡ NDPR knowledge puts you ahead of candidates with only international certs. Every Nigerian bank and fintech must comply. Mention it in interviews.
+          ⚡ NDPR knowledge puts you ahead of candidates with only international certs. Every Nigerian bank and fintech must comply. Mention it in every interview.
         </div>
       </div>
     </div>
 
-    <!-- PHASE 4 -->
+    <!-- PHASE 4 — Broaden & Advance -->
     <div class="phase-wrap">
       <div class="phase-head" onclick="togglePhase('p4')">
         <div class="phase-left">
           <div class="phase-pip" style="background:var(--phase4)"></div>
           <div><div class="phase-title">Phase 4 — Broaden &amp; Advance</div><div class="phase-sub">Month 6+ · While Job Hunting</div></div>
         </div>
-        <span class="phase-chev" id="chev-p4">▼</span>
+        <div class="phase-right">
+          <span class="phase-count" id="cnt-p4" style="color:var(--phase4)">0/6</span>
+          <span class="phase-chev" id="chev-p4">▼</span>
+        </div>
       </div>
       <div class="phase-body" id="body-p4">
+
         <div class="course-row">
           <div class="cbox" id="chk-18" onclick="toggleCourse(18)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-18">Palo Alto — Fundamentals of Cloud Security</div>
-            <div class="c-meta">Palo Alto Networks · Free · Bridges your AWS Udacity background</div>
+            <div class="c-meta">Palo Alto Networks · Free · Bridges your AWS Udacity background into security</div>
             <a class="c-link" href="https://www.paloaltonetworks.com/cybersecurity-academy" target="_blank">Open Course ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-19" onclick="toggleCourse(19)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-19">Cisco — Ethical Hacker</div>
-            <div class="c-meta">Cisco NetAcad · Free · Foundation for pentesting path</div>
-            <a class="c-link" href="https://www.netacad.com/courses/cybersecurity" target="_blank">Open Course ↗</a>
+            <div class="c-meta">Cisco NetAcad · Free · Foundation for penetration testing · CCST Cybersecurity path · Nigeria Cyber Challenge 2025</div>
+            <a class="c-link" href="https://www.netacad.com/courses/cybersecurity" target="_blank">NetAcad Cybersecurity ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-20" onclick="toggleCourse(20)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-20">Hack The Box — Starting Point</div>
-            <div class="c-meta">HackTheBox.com · Free tier · Attempt after 6 months TryHackMe</div>
-            <a class="c-link" href="https://app.hackthebox.com/starting-point" target="_blank">Start Here ↗</a>
+            <div class="c-meta">HackTheBox.com · Free tier · Only attempt after 6 months on TryHackMe · Very competitive</div>
+            <a class="c-link" href="https://app.hackthebox.com/starting-point" target="_blank">HTB Starting Point ↗</a>
           </div>
         </div>
+
         <div class="course-row">
           <div class="cbox" id="chk-21" onclick="toggleCourse(21)"></div>
           <div class="c-info">
             <div class="c-name" id="nm-21">GRC Mastery — Governance, Risk &amp; Compliance</div>
-            <div class="c-meta">MyDFIR / Udemy · Practical GRC — your HSE background transfers here</div>
-            <a class="c-link" href="https://www.udemy.com/courses/search/?q=grc+governance+risk+compliance" target="_blank">Search on Udemy ↗</a>
+            <div class="c-meta">MyDFIR / Udemy · Practical GRC — your HSE Indorama background transfers directly here</div>
+            <a class="c-link" href="https://www.udemy.com/courses/search/?q=grc+governance+risk+compliance" target="_blank">GRC Courses ↗</a>
           </div>
         </div>
+
+        <!-- NEW: AI for Cybersecurity -->
+        <div class="course-row">
+          <div class="cbox" id="chk-28" onclick="toggleCourse(28)"></div>
+          <div class="c-info">
+            <div class="c-name" id="nm-28">AI for Cybersecurity — Cisco NetAcad <span class="new-badge">NEW</span></div>
+            <div class="c-meta">Cisco NetAcad · Free · Learn how AI is used in cybersecurity tools, prompt engineering for security, computer vision for threat detection · AI/automation in 64% of 2026 job postings</div>
+            <a class="c-link" href="https://www.netacad.com/" target="_blank">NetAcad AI Courses ↗</a>
+          </div>
+        </div>
+
+        <!-- NEW: LabEx CTF -->
+        <div class="course-row">
+          <div class="cbox" id="chk-29" onclick="toggleCourse(29)"></div>
+          <div class="c-info">
+            <div class="c-name" id="nm-29">LabEx — CTF Challenges &amp; Advanced Security Labs <span class="new-badge">NEW</span></div>
+            <div class="c-meta">LabEx.io · Free tier · CTF-style challenges: hidden files, weak passwords, log analysis, directory traversal, port scanning · Builds real portfolio</div>
+            <a class="c-link" href="https://labex.io/learn/cybersecurity" target="_blank">LabEx Cybersecurity ↗</a>
+          </div>
+        </div>
+
         <div class="phase-note" style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.18);color:#FED7AA;">
-          ⚡ Shell, Chevron, TotalEnergies in Port Harcourt pay ₦500K–₦1.2M/month. Your Indorama background is a foot in the door Lagos candidates don't have.
+          ⚡ Shell, Chevron, TotalEnergies in Port Harcourt pay ₦500K–₦1.2M/month. Your Indorama background is a foot in the door Lagos candidates don't have. Lead with that in oil &amp; gas interviews.
         </div>
       </div>
     </div>
 
-    <!-- SKIP -->
+    <!-- SKIP BOX -->
     <div class="skip-box">
       <div class="skip-title">⛔ Skip For Now</div>
       <div class="skip-item">Cisco Industrial Networking Essentials — OT/ICS specialization, not relevant at your stage</div>
-      <div class="skip-item">Hack The Box — In Phase 4 but only attempt after 6 months on TryHackMe</div>
+      <div class="skip-item">Hack The Box — Only attempt after 6 solid months on TryHackMe SOC L1</div>
       <div class="skip-item">CISSP — Requires 5 years experience. Study it after your first job, not before</div>
+      <div class="skip-item">OSCP — Advanced offensive cert. Long-term goal after SOC L1 → L2 experience</div>
     </div>
 
-    <!-- CERTS -->
-    <div class="sec-label">Target Certifications</div>
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- SPLUNK SPL QUERIES SECTION -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="sec-label" id="sec-splunk">Splunk SPL Practice Queries</div>
+    <div class="skills-note">
+      🔍 These are real Splunk Search Processing Language (SPL) queries Nigerian SOC employers test in interviews. Practice these in the free Splunk Trial or TryHackMe's Splunk room. <strong>Knowing SPL = instant credibility.</strong>
+    </div>
+
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px">
+      <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;margin-bottom:14px;color:var(--text)">🔐 Authentication & Failed Login Detection</div>
+
+      <div class="spl-label">Find all failed login attempts</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=main sourcetype=WinEventLog EventCode=4625<br>
+        | stats count by src_ip, user<br>
+        | where count > 5<br>
+        | sort -count
+      </div>
+
+      <div class="spl-label">Brute force detection — 10+ failures in 5 minutes</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=security sourcetype=WinEventLog EventCode=4625<br>
+        | bin _time span=5m<br>
+        | stats count by _time, src_ip, user<br>
+        | where count >= 10<br>
+        | rename count as "Failed Attempts"
+      </div>
+
+      <div class="spl-label">Successful logins after multiple failures (credential stuffing)</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=security (EventCode=4625 OR EventCode=4624)<br>
+        | stats count(eval(EventCode=4625)) as failures,<br>
+          count(eval(EventCode=4624)) as successes by src_ip, user<br>
+        | where failures > 5 AND successes > 0<br>
+        | eval risk="High"
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px">
+      <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;margin-bottom:14px;color:var(--text)">🌐 Network & Firewall Analysis</div>
+
+      <div class="spl-label">Top talkers — highest network traffic by source IP</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=network sourcetype=firewall<br>
+        | stats sum(bytes) as TotalBytes by src_ip<br>
+        | eval TotalMB=round(TotalBytes/1048576,2)<br>
+        | sort -TotalMB<br>
+        | head 20
+      </div>
+
+      <div class="spl-label">Blocked/denied firewall connections</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=firewall action=blocked<br>
+        | stats count by src_ip, dest_ip, dest_port<br>
+        | where count > 10<br>
+        | sort -count
+      </div>
+
+      <div class="spl-label">Port scan detection — single IP hitting many ports</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=network<br>
+        | stats dc(dest_port) as unique_ports by src_ip<br>
+        | where unique_ports > 20<br>
+        | eval threat="Possible Port Scan"<br>
+        | sort -unique_ports
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px">
+      <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;margin-bottom:14px;color:var(--text)">🛡️ Threat Detection & Alert Triage</div>
+
+      <div class="spl-label">Malware hash lookup with VirusTotal enrichment placeholder</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=endpoint sourcetype=sysmon EventCode=1<br>
+        | stats count by MD5, Image, CommandLine<br>
+        | lookup malware_hashes MD5 OUTPUT threat_name<br>
+        | where isnotnull(threat_name)
+      </div>
+
+      <div class="spl-label">Suspicious PowerShell execution (common attacker tool)</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=endpoint sourcetype=WinEventLog EventCode=4688<br>
+        | where match(CommandLine, "(?i)(encodedcommand|bypass|hidden|invoke-expression|iex|downloadstring)")<br>
+        | table _time, Computer, user, CommandLine<br>
+        | sort -_time
+      </div>
+
+      <div class="spl-label">Critical security alerts in last 24 hours</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=alerts severity=critical earliest=-24h<br>
+        | stats count by alert_name, src_ip, dest_ip<br>
+        | sort -count<br>
+        | head 25
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px">
+      <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;margin-bottom:14px;color:var(--text)">📊 SOC Dashboard Queries</div>
+
+      <div class="spl-label">Real-time event volume by severity (for SOC dashboard)</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=* earliest=-1h<br>
+        | eval severity=if(isnull(severity),"info",severity)<br>
+        | timechart span=5m count by severity
+      </div>
+
+      <div class="spl-label">MITRE ATT&CK technique mapping</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=endpoint<br>
+        | stats count by mitre_technique, mitre_tactic<br>
+        | sort -count<br>
+        | eval risk_score=case(count>100,"Critical", count>50,"High", count>10,"Medium", true(),"Low")
+      </div>
+
+      <div class="spl-label">User account created outside business hours (insider threat)</div>
+      <div class="spl-block">
+        <button class="spl-copy" onclick="copySPL(this)">Copy</button>
+        index=security EventCode=4720<br>
+        | eval hour=strftime(_time,"%H")<br>
+        | where hour < 8 OR hour > 18<br>
+        | table _time, user, Account_Name, Computer
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- SIEM PLATFORM TRAINING SECTION -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="sec-label" id="sec-siem">SIEM Platform Training — Direct Official Courses</div>
+    <div class="skills-note">
+      🛡️ These are the <strong>3 SIEMs that appear in Nigerian SOC job postings</strong>. Each platform below offers official free training directly from their own website — no third party needed. Study Splunk + Sentinel first (78% of postings), then IBM QRadar as a bonus.
+    </div>
+
+    <!-- ═══ SPLUNK ═══ -->
+    <div style="background:var(--surface);border:2px solid rgba(232,160,32,0.35);border-radius:14px;margin-bottom:14px;overflow:hidden;">
+      <div style="background:linear-gradient(135deg,rgba(232,160,32,0.12),rgba(232,160,32,0.04));padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(232,160,32,0.15);border:1px solid rgba(232,160,32,0.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🔍</div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:800;color:var(--accent);">Splunk — Official Free Training</div>
+          <div style="font-size:0.65rem;color:var(--text3);margin-top:2px;">splunk.com · SIEM #1 in Nigerian SOC postings · In 78% of job ads · Free from Splunk directly</div>
+        </div>
+        <div style="margin-left:auto;background:rgba(232,160,32,0.15);color:var(--accent);font-size:0.6rem;font-weight:700;padding:4px 10px;border-radius:12px;border:1px solid rgba(232,160,32,0.3);white-space:nowrap;">DO FIRST</div>
+      </div>
+      <div style="padding:16px 20px;">
+
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="color:var(--accent)">①</span> Start Here — Free Courses Hub</div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">All Splunk Free Courses (Main Hub)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Blue Team Academy · SOC Operations · Security Use Cases · Threat Hunting · SOAR · UBA — all in one place</div>
+            <a href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank" class="c-link" style="font-size:0.7rem;">splunk.com/en_us/training/free-courses/overview.html ↗</a>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Splunk Fundamentals 1, 2 &amp; 3</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Official Splunk search, SPL, dashboards, alerts, reports — the core skill employers test</div>
+            <a href="https://www.splunk.com/en_us/training/splunk-fundamentals.html" target="_blank" class="c-link" style="font-size:0.7rem;">splunk.com/en_us/training/splunk-fundamentals.html ↗</a>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Full Course Catalog (All Courses)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Browse every Splunk course — free and paid — sorted by role or product</div>
+            <a href="https://www.splunk.com/en_us/training/course-catalog.html" target="_blank" class="c-link" style="font-size:0.7rem;">splunk.com/en_us/training/course-catalog.html ↗</a>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="color:var(--accent)">②</span> Blue Team Academy — SOC Analyst Path (Free)</div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">SOC Operations &amp; Defense Analyst Introduction</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Learn the role of a Cyber Analyst in a SOC — SOC structure, analyst duties, alert triage, incident escalation. Built by Splunk specifically for beginners targeting SOC jobs.</div>
+            <a href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank" class="c-link" style="font-size:0.7rem;">Free Courses Hub → Filter "Blue Team Academy" ↗</a>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Intro to Splunk — Cybrary (Free)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Install Splunk trial, ingest data, write searches, build alerts &amp; dashboards — 100% free with certificate</div>
+            <a href="https://www.cybrary.it/course/intro-to-splunk" target="_blank" class="c-link" style="font-size:0.7rem;">cybrary.it/course/intro-to-splunk ↗</a>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="color:var(--accent)">③</span> Certification Path</div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Splunk Core Certified User → Splunk Certified Cybersecurity Defense Analyst</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Splunk-certified analysts earn 40% more than non-certified peers (Splunk 2025 Career Impact Report)</div>
+            <a href="https://www.splunk.com/en_us/training/certification-track/splunk-core-certified-user.html" target="_blank" class="c-link" style="font-size:0.7rem;">Core Certified User ↗</a>
+            <a href="https://www.splunk.com/en_us/training.html" target="_blank" class="c-link" style="font-size:0.7rem;">All Certifications ↗</a>
+          </div>
+        </div>
+
+        <div style="background:rgba(232,160,32,0.06);border:1px solid rgba(232,160,32,0.18);border-radius:8px;padding:10px 13px;margin-top:14px;font-size:0.7rem;color:var(--accent);font-weight:500;">
+          ⚡ Interview tip: Nigerian employers ask "Write an SPL query to find failed logins" in the first round. Knowing this from the SPL section above + Splunk fundamentals = you stand out immediately.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ MICROSOFT SENTINEL ═══ -->
+    <div style="background:var(--surface);border:2px solid rgba(79,142,247,0.35);border-radius:14px;margin-bottom:14px;overflow:hidden;">
+      <div style="background:linear-gradient(135deg,rgba(79,142,247,0.1),rgba(79,142,247,0.03));padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(79,142,247,0.15);border:1px solid rgba(79,142,247,0.3);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🔷</div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:800;color:var(--blue);">Microsoft Sentinel — Official Free Training</div>
+          <div style="font-size:0.65rem;color:var(--text3);margin-top:2px;">learn.microsoft.com · SIEM #2 in Nigerian postings · Cloud-native · Used by Access Bank, Flutterwave, fintechs</div>
+        </div>
+        <div style="margin-left:auto;background:rgba(79,142,247,0.12);color:var(--blue);font-size:0.6rem;font-weight:700;padding:4px 10px;border-radius:12px;border:1px solid rgba(79,142,247,0.3);white-space:nowrap;">DO SECOND</div>
+      </div>
+      <div style="padding:16px 20px;">
+
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="color:var(--blue)">①</span> Official Microsoft Learn — 100% Free</div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Introduction to Microsoft Sentinel (Module)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">What Sentinel is, its components, use cases vs traditional SIEM — perfect starting point</div>
+            <a href="https://learn.microsoft.com/en-us/training/modules/intro-to-azure-sentinel/" target="_blank" class="c-link" style="font-size:0.7rem;">learn.microsoft.com/en-us/training/modules/intro-to-azure-sentinel/ ↗</a>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Configure Your Microsoft Sentinel Environment (Learning Path)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Set up workspace, connect data sources, write KQL queries, manage watchlists — full hands-on path. Aligns with SC-200 exam.</div>
+            <a href="https://learn.microsoft.com/en-us/training/paths/sc-200-configure-azure-sentinel-environment/" target="_blank" class="c-link" style="font-size:0.7rem;">SC-200 Sentinel Environment Path ↗</a>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Microsoft Sentinel Skill-Up Training (21 Modules — Level 400)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Deep-dive: SOC lifecycle, threat detection, analytics rules, incident response, automation (SOAR), threat intelligence — the full professional training</div>
+            <a href="https://learn.microsoft.com/en-us/azure/sentinel/skill-up-resources" target="_blank" class="c-link" style="font-size:0.7rem;">learn.microsoft.com/en-us/azure/sentinel/skill-up-resources ↗</a>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">SC-200 Full Learning Path — Sentinel + Defender (Free)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">The complete Microsoft exam prep path — covers Sentinel, Microsoft Defender XDR, KQL for threat detection</div>
+            <a href="https://learn.microsoft.com/en-us/training/paths/sc-200-mitigate-threats-using-microsoft-defender/" target="_blank" class="c-link" style="font-size:0.7rem;">SC-200 Full Microsoft Defender Path ↗</a>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="color:var(--blue)">②</span> Free Lab Environment (Practice in Azure)</div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Microsoft Sentinel — Free Azure Lab (Udemy Free)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Create a free Azure account → enable Sentinel → connect data → write analytics rules → investigate incidents. Entire lab is free.</div>
+            <a href="https://www.udemy.com/course/microsoft-sentinel-the-complete-introduction-course/" target="_blank" class="c-link" style="font-size:0.7rem;">Sentinel Complete Intro Course (Udemy) ↗</a>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Microsoft Student SOC + Sentinel (GitHub)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Microsoft-built student SOC curriculum using Sentinel — already in your Phase 2 courses above</div>
+            <a href="https://microsoft.github.io/SOC/source/content/#/lessons/j362x-_7A1SESGqKqzF2uu5BRMAmkBTH" target="_blank" class="c-link" style="font-size:0.7rem;">Microsoft Student SOC ↗</a>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="color:var(--blue)">③</span> Key Skill: KQL — Kusto Query Language</div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">KQL is to Sentinel what SPL is to Splunk</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Nigerian employers using Sentinel will ask you to write KQL queries. Example: <code style="background:var(--bg2);padding:1px 5px;border-radius:3px;color:var(--blue);">SecurityEvent | where EventID == 4625 | summarize count() by Account, IpAddress</code></div>
+            <a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/" target="_blank" class="c-link" style="font-size:0.7rem;">KQL Reference Docs ↗</a>
+            <a href="https://learn.microsoft.com/en-us/training/paths/sc-200-utilize-kql-for-azure-sentinel/" target="_blank" class="c-link" style="font-size:0.7rem;">SC-200 KQL Learning Path ↗</a>
+          </div>
+        </div>
+
+        <div style="background:rgba(79,142,247,0.06);border:1px solid rgba(79,142,247,0.18);border-radius:8px;padding:10px 13px;margin-top:14px;font-size:0.7rem;color:var(--blue);font-weight:500;">
+          ⚡ SC-200 cert + Sentinel experience = strongest combo for Nigerian fintech and banking SOC jobs. Access Bank, Flutterwave, and Kuda all use Azure infrastructure.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ IBM QRADAR ═══ -->
+    <div style="background:var(--surface);border:2px solid rgba(34,201,122,0.25);border-radius:14px;margin-bottom:14px;overflow:hidden;">
+      <div style="background:linear-gradient(135deg,rgba(34,201,122,0.08),rgba(34,201,122,0.02));padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:rgba(34,201,122,0.12);border:1px solid rgba(34,201,122,0.25);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🟢</div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:800;color:var(--green);">IBM QRadar — Official Free Training</div>
+          <div style="font-size:0.65rem;color:var(--text3);margin-top:2px;">ibm.com/training · Used by large enterprises &amp; telecoms globally · Bonus skill — do after Splunk + Sentinel</div>
+        </div>
+        <div style="margin-left:auto;background:rgba(34,201,122,0.1);color:var(--green);font-size:0.6rem;font-weight:700;padding:4px 10px;border-radius:12px;border:1px solid rgba(34,201,122,0.2);white-space:nowrap;">BONUS</div>
+      </div>
+      <div style="padding:16px 20px;">
+
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="color:var(--green)">①</span> Official IBM Training — Free Courses</div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">IBM QRadar SIEM Foundations (BQ104G/BQ105G)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Official IBM course — QRadar architecture, navigation, investigating offenses, log sources, event analysis. Hands-on labs included. Self-paced = 24 hours.</div>
+            <a href="https://www.ibm.com/training/course/ibm-qradar-siem-foundations-BQ104G" target="_blank" class="c-link" style="font-size:0.7rem;">ibm.com/training → QRadar SIEM Foundations ↗</a>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;margin-bottom:8px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">Using IBM QRadar SIEM — Free Lab (Class Central)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Navigate QRadar interface, investigate offenses, review Pulse app, create reports — completely free with IBM lab access</div>
+            <a href="https://www.classcentral.com/course/ibm-training-using-ibm-qradar-siem-478473" target="_blank" class="c-link" style="font-size:0.7rem;">Class Central → Using IBM QRadar SIEM ↗</a>
+          </div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">IBM QRadar SIEM Analyst — Full Learning Path (Free)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">12 hours of IBM SME-led modules — navigate QRadar, identify offenses, interpret events, generate reports. IBM Certified Analyst path.</div>
+            <a href="https://community.ibm.com/community/user/security/discussion/free-ibm-qradar-siem-training-from-security-learning-academy" target="_blank" class="c-link" style="font-size:0.7rem;">IBM Security Learning Academy (Free) ↗</a>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="color:var(--green)">②</span> Deep Dive — Udemy Bootcamp</div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">IBM QRadar SIEM — Step-by-Step Bootcamp (Udemy)</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">Architecture, offense investigation, AQL queries (QRadar's query language), log integration, custom rules, threat hunting — install Community Edition free</div>
+            <a href="https://www.udemy.com/course/ibm-qradar-siem-a-step-by-step-bootcamp/" target="_blank" class="c-link" style="font-size:0.7rem;">QRadar Bootcamp on Udemy ↗</a>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.72rem;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span style="color:var(--green)">③</span> Certification</div>
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 15px;">
+            <div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:4px;">IBM Certified Analyst — Security QRadar SIEM V7.5</div>
+            <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px;">IBM's official QRadar analyst certification. Pursue this after Splunk + Sentinel certs are done. Strong differentiator for enterprise/telco SOC roles.</div>
+            <a href="https://www.ibm.com/training/course/ibm-qradar-siem-foundations-BQ104G" target="_blank" class="c-link" style="font-size:0.7rem;">IBM Training Portal ↗</a>
+          </div>
+        </div>
+
+        <div style="background:rgba(34,201,122,0.05);border:1px solid rgba(34,201,122,0.18);border-radius:8px;padding:10px 13px;margin-top:14px;font-size:0.7rem;color:var(--green);font-weight:500;">
+          ⚡ QRadar is used by MTN Nigeria, large Nigerian banks, and telecoms. Knowing all 3 SIEMs (Splunk + Sentinel + QRadar) makes you the strongest SOC L1 candidate in Port Harcourt.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ WHAT IS SIEM ═══ -->
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;margin-bottom:14px;padding:16px 20px;">
+      <div style="font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:12px;">📖 What is SIEM? — Free Concept Courses</div>
+      <div style="font-size:0.68rem;color:var(--text3);margin-bottom:12px;line-height:1.6;">Before diving into a specific SIEM tool, understand what SIEM <em>is</em>. These free resources explain the core concept all Nigerian employers assume you know.</div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;">
+        <div style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:3px;">Splunk — "What is SIEM?" Article + Video</div>
+        <div style="font-size:0.62rem;color:var(--text3);margin-bottom:6px;">Written by Splunk experts — explains SIEM architecture, log aggregation, correlation rules, alerting — the theory behind every SIEM tool</div>
+        <a href="https://www.splunk.com/en_us/blog/learn/what-is-siem.html" target="_blank" class="c-link" style="font-size:0.68rem;">Splunk — What is SIEM? ↗</a>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;">
+        <div style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:3px;">Microsoft Learn — Introduction to SIEM Concepts</div>
+        <div style="font-size:0.62rem;color:var(--text3);margin-bottom:6px;">Part of the SC-200 path — explains why cloud SIEM is replacing on-prem, how Sentinel fits, data ingestion fundamentals</div>
+        <a href="https://learn.microsoft.com/en-us/training/modules/intro-to-azure-sentinel/" target="_blank" class="c-link" style="font-size:0.68rem;">Microsoft Learn — Intro to Sentinel/SIEM ↗</a>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;">
+        <div style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:3px;">TryHackMe — Splunk & SIEM Rooms (Hands-on Free)</div>
+        <div style="font-size:0.62rem;color:var(--text3);margin-bottom:6px;">Practice Splunk queries in a browser-based SOC environment — no install needed. "Splunk: Basics", "Splunk 2", "Investigating with Splunk" rooms</div>
+        <a href="https://tryhackme.com/room/splunk101" target="_blank" class="c-link" style="font-size:0.68rem;">TryHackMe Splunk 101 ↗</a>
+        <a href="https://tryhackme.com/room/splunk201" target="_blank" class="c-link" style="font-size:0.68rem;">Splunk 201 ↗</a>
+        <a href="https://tryhackme.com/room/investigatingwithsplunk" target="_blank" class="c-link" style="font-size:0.68rem;">Investigating with Splunk ↗</a>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
+        <div style="font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:3px;">Elastic SIEM — Free Alternative (Open Source)</div>
+        <div style="font-size:0.62rem;color:var(--text3);margin-bottom:6px;">Elastic Security is free and open-source. Some Nigerian startups and smaller companies use it. Good third SIEM to know.</div>
+        <a href="https://www.elastic.co/security/siem" target="_blank" class="c-link" style="font-size:0.68rem;">Elastic Security SIEM ↗</a>
+        <a href="https://www.elastic.co/training/free" target="_blank" class="c-link" style="font-size:0.68rem;">Elastic Free Training ↗</a>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- CERTIFICATIONS -->
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="sec-label" id="sec-certs">Target Certifications</div>
+
     <div class="cert-row">
       <div class="cert-circle" id="cert-0" onclick="toggleCert(0)"></div>
       <div class="cert-info">
         <div class="cert-n" id="cn-0">CompTIA Security+ (SY0-701)</div>
-        <div class="cert-t">Month 5–6 · Appears in nearly every Nigerian SOC posting · NITDA 50% subsidy available</div>
+        <div class="cert-t">Month 5–6 · Appears in nearly every Nigerian SOC posting · NITDA 50% subsidy available · ~$200 USD</div>
         <a class="c-link" href="https://www.comptia.org/certifications/security" target="_blank">Official Exam Info ↗</a>
       </div>
       <span class="cbadge cb-now">Primary #1</span>
     </div>
+
     <div class="cert-row">
       <div class="cert-circle" id="cert-1" onclick="toggleCert(1)"></div>
       <div class="cert-info">
         <div class="cert-n" id="cn-1">Cisco CyberOps Associate (200-201)</div>
-        <div class="cert-t">Month 5–6 · Built specifically for SOC roles · Free study via NetAcad</div>
+        <div class="cert-t">Month 5–6 · Built specifically for SOC roles · Free study via NetAcad · Strong employer recognition</div>
         <a class="c-link" href="https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/cyberops-associate.html" target="_blank">Official Exam Info ↗</a>
       </div>
       <span class="cbadge cb-now">Primary #2</span>
     </div>
+
     <div class="cert-row">
       <div class="cert-circle" id="cert-2" onclick="toggleCert(2)"></div>
       <div class="cert-info">
         <div class="cert-n" id="cn-2">SC-200 Microsoft Security Operations Analyst</div>
-        <div class="cert-t">After Phase 2 · Pairs with Sentinel skills · Strong in fintech/banking</div>
+        <div class="cert-t">After Phase 2 · Pairs with Sentinel skills · Strong in fintech/banking · Growing demand</div>
         <a class="c-link" href="https://learn.microsoft.com/en-us/credentials/certifications/security-operations-analyst/" target="_blank">Official Exam Info ↗</a>
       </div>
       <span class="cbadge cb-goal">Phase 2–3</span>
     </div>
+
     <div class="cert-row">
       <div class="cert-circle" id="cert-3" onclick="toggleCert(3)"></div>
       <div class="cert-info">
         <div class="cert-n" id="cn-3">CompTIA CySA+</div>
-        <div class="cert-t">After first SOC L1 job · Step up from Security+</div>
+        <div class="cert-t">After first SOC L1 job · Step up from Security+ · Validates real analyst skills</div>
         <a class="c-link" href="https://www.comptia.org/certifications/cybersecurity-analyst" target="_blank">Official Exam Info ↗</a>
       </div>
       <span class="cbadge cb-goal">Next Level</span>
     </div>
+
     <div class="cert-row">
       <div class="cert-circle" id="cert-4" onclick="toggleCert(4)"></div>
       <div class="cert-info">
-        <div class="cert-n" id="cn-4">CyberDefenders Blue Team Analyst</div>
-        <div class="cert-t">CyberDefenders.org · Validates real SOC blue team skills</div>
-        <a class="c-link" href="https://cyberdefenders.org/blue-team-training/courses/" target="_blank">Official Cert Info ↗</a>
+        <div class="cert-n" id="cn-4">Splunk Core Certified User</div>
+        <div class="cert-t">Splunk · Entry certification · Validates SPL search skills · Employers recognize it · Pairs with free training</div>
+        <a class="c-link" href="https://www.splunk.com/en_us/training/certification-track/splunk-core-certified-user.html" target="_blank">Cert Info ↗</a>
+        <a class="c-link" href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank">Free Training ↗</a>
       </div>
-      <span class="cbadge cb-goal">SOC Path</span>
+      <span class="cbadge cb-goal">SIEM Cert</span>
     </div>
+
     <div class="cert-row">
       <div class="cert-circle" id="cert-5" onclick="toggleCert(5)"></div>
       <div class="cert-info">
-        <div class="cert-n" id="cn-5">CRISC — Certified in Risk &amp; Info Systems Control</div>
-        <div class="cert-t">ISACA · Mid-senior GRC path · After 3+ years experience</div>
-        <a class="c-link" href="https://www.isaca.org/credentialing/crisc" target="_blank">Official Exam Info ↗</a>
+        <div class="cert-n" id="cn-5">CyberDefenders Blue Team Analyst</div>
+        <div class="cert-t">CyberDefenders.org · Validates real SOC blue team skills · Free labs build toward this</div>
+        <a class="c-link" href="https://cyberdefenders.org/blue-team-training/courses/" target="_blank">Cert Info ↗</a>
       </div>
-      <span class="cbadge cb-later">GRC Path</span>
+      <span class="cbadge cb-goal">SOC Path</span>
     </div>
+
     <div class="cert-row">
       <div class="cert-circle" id="cert-6" onclick="toggleCert(6)"></div>
       <div class="cert-info">
         <div class="cert-n" id="cn-6">CISSP</div>
-        <div class="cert-t">ISC2 · 5 years experience required · Gold standard globally</div>
+        <div class="cert-t">ISC2 · 5 years experience required · Gold standard globally · Study after your first job</div>
         <a class="c-link" href="https://www.isc2.org/certifications/cissp" target="_blank">Official Exam Info ↗</a>
       </div>
       <span class="cbadge cb-later">Long-term</span>
     </div>
 
+    <!-- ═══════════════════════════════════════════════ -->
     <!-- ROLES -->
-    <div class="sec-label">Career Unlock Status</div>
+    <!-- ═══════════════════════════════════════════════ -->
+    <div class="sec-label" id="sec-roles">Career Unlock Status</div>
     <div class="roles-intro">Roles unlock based on your courses <strong>AND</strong> skills combined — matching real 2026 Nigerian employer requirements. Salary ranges from actual Nigerian job postings.</div>
     <div id="rolesWrap"></div>
 
     <div class="footer">
-      <span>Godson Uzoezie</span> · Port Harcourt, Nigeria 🇳🇬 · github.com/godsonomichael · 2026<br>
-      <span style="color:var(--text3);font-size:0.6rem">Target employers: Certfort · GVA Partners · Access Bank · Flutterwave · Shell Nigeria · TotalEnergies</span>
+      <span>Godson Uzoezie</span> · Port Harcourt, Nigeria 🇳🇬 · 2026<br>
+      <span style="color:var(--text3);font-size:0.6rem">Target employers: Certfort · GVA Partners · Cardinal Security · Access Bank · Flutterwave · Shell Nigeria · TotalEnergies · Chevron</span>
     </div>
-  </div>
+  </div><!-- /main -->
 
   <!-- AI FAB -->
   <button class="ai-fab" id="aiFab" onclick="toggleAIDrawer()" aria-label="AI Assistant">
@@ -774,19 +1282,29 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
       </div>
       <button class="ai-drawer-close" onclick="closeAIDrawer()">✕</button>
     </div>
+    <div class="ai-suggestions" id="aiSuggestions">
+      <button class="ai-sug" onclick="askSuggestion(this)">Splunk vs Sentinel — which to learn first?</button>
+      <button class="ai-sug" onclick="askSuggestion(this)">What SPL queries will I be tested on?</button>
+      <button class="ai-sug" onclick="askSuggestion(this)">How to get Security+ in Nigeria?</button>
+      <button class="ai-sug" onclick="askSuggestion(this)">NITDA subsidy for Security+?</button>
+      <button class="ai-sug" onclick="askSuggestion(this)">What KQL queries should I know for Sentinel?</button>
+      <button class="ai-sug" onclick="askSuggestion(this)">Is IBM QRadar used in Nigeria?</button>
+      <button class="ai-sug" onclick="askSuggestion(this)">How to get remote SOC job?</button>
+      <button class="ai-sug" onclick="askSuggestion(this)">Use my HSE experience in interviews</button>
+    </div>
     <div class="ai-msgs" id="aiMsgs"></div>
     <div class="ai-drawer-input">
-      <textarea class="ai-input" id="aiInput" rows="2" placeholder="Ask about SOC, Security+, Nigerian employers, salary..."></textarea>
+      <textarea class="ai-input" id="aiInput" rows="2" placeholder="Ask about SOC, Splunk, Nigerian employers, salary..."></textarea>
       <button class="ai-btn" id="aiBtn" onclick="askGroq()">Send ↑</button>
     </div>
   </div>
 
   <!-- NOTIFICATION MODAL -->
-  <div id="notifModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:800;align-items:flex-end;justify-content:center">
-    <div style="background:var(--surface);border-radius:20px 20px 0 0;padding:24px 20px 32px;width:100%;border-top:1px solid var(--border);box-shadow:0 -8px 40px rgba(0,0,0,0.4);max-width:500px;margin:0 auto">
+  <div id="notifModal">
+    <div class="notif-sheet">
       <div style="width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 18px"></div>
       <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:6px">🔔 Daily Study Reminder</div>
-      <div style="font-size:0.72rem;color:var(--text3);margin-bottom:18px;line-height:1.5">Pick a time for your daily reminder while the app is open.<br><strong style="color:var(--accent)">For background notifications</strong> — enable in phone Settings → Apps → Notifications.</div>
+      <div style="font-size:0.72rem;color:var(--text3);margin-bottom:18px;line-height:1.5">Pick a time for your daily reminder.<br><strong style="color:var(--accent)">For background notifications</strong> — enable in phone Settings → Apps → Notifications.</div>
       <div style="margin-bottom:16px">
         <label style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:8px">Reminder Time</label>
         <input type="time" id="notifTime" value="08:00" style="width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:9px;padding:12px 14px;color:var(--text);font-family:'Inter',sans-serif;font-size:1rem;outline:none">
@@ -796,12 +1314,14 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
     </div>
   </div>
 
-</div>
+</div><!-- /app -->
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ══ FIREBASE ══
+// ══════════════════════════════════════════════════════
+// FIREBASE CONFIG
+// ══════════════════════════════════════════════════════
 const firebaseConfig = {
   apiKey:"AIzaSyDe2ngASIsjK2lflmjcb-SoqkrxvH12mNI",
   authDomain:"godson-cyber-roadmap.firebaseapp.com",
@@ -815,8 +1335,17 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db   = firebase.firestore();
 
-const TOTAL_COURSES = 22;
+// ── UPDATED COURSE COUNT: 30 courses (0-29), 7 certs ──
+const TOTAL_COURSES = 30;
 const TOTAL_CERTS   = 7;
+
+// Phase mapping: which course IDs belong to each phase + displayed count
+const PHASE_COURSES = {
+  p1: [0,1,2,3,4,5,22,23],   // 8 courses
+  p2: [6,7,8,9,10,11,12,24,25], // 9 courses
+  p3: [13,14,15,16,17,26,27],  // 7 courses
+  p4: [18,19,20,21,28,29],    // 6 courses
+};
 
 let uid      = null;
 let courses  = new Array(TOTAL_COURSES).fill(false);
@@ -825,9 +1354,9 @@ let skills   = {};
 let authMode = "login";
 let signupInProgress = false;
 
-// ══ SKILLS DATA ══
-// Each skill: id, name, category
-// Role engine checks skills[id] === true
+// ══════════════════════════════════════════════════════
+// SKILLS DATA
+// ══════════════════════════════════════════════════════
 const SKILLS_LIST = [
   {id:"siem",      name:"SIEM (Splunk/Sentinel)", cat:"Core SOC"},
   {id:"wireshark", name:"Wireshark / Packet Analysis", cat:"Network"},
@@ -837,6 +1366,7 @@ const SKILLS_LIST = [
   {id:"firewalls", name:"Firewalls / IDS/IPS", cat:"Network"},
   {id:"iam",       name:"IAM / Access Control", cat:"Security"},
   {id:"edr",       name:"EDR Tools", cat:"Security"},
+  {id:"spl",       name:"Splunk SPL Queries", cat:"Core SOC"},
   {id:"virustotal",name:"VirusTotal / Threat Intel", cat:"Threat Intel"},
   {id:"ndpr",      name:"NDPR / Nigerian Compliance", cat:"GRC"},
   {id:"iso27001",  name:"ISO 27001 / NIST", cat:"GRC"},
@@ -845,13 +1375,18 @@ const SKILLS_LIST = [
   {id:"scripting", name:"Python / Scripting basics", cat:"Automation"},
   {id:"incident",  name:"Incident Response basics", cat:"Core SOC"},
   {id:"triage",    name:"Alert Triage", cat:"Core SOC"},
+  {id:"ai_tools",  name:"AI Security Tools", cat:"Automation"},
 ];
 
-// ══ MENU ══
+// ══════════════════════════════════════════════════════
+// MENU
+// ══════════════════════════════════════════════════════
 function openMenu(){ document.getElementById("menuTray").classList.add("open"); document.getElementById("menuOverlay").classList.add("open"); }
 function closeMenu(){ document.getElementById("menuTray").classList.remove("open"); document.getElementById("menuOverlay").classList.remove("open"); }
 
-// ══ THEME ══
+// ══════════════════════════════════════════════════════
+// THEME
+// ══════════════════════════════════════════════════════
 const savedTheme = localStorage.getItem("crp-theme") || "dark";
 document.documentElement.setAttribute("data-theme", savedTheme);
 function applyThemeUI(t){
@@ -869,7 +1404,9 @@ function toggleTheme(){
   applyThemeUI(next);
 }
 
-// ══ AUTH ══
+// ══════════════════════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════════════════════
 function setTab(m){
   authMode = m;
   document.querySelectorAll(".auth-tab").forEach((t,i) => t.classList.toggle("active",(m==="login"&&i===0)||(m==="signup"&&i===1)));
@@ -908,9 +1445,9 @@ function doAuth(){
         document.getElementById("app").style.display = "block";
         loadData();
       })
-      .catch(ex => { signupInProgress=false; err.textContent=ex.message; });
+      .catch(ex => { signupInProgress=false; err.textContent=ex.message.replace("Firebase: ",""); });
   } else {
-    auth.signInWithEmailAndPassword(e,p).catch(ex => { err.textContent=ex.message; });
+    auth.signInWithEmailAndPassword(e,p).catch(ex => { err.textContent=ex.message.replace("Firebase: ",""); });
   }
 }
 function doLogout(){ auth.signOut(); closeMenu(); }
@@ -928,7 +1465,9 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-// ══ LOAD DATA ══
+// ══════════════════════════════════════════════════════
+// LOAD DATA
+// ══════════════════════════════════════════════════════
 function loadData(){
   db.collection("users").doc(uid).get().then(doc => {
     const d = doc.data() || {};
@@ -937,8 +1476,8 @@ function loadData(){
     const block = document.getElementById("menuUserBlock");
     if(block){
       block.innerHTML = name
-        ? "<strong style=\"display:block;font-size:0.84rem;color:var(--text);margin-bottom:3px\">" + name + "</strong><span style=\"font-size:0.68rem;color:var(--text3)\">" + email + "</span>"
-        : "<span style=\"font-size:0.78rem\">" + email + "</span>";
+        ? `<strong style="display:block;font-size:0.84rem;color:var(--text);margin-bottom:3px">${name}</strong><span style="font-size:0.68rem;color:var(--text3)">${email}</span>`
+        : `<span style="font-size:0.78rem">${email}</span>`;
     }
     const rawC = Array.isArray(d.courses) ? d.courses : [];
     courses = Array.from({length:TOTAL_COURSES},(_,i)=>Boolean(rawC[i]));
@@ -948,7 +1487,7 @@ function loadData(){
     courses.forEach((_,i)=>applyC(i));
     certs.forEach((_,i)=>applyT(i));
     const streak = d.streak || 0;
-    document.getElementById("streakVal").innerHTML = streak + "<small>days in a row</small>";
+    document.getElementById("streakVal").innerHTML = streak + `<small>days in a row</small>`;
     document.getElementById("statStreak").textContent = streak;
     const todayStr = new Date().toDateString();
     const btn = document.getElementById("streakBtn");
@@ -956,42 +1495,112 @@ function loadData(){
       if(d.lastDay===todayStr){ btn.textContent="✕ Unmark Today"; btn.style.background="var(--red)"; }
       else { btn.textContent="✓ Mark Today Done"; btn.style.background=""; }
     }
-    const saved = localStorage.getItem("crp-notif-time");
-    if(saved && Notification.permission==="granted") startReminderLoop(saved);
     renderSkills();
-    updateProgress();
+    updateStats();
     renderRoles();
-  }).catch(e => { console.error(e); showToast("⚠️ Could not load data. Check connection."); });
+    updatePhaseCounts();
+    const saved = localStorage.getItem("crp-notif-time");
+    if(saved) document.getElementById("notifTime").value = saved;
+  });
 }
 
-// ══ SAVE ══
-function save(){
-  if(!uid) return;
-  db.collection("users").doc(uid).set({courses:[...courses],certs:[...certs],skills:{...skills}},{merge:true})
-    .catch(e=>console.error("Save error:",e));
+// ══════════════════════════════════════════════════════
+// PHASE TOGGLE + COUNTS
+// ══════════════════════════════════════════════════════
+function togglePhase(id){
+  const body = document.getElementById("body-"+id);
+  const chev = document.getElementById("chev-"+id);
+  if(!body) return;
+  const isOpen = body.classList.toggle("open");
+  chev.classList.toggle("open", isOpen);
+}
+function updatePhaseCounts(){
+  Object.entries(PHASE_COURSES).forEach(([pid, ids]) => {
+    const done = ids.filter(i => courses[i]).length;
+    const el = document.getElementById("cnt-"+pid);
+    if(el) el.textContent = `${done}/${ids.length}`;
+  });
 }
 
-// ══ COURSES ══
-function toggleCourse(i){
-  courses[i]=!courses[i]; applyC(i); updateProgress(); renderRoles(); save();
-  if(courses[i]){ showToast("✓ Course complete!"); bumpStat("statDone"); bumpStat("statPct"); pulseFill(); }
-}
+// ══════════════════════════════════════════════════════
+// COURSES
+// ══════════════════════════════════════════════════════
 function applyC(i){
-  document.getElementById("chk-"+i)?.classList.toggle("checked",courses[i]);
-  document.getElementById("nm-"+i)?.classList.toggle("done",courses[i]);
+  const box = document.getElementById("chk-"+i);
+  const nm  = document.getElementById("nm-"+i);
+  if(box) box.classList.toggle("checked", courses[i]);
+  if(nm)  nm.classList.toggle("done", courses[i]);
+}
+function toggleCourse(i){
+  courses[i] = !courses[i];
+  applyC(i);
+  updateStats();
+  renderRoles();
+  updatePhaseCounts();
+  db.collection("users").doc(uid).update({courses});
+  if(courses[i]) showToast("✓ Course complete! Keep going 🚀");
+}
+function updateStats(){
+  const done = courses.filter(Boolean).length + certs.filter(Boolean).length;
+  const total = TOTAL_COURSES + TOTAL_CERTS;
+  const pct = Math.round(done/total*100);
+  document.getElementById("statDone").textContent = done;
+  document.getElementById("statPct").textContent = pct+"%";
+  const fill = document.getElementById("progFill");
+  const pctEl = document.getElementById("progPct");
+  if(fill){ fill.style.width = pct+"%"; }
+  if(pctEl) pctEl.textContent = pct+"%";
 }
 
-// ══ CERTS ══
-function toggleCert(i){
-  certs[i]=!certs[i]; applyT(i); updateProgress(); renderRoles(); save();
-  if(certs[i]){ showToast("🏅 Certification earned!"); bumpStat("statDone"); pulseFill(); }
-}
+// ══════════════════════════════════════════════════════
+// CERTS
+// ══════════════════════════════════════════════════════
 function applyT(i){
-  document.getElementById("cert-"+i)?.classList.toggle("checked",certs[i]);
-  document.getElementById("cn-"+i)?.classList.toggle("done",certs[i]);
+  const el = document.getElementById("cert-"+i);
+  const nm = document.getElementById("cn-"+i);
+  if(el) el.classList.toggle("checked", certs[i]);
+  if(nm) nm.classList.toggle("done", certs[i]);
+}
+function toggleCert(i){
+  certs[i] = !certs[i];
+  applyT(i);
+  updateStats();
+  renderRoles();
+  db.collection("users").doc(uid).update({certs});
+  if(certs[i]) showToast("🏅 Certification earned!");
 }
 
-// ══ SKILLS ══
+// ══════════════════════════════════════════════════════
+// STREAK
+// ══════════════════════════════════════════════════════
+function markToday(){
+  const todayStr = new Date().toDateString();
+  db.collection("users").doc(uid).get().then(doc => {
+    const d = doc.data()||{};
+    const curStreak = d.streak||0;
+    const lastDay = d.lastDay||"";
+    const btn = document.getElementById("streakBtn");
+    if(lastDay===todayStr){
+      const s = Math.max(curStreak-1,0);
+      db.collection("users").doc(uid).update({streak:s,lastDay:""});
+      document.getElementById("streakVal").innerHTML = s+`<small>days in a row</small>`;
+      document.getElementById("statStreak").textContent = s;
+      if(btn){ btn.textContent="✓ Mark Today Done"; btn.style.background=""; }
+      showToast("↩ Today unmarked");
+    } else {
+      const s = curStreak+1;
+      db.collection("users").doc(uid).update({streak:s,lastDay:todayStr});
+      document.getElementById("streakVal").innerHTML = s+`<small>days in a row</small>`;
+      document.getElementById("statStreak").textContent = s;
+      if(btn){ btn.textContent="✕ Unmark Today"; btn.style.background="var(--red)"; }
+      showToast("🔥 "+s+" day streak!");
+    }
+  });
+}
+
+// ══════════════════════════════════════════════════════
+// SKILLS
+// ══════════════════════════════════════════════════════
 function renderSkills(){
   const grid = document.getElementById("skillsGrid");
   grid.innerHTML = "";
@@ -999,118 +1608,35 @@ function renderSkills(){
     const owned = Boolean(skills[sk.id]);
     const chip = document.createElement("div");
     chip.className = "skill-chip" + (owned?" owned":"");
-    chip.onclick = ()=>toggleSkill(sk.id);
-    chip.innerHTML = "<div class=\"skill-chip-dot\"></div><div><div class=\"skill-chip-name\">" + sk.name + "</div><div class=\"skill-chip-cat\">" + sk.cat + "</div></div>";
+    chip.onclick = () => toggleSkill(sk.id, chip);
+    chip.innerHTML = `<div class="skill-chip-dot"></div><div><div class="skill-chip-name">${sk.name}</div><div class="skill-chip-cat">${sk.cat}</div></div>`;
     grid.appendChild(chip);
   });
 }
-function toggleSkill(id){
+function toggleSkill(id, chip){
   skills[id] = !skills[id];
-  renderSkills(); renderRoles(); save();
-  if(skills[id]) showToast("✅ Skill: " + id + " added!");
+  if(!skills[id]) delete skills[id];
+  chip.classList.toggle("owned", Boolean(skills[id]));
+  db.collection("users").doc(uid).update({skills});
+  renderRoles();
+  if(skills[id]) showToast("✅ Skill added!");
 }
 
-// ══ PROGRESS ══
-function updateProgress(){
-  const total = TOTAL_COURSES + TOTAL_CERTS;
-  const done  = courses.filter(Boolean).length + certs.filter(Boolean).length;
-  const pct   = total ? Math.round(done/total*100) : 0;
-  document.getElementById("progFill").style.width = pct+"%";
-  document.getElementById("progPct").textContent  = pct+"%";
-  document.getElementById("statPct").textContent  = pct+"%";
-  document.getElementById("statDone").textContent = done;
-}
-
-// ══ STREAK ══
-function markToday(){
-  if(!uid) return;
-  const ref = db.collection("users").doc(uid);
-  ref.get().then(doc => {
-    const d = doc.data() || {};
-    const today = new Date().toDateString();
-    const btn = document.getElementById("streakBtn");
-    if(d.lastDay===today){
-      const streak = Math.max((d.streak||1)-1,0);
-      ref.set({streak,lastDay:""},{merge:true});
-      document.getElementById("streakVal").innerHTML = streak+"<small>days in a row</small>";
-      document.getElementById("statStreak").textContent = streak;
-      bumpStat("statStreak");
-      if(btn){ btn.textContent="✓ Mark Today Done"; btn.style.background=""; }
-      showToast("↩ Today unmarked — streak adjusted");
-    } else {
-      const streak = (d.streak||0)+1;
-      ref.set({streak,lastDay:today},{merge:true});
-      const sv = document.getElementById("streakVal");
-      sv.innerHTML = streak+"<small>days in a row</small>";
-      sv.classList.remove("fire"); void sv.offsetWidth; sv.classList.add("fire");
-      document.getElementById("statStreak").textContent = streak;
-      bumpStat("statStreak");
-      if(btn){ btn.textContent="✕ Unmark Today"; btn.style.background="var(--red)"; }
-      showToast("🔥 "+streak+" day streak!");
-    }
+// ══════════════════════════════════════════════════════
+// SPL COPY
+// ══════════════════════════════════════════════════════
+function copySPL(btn){
+  const block = btn.parentElement;
+  const text = block.innerText.replace("Copy","").trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = "Copied!";
+    setTimeout(()=>btn.textContent="Copy",2000);
   });
 }
 
-// ══ PHASE TOGGLE ══
-function togglePhase(id){
-  const body = document.getElementById("body-"+id);
-  const chev = document.getElementById("chev-"+id);
-  const open = body.classList.toggle("open");
-  chev.classList.toggle("open",open);
-}
-
-// ══ NOTIFICATIONS ══
-function showNotifSetup(){
-  const modal = document.getElementById("notifModal");
-  modal.style.display = "flex";
-  if(uid) db.collection("users").doc(uid).get().then(doc=>{
-    const d = doc.data()||{};
-    if(d.notifTime) document.getElementById("notifTime").value = d.notifTime;
-  });
-}
-function closeNotifModal(){ document.getElementById("notifModal").style.display="none"; }
-function saveNotifTime(){
-  if(!("Notification" in window)){ showToast("Notifications not supported"); closeNotifModal(); return; }
-  Notification.requestPermission().then(p=>{
-    if(p==="granted"){
-      const t = document.getElementById("notifTime").value || "08:00";
-      if(uid) db.collection("users").doc(uid).set({notifEnabled:true,notifTime:t},{merge:true});
-      localStorage.setItem("crp-notif-time",t);
-      new Notification("Reminder Set! 🔔",{body:"Daily reminder at "+t+" while the app is open."});
-      showToast("🔔 Reminder set for "+t+" daily!");
-      startReminderLoop(t);
-      closeNotifModal();
-    } else {
-      showToast("Blocked. Go to Settings → App → Notifications to allow.");
-      closeNotifModal();
-    }
-  });
-}
-let reminderInterval = null;
-function startReminderLoop(targetTime){
-  if(reminderInterval) clearInterval(reminderInterval);
-  const [h,m] = (targetTime||"08:00").split(":").map(Number);
-  reminderInterval = setInterval(()=>{
-    const now = new Date();
-    if(now.getHours()===h&&now.getMinutes()===m&&Notification.permission==="granted"){
-      new Notification("Time to Study! 📚",{body:"Keep your Cyber Roadmap streak alive — 30 min today!"});
-    }
-  },60000);
-}
-(function(){ const s=localStorage.getItem("crp-notif-time"); if(s&&Notification.permission==="granted") startReminderLoop(s); })();
-
-// ══ ROLE ENGINE ══
-// Course indices map:
-// 0=PA Intro, 1=Cisco Intro, 2=Networking, 3=Linux, 4=Prof Messer Sec+, 5=Google Cyb,
-// 6=PA SOC, 7=PA Network Sec, 8=Splunk, 9=MS SOC/Sentinel, 10=SC-200,
-// 11=TryHackMe, 12=Wireshark, 13=CyberOps Assoc, 14=CyberDefenders, 15=NDPR,
-// 16=ISO/NIST, 17=Cisco Threat Mgmt, 18=PA Cloud, 19=Cisco Ethical Hacker,
-// 20=HackTheBox, 21=GRC
-//
-// Cert indices: 0=Sec+, 1=CyberOps Assoc, 2=SC-200, 3=CySA+, 4=CyberDefenders, 5=CRISC, 6=CISSP
-//
-// Skills: see SKILLS_LIST ids
-
+// ══════════════════════════════════════════════════════
+// ROLE ENGINE
+// ══════════════════════════════════════════════════════
 const ROLES = [
   {
     title:"IT Helpdesk / Support Technician",
@@ -1126,7 +1652,7 @@ const ROLES = [
   {
     title:"Junior GRC / Compliance Analyst",
     remote:"Good remote potential",
-    desc:"Help organizations comply with security frameworks. Your HSE Indorama background transfers directly — compliance documentation, risk registers, audit support.",
+    desc:"Help organizations comply with security frameworks. Your HSE Indorama background transfers directly — compliance documentation, risk registers, audit support. NDPR knowledge is your differentiator.",
     salary:"₦200K–₦450K/month local · $800–$1,500/month remote",
     needC:[0,1,5,15,16],
     needT:[0],
@@ -1141,18 +1667,18 @@ const ROLES = [
     salary:"₦150K–₦350K/month local · $800–$2,000/month remote",
     needC:[0,1,2,3,4,6,7,8,11],
     needT:[0],
-    needSkills:["siem","linux","windows","triage","incident"],
-    certsToLand:["CompTIA Security+","Cisco CyberOps Associate"],
+    needSkills:["siem","linux","windows","triage","incident","spl"],
+    certsToLand:["CompTIA Security+","Cisco CyberOps Associate","Splunk Core Certified User"],
     employers:"Certfort · Cardinal Security · GVA Partners · Access Bank · Leadway"
   },
   {
     title:"SOC Analyst — Oil & Gas (PH Target) 🛢️",
     remote:"Hybrid/on-site · Highest Nigerian salaries",
-    desc:"Protect OT/IT infrastructure at oil majors. Your Indorama background gives you a massive advantage. Shell, Chevron, TotalEnergies pay ₦500K–₦1.2M/month. Most PH candidates don't have your insider knowledge of industrial environments.",
+    desc:"Protect OT/IT infrastructure at oil majors. Your Indorama background gives you a massive advantage. Shell, Chevron, TotalEnergies pay ₦500K–₦1.2M/month.",
     salary:"₦500K–₦1,200K/month · Top paying sector in Nigeria",
     needC:[0,1,2,3,6,7,8,9,10,11],
     needT:[0,1],
-    needSkills:["siem","linux","firewalls","incident","triage"],
+    needSkills:["siem","linux","firewalls","incident","triage","spl"],
     certsToLand:["CompTIA Security+","Cisco CyberOps Associate","SC-200"],
     employers:"Shell Nigeria · Chevron · TotalEnergies · Indorama · Seplat"
   },
@@ -1174,7 +1700,7 @@ const ROLES = [
     salary:"₦400K–₦900K/month local · $2,000–$4,000/month remote",
     needC:[0,1,2,3,5,6,7,8,9,10,11,12,14],
     needT:[0,2,3],
-    needSkills:["siem","wireshark","linux","windows","firewalls","edr","incident","triage"],
+    needSkills:["siem","wireshark","linux","windows","firewalls","edr","incident","triage","spl"],
     certsToLand:["CompTIA CySA+","SC-200","GCIA"],
     employers:"Large banks · Telecoms · International SOC providers"
   },
@@ -1192,131 +1718,209 @@ const ROLES = [
 ];
 
 function getRoleStatus(r){
-  const doneC = r.needC.filter(i=>courses[i]).length;
-  const doneT = r.needT.filter(i=>certs[i]).length;
-  const doneSk = r.needSkills.filter(s=>skills[s]).length;
-  const totalReqs = r.needC.length + r.needT.length + r.needSkills.length;
-  const totalDone = doneC + doneT + doneSk;
-  const allC = r.needC.every(i=>courses[i]);
-  const allT = r.needT.length===0 || r.needT.every(i=>certs[i]);
+  const allC  = r.needC.every(i=>courses[i]);
+  const allT  = r.needT.length===0 || r.needT.every(i=>certs[i]);
   const allSk = r.needSkills.every(s=>skills[s]);
   if(allC && allT && allSk) return "qualified";
-  if(totalDone > 0) return "partial";
+  const doneC = r.needC.filter(i=>courses[i]).length;
+  const doneT = r.needT.filter(i=>certs[i]).length;
+  const doneSk= r.needSkills.filter(s=>skills[s]).length;
+  if(doneC+doneT+doneSk > 0) return "partial";
   return "locked";
 }
 
 function renderRoles(){
   const wrap = document.getElementById("rolesWrap");
   wrap.innerHTML = "";
+  const certNames=["Sec+","CyberOps","SC-200","CySA+","Splunk","CyberDef","CISSP"];
   ROLES.forEach((role,ri)=>{
     const status = getRoleStatus(role);
     const badgeText  = status==="qualified" ? "✓ You Qualify" : status==="partial" ? "⚡ In Progress" : "🔒 Not Yet";
     const badgeClass = status==="qualified" ? "rb-qualified" : status==="partial" ? "rb-partial" : "rb-locked";
 
-    // Course tags (show first 4 + count)
     let tags = "";
     const showC = role.needC.slice(0,3);
     showC.forEach(i=>{
-      tags += "<span class=\"rtag "+(courses[i]?"rtag-done":"rtag-miss")+"\">"+(courses[i]?"✓":"○")+" Course "+(i+1)+"</span>";
+      tags += `<span class="rtag ${courses[i]?"rtag-done":"rtag-miss"}">${courses[i]?"✓":"○"} Course ${i+1}</span>`;
     });
     if(role.needC.length>3){
-      const extra=role.needC.length-3; const doneExtra=role.needC.slice(3).filter(i=>courses[i]).length;
-      tags += "<span class=\"rtag "+(doneExtra===extra?"rtag-done":"rtag-miss")+"\">+"+extra+" courses</span>";
+      const extra=role.needC.length-3;
+      const doneExtra=role.needC.slice(3).filter(i=>courses[i]).length;
+      tags += `<span class="rtag ${doneExtra===extra?"rtag-done":"rtag-miss"}">+${extra} more courses</span>`;
     }
     role.needT.forEach(i=>{
-      const certNames=["Sec+","CyberOps","SC-200","CySA+","CyberDef","CRISC","CISSP"];
-      tags += "<span class=\"rtag "+(certs[i]?"rtag-done":"rtag-miss")+"\">"+(certs[i]?"✓":"○")+" "+certNames[i]+"</span>";
+      tags += `<span class="rtag ${certs[i]?"rtag-done":"rtag-miss"}">${certs[i]?"✓":"○"} ${certNames[i]||"Cert"}</span>`;
     });
 
-    // Skills tags
     let skillTagsHtml = "";
     if(role.needSkills.length>0){
-      skillTagsHtml = "<div class=\"role-skills-needed\"><div class=\"role-skills-label\">Skills needed</div><div class=\"role-skill-tags\">";
+      skillTagsHtml = `<div class="role-skills-needed"><div class="role-skills-label">Skills needed</div><div class="role-skill-tags">`;
       role.needSkills.forEach(s=>{
         const have = Boolean(skills[s]);
         const sk = SKILLS_LIST.find(x=>x.id===s);
-        skillTagsHtml += "<span class=\"rsk "+(have?"rsk-have":"rsk-need")+"\">"+(have?"✓":"○")+" "+(sk?sk.name:s)+"</span>";
+        skillTagsHtml += `<span class="rsk ${have?"rsk-have":"rsk-need"}">${have?"✓":"○"} ${sk?sk.name:s}</span>`;
       });
-      skillTagsHtml += "</div></div>";
+      skillTagsHtml += `</div></div>`;
     }
 
     let certsHtml = "";
     if(status!=="qualified"){
-      certsHtml="<div class=\"certs-needed\"><div class=\"cn-label\">To land this role</div>"+role.certsToLand.map(c=>"<div class=\"cn-item\">"+c+"</div>").join("")+"</div>";
+      certsHtml=`<div class="certs-needed"><div class="cn-label">To land this role</div>${role.certsToLand.map(c=>`<div class="cn-item">${c}</div>`).join("")}</div>`;
     }
 
     const autoOpen = status!=="locked" ? "open" : "";
     const card = document.createElement("div");
     card.className = "role-card "+status;
-    card.innerHTML = "<div class=\"role-head\" onclick=\"toggleRole("+ri+")\">" +
-      "<div class=\"role-dot\"></div>" +
-      "<div class=\"role-info\"><div class=\"role-name\">"+role.title+"</div><div class=\"role-remote\">"+role.remote+"</div></div>" +
-      "<span class=\"role-badge "+badgeClass+"\">"+badgeText+"</span></div>" +
-      "<div class=\"role-body "+autoOpen+"\" id=\"rbody-"+ri+"\">" +
-      "<div class=\"role-desc\">"+role.desc+"</div>" +
-      "<div class=\"role-reqs-label\">Course requirements</div>" +
-      "<div class=\"role-tags\">"+tags+"</div>" +
-      skillTagsHtml +
-      "<div class=\"role-salary\">💰 <span class=\"salary-n\">"+role.salary+"</span></div>" +
-      "<div style=\"font-size:0.65rem;color:var(--text3);margin-bottom:8px\">🏢 "+role.employers+"</div>" +
-      certsHtml+"</div>";
+    card.innerHTML = `<div class="role-head" onclick="toggleRole(${ri})">
+      <div class="role-dot"></div>
+      <div class="role-info"><div class="role-name">${role.title}</div><div class="role-remote">${role.remote}</div></div>
+      <span class="role-badge ${badgeClass}">${badgeText}</span></div>
+      <div class="role-body ${autoOpen}" id="rbody-${ri}">
+      <div class="role-desc">${role.desc}</div>
+      <div class="role-reqs-label">Course requirements</div>
+      <div class="role-tags">${tags}</div>
+      ${skillTagsHtml}
+      <div class="role-salary">💰 <span class="salary-n">${role.salary}</span></div>
+      <div style="font-size:0.65rem;color:var(--text3);margin-bottom:8px">🏢 ${role.employers}</div>
+      ${certsHtml}</div>`;
     wrap.appendChild(card);
   });
 }
 function toggleRole(i){ document.getElementById("rbody-"+i)?.classList.toggle("open"); }
 
-// ══ GROQ AI ══
-async function askGroq(){
+// ══════════════════════════════════════════════════════
+// NOTIFICATIONS
+// ══════════════════════════════════════════════════════
+function openNotifModal(){ document.getElementById("notifModal").classList.add("show"); }
+function closeNotifModal(){ document.getElementById("notifModal").classList.remove("show"); }
+function saveNotifTime(){
+  const t = document.getElementById("notifTime").value;
+  localStorage.setItem("crp-notif-time", t);
+  scheduleNotif(t);
+  closeNotifModal();
+  showToast("🔔 Reminder set for "+t);
+}
+function scheduleNotif(timeStr){
+  if(!("Notification" in window)) return;
+  Notification.requestPermission().then(p => {
+    if(p!=="granted") return;
+    const [h,m] = timeStr.split(":").map(Number);
+    function fireAt(){
+      const now = new Date();
+      const next = new Date(); next.setHours(h,m,0,0);
+      if(next<=now) next.setDate(next.getDate()+1);
+      const diff = next-now;
+      setTimeout(()=>{
+        new Notification("📚 Cyber Roadmap — Study Time!",{body:"Keep your streak alive — 30 min today builds your SOC career!",icon:"🛡️"});
+        fireAt();
+      },diff);
+    }
+    fireAt();
+  });
+}
+
+// ══════════════════════════════════════════════════════
+// GROQ AI
+// ══════════════════════════════════════════════════════
+const AI_SYSTEM = `You are a cybersecurity career mentor for Godson Uzoezie in Port Harcourt Nigeria targeting SOC Analyst L1. Key facts: He has AWS Udacity certs and HSE/Indorama background. SIEM tools used in Nigeria: (1) Splunk — official free training at splunk.com/en_us/training/free-courses/overview.html, Blue Team Academy is free, SPL is the query language. (2) Microsoft Sentinel — official free training on Microsoft Learn (learn.microsoft.com), KQL is the query language, SC-200 cert. (3) IBM QRadar — IBM official free training at ibm.com/training, AQL is the query language, used by telecoms and large banks. SIEM in 78% of Nigerian SOC postings — Splunk and Sentinel are the top two. Top employers: Certfort, GVA Partners, Cardinal Security, Access Bank, Shell Nigeria, Flutterwave, TotalEnergies, MTN Nigeria. Security+ costs ~$200 USD but NITDA offers 50% subsidy. NDPR (Nigeria Data Protection Regulation) knowledge is a key differentiator in Nigerian interviews. For oil & gas roles (Shell, Chevron, TotalEnergies) in PH, salary is ₦500K–₦1.2M/month. Remote SOC roles pay $800–$2,000/month. LabEx.io offers free browser-based hands-on labs. TryHackMe has free Splunk 101, 201, Investigating with Splunk rooms. AI tools knowledge is in 64% of 2026 job postings. Splunk-certified analysts earn 40% more than non-certified peers. Be practical, concise, and encouraging. Under 200 words.`;
+
+let aiHistory = [];
+
+async function askGroq(questionOverride){
   const input=document.getElementById("aiInput");
   const btn=document.getElementById("aiBtn");
   const msgs=document.getElementById("aiMsgs");
-  const q=input.value.trim(); if(!q) return;
-  const uBubble=document.createElement("div"); uBubble.className="bubble bubble-u"; uBubble.textContent=q; msgs.appendChild(uBubble);
-  const aiBubble=document.createElement("div"); aiBubble.className="bubble bubble-ai bubble-thinking"; aiBubble.textContent="Thinking..."; msgs.appendChild(aiBubble);
-  input.value=""; btn.disabled=true; msgs.scrollTop=msgs.scrollHeight;
+  const q = questionOverride || input.value.trim();
+  if(!q) return;
+  document.getElementById("aiSuggestions").style.display="none";
+  const uBubble=document.createElement("div");
+  uBubble.className="bubble bubble-u";
+  uBubble.textContent=q;
+  msgs.appendChild(uBubble);
+  const aiBubble=document.createElement("div");
+  aiBubble.className="bubble bubble-ai bubble-thinking";
+  aiBubble.textContent="Thinking...";
+  msgs.appendChild(aiBubble);
+  if(!questionOverride) input.value="";
+  btn.disabled=true;
+  msgs.scrollTop=msgs.scrollHeight;
+  aiHistory.push({role:"user",content:q});
   try{
     const res=await fetch("https://api.groq.com/openai/v1/chat/completions",{
       method:"POST",
       headers:{"Content-Type":"application/json","Authorization":"Bearer "+GROQ_KEY},
       body:JSON.stringify({
-        model:"llama-3.1-8b-instant",max_tokens:600,
-        messages:[
-          {role:"system",content:"You are a cybersecurity career mentor for Godson Uzoezie in Port Harcourt Nigeria targeting SOC Analyst L1. He has AWS Udacity certs and HSE/Indorama background. Key facts: SIEM in 78% of Nigerian SOC postings, top employers are Certfort, GVA Partners, Access Bank, Shell Nigeria, Flutterwave. Security+ costs $200 but NITDA offers 50% subsidy. NDPR knowledge is a differentiator in Nigerian interviews. Be practical, concise, encouraging. Under 150 words."},
-          {role:"user",content:q}
-        ]
+        model:"llama-3.1-8b-instant",
+        max_tokens:600,
+        messages:[{role:"system",content:AI_SYSTEM},...aiHistory]
       })
     });
     const data=await res.json();
+    let reply="";
     if(res.status===429){
-      aiBubble.className="bubble bubble-ai";
-      aiBubble.innerHTML="<strong>⚠️ Rate limit.</strong> Wait 1 min and retry.<br><br>Study now: <a href=\"https://tryhackme.com\" target=\"_blank\" style=\"color:var(--accent)\">TryHackMe ↗</a> · <a href=\"https://splunk.com\" target=\"_blank\" style=\"color:var(--accent)\">Splunk ↗</a>";
+      aiBubble.innerHTML=`<strong>⚠️ Rate limit.</strong> Wait 1 min and retry.<br><br>Study now: <a href="https://tryhackme.com" target="_blank" style="color:var(--accent)">TryHackMe ↗</a> · <a href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank" style="color:var(--accent)">Splunk Free ↗</a> · <a href="https://labex.io/free-labs/cybersecurity" target="_blank" style="color:var(--accent)">LabEx ↗</a>`;
     } else if(res.status===401){
-      aiBubble.className="bubble bubble-ai"; aiBubble.innerHTML="⚠️ API key invalid. Get free key at <a href=\"https://console.groq.com\" target=\"_blank\" style=\"color:var(--accent)\">console.groq.com ↗</a>";
+      aiBubble.innerHTML=`⚠️ API key issue. Get a free key at <a href="https://console.groq.com" target="_blank" style="color:var(--accent)">console.groq.com ↗</a>`;
     } else if(!res.ok){
       aiBubble.className="bubble bubble-ai"; aiBubble.textContent="⚠️ Error "+res.status+". Try again.";
     } else {
-      aiBubble.className="bubble bubble-ai"; aiBubble.textContent=data.choices?.[0]?.message?.content||"No response. Try again.";
+      reply = data.choices?.[0]?.message?.content||"No response. Try again.";
+      aiBubble.className="bubble bubble-ai";
+      aiBubble.textContent=reply;
+      aiHistory.push({role:"assistant",content:reply});
     }
-  } catch(e){ aiBubble.className="bubble bubble-ai"; aiBubble.textContent="⚠️ No internet. Check connection."; }
-  btn.disabled=false; msgs.scrollTop=msgs.scrollHeight;
+  } catch(e){
+    aiBubble.className="bubble bubble-ai";
+    aiBubble.textContent="⚠️ No internet connection. Check your connection and try again.";
+  }
+  btn.disabled=false;
+  msgs.scrollTop=msgs.scrollHeight;
 }
 
-// ══ AI DRAWER ══
+function askSuggestion(btn){
+  const q = btn.textContent;
+  askGroq(q);
+}
+
+// ══════════════════════════════════════════════════════
+// AI DRAWER
+// ══════════════════════════════════════════════════════
 let aiDrawerOpen=false;
 function toggleAIDrawer(){ aiDrawerOpen?closeAIDrawer():openAIDrawer(); }
-function openAIDrawer(){ aiDrawerOpen=true; document.getElementById("aiDrawer").classList.add("open"); document.getElementById("aiOverlay").classList.add("open"); document.getElementById("aiFab").style.transform="scale(0.9)"; setTimeout(()=>document.getElementById("aiInput")?.focus(),400); }
-function closeAIDrawer(){ aiDrawerOpen=false; document.getElementById("aiDrawer").classList.remove("open"); document.getElementById("aiOverlay").classList.remove("open"); document.getElementById("aiFab").style.transform=""; }
+function openAIDrawer(){
+  aiDrawerOpen=true;
+  document.getElementById("aiDrawer").classList.add("open");
+  document.getElementById("aiOverlay").classList.add("open");
+  document.getElementById("aiFab").style.transform="scale(0.9)";
+  setTimeout(()=>document.getElementById("aiInput")?.focus(),400);
+}
+function closeAIDrawer(){
+  aiDrawerOpen=false;
+  document.getElementById("aiDrawer").classList.remove("open");
+  document.getElementById("aiOverlay").classList.remove("open");
+  document.getElementById("aiFab").style.transform="";
+}
 
-// ══ HELPERS ══
-function bumpStat(id){ const el=document.getElementById(id); if(!el)return; el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump"); setTimeout(()=>el.classList.remove("bump"),400); }
-function pulseFill(){ const el=document.getElementById("progFill"); if(!el)return; el.classList.remove("pulse"); void el.offsetWidth; el.classList.add("pulse"); setTimeout(()=>el.classList.remove("pulse"),600); }
-function showToast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),3000); }
+// ══════════════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════════════
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),3000);
+}
 
 document.addEventListener("DOMContentLoaded",()=>{
-  document.getElementById("aiInput")?.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();askGroq();}});
-  document.getElementById("authPass")?.addEventListener("keydown",e=>{if(e.key==="Enter")doAuth();});
+  document.getElementById("aiInput")?.addEventListener("keydown",e=>{
+    if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();askGroq();}
+  });
+  document.getElementById("authPass")?.addEventListener("keydown",e=>{
+    if(e.key==="Enter")doAuth();
+  });
   renderSkills();
   renderRoles();
+  updatePhaseCounts();
 });
 </script>
 </body>
