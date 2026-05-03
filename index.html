@@ -1,303 +1,362 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cyber Roadmap Pro</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<title>Cyber Roadmap Pro · SOC Analyst Path 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Orbitron:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-[data-theme="dark"]{
-  --bg:#0A0B0F;--surface:#16181F;--card:#1C1F28;--border:#272B38;--border2:#323748;
-  --text:#F0F2F8;--text2:#9BA3BC;--text3:#5C6480;--accent:#E8A020;--accent2:#C8861A;
-  --accent-glow:rgba(232,160,32,0.15);--green:#22C97A;--green-glow:rgba(34,201,122,0.12);
-  --blue:#4F8EF7;--red:#F05A5A;--phase1:#7C6FF7;--phase2:#3BBFD9;--phase3:#A855F7;--phase4:#F97316;
-  --shadow:0 4px 24px rgba(0,0,0,0.4);--shadow-sm:0 2px 8px rgba(0,0,0,0.3);
+:root {
+  --bg: #080b12;
+  --bg2: #0d1220;
+  --surface: #111827;
+  --surface2: #162035;
+  --card: #0f1a2e;
+  --border: rgba(99,179,255,0.10);
+  --border2: rgba(99,179,255,0.18);
+  --accent: #3b82f6;
+  --accent2: #60a5fa;
+  --accent3: #93c5fd;
+  --cyan: #06b6d4;
+  --green: #10b981;
+  --purple: #8b5cf6;
+  --orange: #f59e0b;
+  --red: #ef4444;
+  --text: #f0f6ff;
+  --text2: #94a3b8;
+  --text3: #4b6080;
+  --glow: rgba(59,130,246,0.15);
+  --glow2: rgba(6,182,212,0.10);
 }
-[data-theme="light"]{
-  --bg:#F5F4F0;--surface:#FFFFFF;--card:#F9F8F5;--border:#E2DDD6;--border2:#CCC7BE;
-  --text:#1A1816;--text2:#5C5650;--text3:#9C968E;--accent:#C07010;--accent2:#A05C0A;
-  --accent-glow:rgba(192,112,16,0.1);--green:#18A362;--green-glow:rgba(24,163,98,0.1);
-  --blue:#2E6FD4;--red:#D94040;--phase1:#5850D6;--phase2:#1B9AB8;--phase3:#8B35D6;--phase4:#C2410C;
-  --shadow:0 4px 24px rgba(0,0,0,0.08);--shadow-sm:0 2px 8px rgba(0,0,0,0.06);
+[data-theme="light"] {
+  --bg: #f0f4fc;
+  --bg2: #e8eef8;
+  --surface: #ffffff;
+  --surface2: #f5f8ff;
+  --card: #eef2fc;
+  --border: rgba(59,130,246,0.12);
+  --border2: rgba(59,130,246,0.22);
+  --text: #0f172a;
+  --text2: #475569;
+  --text3: #94a3b8;
+  --glow: rgba(59,130,246,0.08);
+  --glow2: rgba(6,182,212,0.06);
 }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s}
-.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0}
-[data-theme="dark"] .grid-bg{background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:44px 44px}
-[data-theme="light"] .grid-bg{background-image:linear-gradient(rgba(0,0,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.04) 1px,transparent 1px);background-size:44px 44px}
-#authPage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;position:relative;z-index:1}
-.auth-wrap{width:100%;max-width:400px;animation:slideUp 0.5s cubic-bezier(0.16,1,0.3,1) forwards}
-.auth-brand{text-align:center;margin-bottom:26px}
-.auth-icon-wrap{width:96px;height:96px;border-radius:22px;overflow:hidden;margin:0 auto 14px;box-shadow:0 8px 32px rgba(0,0,0,0.45)}
-.auth-icon-wrap img{width:100%;height:100%;object-fit:cover}
-.auth-brand-name{font-family:"Syne",sans-serif;font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:4px}
-.auth-brand-sub{font-size:0.7rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
-.auth-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;box-shadow:var(--shadow)}
-.auth-tabs{display:flex;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:20px;gap:4px}
-.auth-tab{flex:1;padding:9px;background:transparent;border:none;border-radius:7px;color:var(--text3);font-family:"Inter",sans-serif;font-size:0.78rem;font-weight:500;cursor:pointer;transition:all 0.2s}
-.auth-tab.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm);font-weight:600}
-.field{margin-bottom:13px}
-.field label{display:block;font-size:0.67rem;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
-.field input{width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:9px;padding:11px 14px;color:var(--text);font-family:"Inter",sans-serif;font-size:0.88rem;outline:none;transition:all 0.2s}
-.field input:focus{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 3px var(--accent-glow)}
-.field input::placeholder{color:var(--text3)}
-.btn-primary{width:100%;padding:12px;background:var(--accent);color:#0A0B0F;border:none;border-radius:9px;font-family:"Syne",sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:0.03em;margin-top:4px}
-.btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 4px 16px var(--accent-glow)}
-.auth-err{color:var(--red);font-size:0.72rem;text-align:center;margin-top:10px;min-height:16px;font-weight:500}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* Animated background grid */
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:50px 50px;opacity:0.4;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -20%,rgba(59,130,246,0.12) 0%,transparent 70%);pointer-events:none;z-index:0}
+
+/* ===== AUTH PAGE ===== */
+#authPage{display:none;position:fixed;inset:0;z-index:100;background:var(--bg);align-items:center;justify-content:center;flex-direction:column;gap:0;padding:20px}
+.auth-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(59,130,246,0.15) 0%,transparent 70%);pointer-events:none}
+.auth-brand{text-align:center;margin-bottom:32px;position:relative;z-index:1}
+.auth-brand-logo{width:54px;height:54px;background:linear-gradient(135deg,#1d4ed8,#06b6d4);border-radius:14px;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 0 30px rgba(59,130,246,0.4)}
+.auth-brand-name{font-family:'Orbitron',monospace;font-size:1.3rem;font-weight:700;letter-spacing:0.05em;color:var(--text);margin-bottom:4px}
+.auth-brand-sub{font-size:0.72rem;color:var(--text3);letter-spacing:0.12em;text-transform:uppercase}
+.auth-card{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:28px 26px;width:100%;max-width:380px;position:relative;z-index:1;box-shadow:0 24px 60px rgba(0,0,0,0.4)}
+.auth-tabs{display:flex;gap:6px;margin-bottom:22px;background:var(--bg2);border-radius:10px;padding:4px}
+.auth-tab{flex:1;padding:8px;background:transparent;border:none;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;border-radius:7px;transition:all 0.2s}
+.auth-tab.active{background:var(--accent);color:#fff;box-shadow:0 2px 12px rgba(59,130,246,0.35)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.field input{width:100%;background:var(--bg2);border:1px solid var(--border2);border-radius:9px;padding:11px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s}
+.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,0.15)}
 .pass-wrap{position:relative}
-.pass-wrap input{padding-right:44px;width:100%}
-.pass-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:0.95rem;color:var(--text3);padding:0;line-height:1}
-#app{display:none;position:relative;z-index:1}
-.nav{position:sticky;top:0;z-index:100;background:rgba(10,11,15,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 18px}
-[data-theme="light"] .nav{background:rgba(245,244,240,0.92)}
-.nav-inner{max-width:960px;margin:0 auto;height:54px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{display:flex;align-items:center;gap:9px}
-.nav-logo-img{width:32px;height:32px;border-radius:8px;overflow:hidden}
+.pass-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem;color:var(--text3);padding:2px}
+.btn-primary{width:100%;padding:12px;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.92rem;font-weight:700;cursor:pointer;margin-top:4px;transition:all 0.2s;box-shadow:0 4px 20px rgba(59,130,246,0.3)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(59,130,246,0.45)}
+.auth-err{font-size:0.75rem;color:var(--red);margin-top:10px;min-height:16px}
+
+/* ===== NAV ===== */
+.nav{position:sticky;top:0;z-index:50;background:rgba(8,11,18,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:54px}
+[data-theme="light"] .nav{background:rgba(240,244,252,0.88)}
+.nav-inner{max-width:700px;margin:0 auto;padding:0 16px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.nav-logo-img{width:30px;height:30px;background:linear-gradient(135deg,#1d4ed8,#06b6d4);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
 .nav-logo-img img{width:100%;height:100%;object-fit:cover}
-.nav-logo-text{font-family:"Syne",sans-serif;font-size:0.9rem;font-weight:800;color:var(--text)}
-.hamburger{width:38px;height:38px;background:transparent;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:all 0.2s}
-.hamburger:hover{border-color:var(--accent);background:var(--card)}
-.hamburger span{display:block;width:14px;height:1.5px;background:var(--text2);border-radius:2px}
-.hamburger:hover span{background:var(--accent)}
-.menu-tray{position:fixed;top:0;right:0;bottom:0;width:270px;background:var(--surface);border-left:1px solid var(--border);z-index:999;transform:translateX(100%);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:-8px 0 32px rgba(0,0,0,0.3);display:flex;flex-direction:column}
-.menu-tray.open{transform:translateX(0)}
-.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:998;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.nav-logo-text{font-family:'Orbitron',monospace;font-size:0.8rem;font-weight:700;letter-spacing:0.05em;color:var(--text)}
+.hamburger{background:none;border:1px solid var(--border2);border-radius:8px;padding:7px 9px;cursor:pointer;display:flex;flex-direction:column;gap:4px;transition:border-color 0.2s}
+.hamburger:hover{border-color:var(--accent)}
+.hamburger span{display:block;width:18px;height:1.5px;background:var(--text2);border-radius:2px;transition:all 0.2s}
+
+/* ===== MENU ===== */
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);z-index:60;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .menu-overlay.open{opacity:1;pointer-events:all}
-.menu-head{padding:18px 16px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.menu-head-title{font-family:"Syne",sans-serif;font-size:0.88rem;font-weight:700}
-.menu-close{background:none;border:none;color:var(--text3);font-size:1.2rem;cursor:pointer;padding:4px;line-height:1;transition:color 0.2s}
-.menu-close:hover{color:var(--text)}
-.menu-user{padding:13px 16px;border-bottom:1px solid var(--border)}
-.menu-user-label{font-size:0.58rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:5px}
-.menu-items{flex:1;padding:10px 8px;overflow-y:auto}
-.menu-item{display:flex;align-items:center;gap:10px;padding:11px 10px;border-radius:8px;cursor:pointer;transition:all 0.2s;border:none;background:none;width:100%;text-align:left;color:var(--text);font-family:"Inter",sans-serif;font-size:0.82rem;font-weight:500}
-.menu-item:hover{background:var(--card);color:var(--accent)}
-.menu-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
-.menu-bottom{padding:10px 8px;border-top:1px solid var(--border)}
-.menu-danger{color:var(--red)}
-.menu-danger:hover{background:rgba(240,90,90,0.08)!important;color:var(--red)!important}
-.main{padding:18px;max-width:960px;margin:0 auto;padding-bottom:110px}
-.hero-strip{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:14px;overflow:hidden;position:relative}
-.hero-strip::before{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;background:var(--accent-glow);border-radius:50%;pointer-events:none}
-.hero-title{font-family:"Syne",sans-serif;font-size:0.98rem;font-weight:800;margin-bottom:3px}
-.hero-sub{font-size:0.68rem;color:var(--text3)}
-.hero-tag{background:var(--accent);color:#0A0B0F;padding:5px 12px;border-radius:20px;font-size:0.66rem;font-weight:700;font-family:"Syne",sans-serif;white-space:nowrap}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:15px 12px;text-align:center;transition:border-color 0.2s,transform 0.2s}
-.stat:hover{border-color:var(--border2);transform:translateY(-2px)}
-.stat-n{font-family:"Syne",sans-serif;font-size:1.55rem;font-weight:800;color:var(--accent);display:block;line-height:1}
-.stat-l{font-size:0.58rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px;display:block}
-.progress-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:14px}
-.progress-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
-.progress-label{font-family:"Syne",sans-serif;font-size:0.84rem;font-weight:700}
-.progress-val{font-size:0.8rem;color:var(--accent);font-weight:700}
-.progress-track{height:8px;background:var(--card);border-radius:4px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:4px;width:0%;transition:width 1s cubic-bezier(0.16,1,0.3,1)}
-.streak-row{display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 16px;margin-bottom:14px;gap:10px}
-.streak-lbl{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:3px}
-.streak-num{font-family:"Syne",sans-serif;font-size:1.35rem;font-weight:800;color:var(--accent)}
-.streak-num small{font-family:"Inter",sans-serif;font-size:0.68rem;color:var(--text3);font-weight:400;margin-left:3px}
-.btn-streak{padding:9px 14px;background:var(--accent);color:#0A0B0F;border:none;border-radius:8px;font-family:"Syne",sans-serif;font-size:0.7rem;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap}
-.btn-streak:hover{background:var(--accent2);transform:translateY(-1px)}
-.sec-label{font-size:0.6rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin:20px 0 11px;display:flex;align-items:center;gap:10px}
-.sec-label::after{content:"";flex:1;height:1px;background:var(--border)}
-.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:6px}
-.skill-chip{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 11px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;transition:all 0.2s}
-.skill-chip:hover{border-color:var(--border2)}
-.skill-chip.owned{border-color:var(--green);background:rgba(34,201,122,0.04)}
-.skill-dot{width:7px;height:7px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:all 0.2s}
-.skill-chip.owned .skill-dot{background:var(--green);box-shadow:0 0 6px var(--green)}
-.skill-name{font-size:0.7rem;font-weight:500;flex:1;line-height:1.3}
+.menu-tray{position:fixed;top:0;right:-320px;width:300px;height:100vh;background:var(--surface);border-left:1px solid var(--border2);z-index:70;transition:right 0.35s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;overflow:hidden}
+.menu-tray.open{right:0;box-shadow:-20px 0 60px rgba(0,0,0,0.5)}
+.menu-head{padding:18px 18px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.menu-head-title{font-family:'Orbitron',monospace;font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3)}
+.menu-close{background:none;border:1px solid var(--border2);border-radius:6px;color:var(--text2);cursor:pointer;padding:5px 9px;font-size:0.8rem;transition:all 0.2s}
+.menu-close:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.menu-user{padding:14px 18px;border-bottom:1px solid var(--border)}
+.menu-user-label{font-size:0.62rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:5px}
+.menu-items{flex:1;padding:10px 10px;overflow-y:auto}
+.menu-item{width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;background:transparent;border:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:0.84rem;cursor:pointer;border-radius:9px;text-align:left;transition:all 0.15s;margin-bottom:2px}
+.menu-item:hover{background:var(--surface2);color:var(--text)}
+.menu-icon{font-size:1rem;width:22px;text-align:center}
+.menu-bottom{padding:12px 10px;border-top:1px solid var(--border)}
+.menu-danger:hover{background:rgba(239,68,68,0.1);color:var(--red)}
+
+/* ===== MAIN LAYOUT ===== */
+.main{max-width:700px;margin:0 auto;padding:0 14px 80px;position:relative;z-index:1}
+
+/* ===== HERO ===== */
+.hero-strip{padding:24px 0 16px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.hero-title{font-family:'Orbitron',monospace;font-size:1.05rem;font-weight:700;letter-spacing:0.02em;color:var(--text);margin-bottom:5px}
+.hero-sub{font-size:0.73rem;color:var(--text3);line-height:1.5}
+.hero-tag{background:linear-gradient(135deg,rgba(59,130,246,0.15),rgba(6,182,212,0.1));border:1px solid rgba(59,130,246,0.3);border-radius:20px;padding:7px 14px;font-size:0.72rem;font-weight:700;color:var(--accent2);white-space:nowrap;font-family:'Space Mono',monospace;letter-spacing:0.03em}
+
+/* ===== STATS ===== */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 12px;text-align:center;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.stat-n{display:block;font-family:'Orbitron',monospace;font-size:1.5rem;font-weight:800;color:var(--accent2);line-height:1}
+.stat-l{display:block;font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px}
+
+/* ===== PROGRESS ===== */
+.progress-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
+.progress-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.progress-label{font-size:0.72rem;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.08em}
+.progress-val{font-family:'Orbitron',monospace;font-size:0.8rem;font-weight:700;color:var(--accent2)}
+.progress-track{height:6px;background:var(--bg2);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--cyan));border-radius:99px;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1);position:relative}
+.progress-fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:20px;background:rgba(255,255,255,0.4);filter:blur(4px)}
+
+/* ===== STREAK ===== */
+.streak-row{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.streak-lbl{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:3px}
+.streak-num{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:800;color:var(--orange);line-height:1.1}
+.streak-num small{font-size:0.55rem;color:var(--text3);display:block;font-family:'DM Sans',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px}
+.btn-streak{background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(6,182,212,0.1));border:1px solid rgba(16,185,129,0.35);color:#10b981;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:700;padding:9px 14px;border-radius:10px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.btn-streak:hover{background:rgba(16,185,129,0.2);border-color:rgba(16,185,129,0.6)}
+
+/* ===== SECTION LABELS ===== */
+.sec-label{font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin:28px 0 12px;padding-left:2px;display:flex;align-items:center;gap:10px}
+.sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent)}
+.skills-note{font-size:0.73rem;color:var(--text2);line-height:1.6;background:rgba(59,130,246,0.05);border:1px solid var(--border);border-radius:10px;padding:11px 13px;margin-bottom:14px}
+.skills-note strong{color:var(--accent2)}
+
+/* ===== SKILLS GRID ===== */
+.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:8px}
+.skill-chip{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:9px;transition:all 0.2s;position:relative;overflow:hidden}
+.skill-chip::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(59,130,246,0.04));opacity:0;transition:opacity 0.2s}
+.skill-chip:hover::before{opacity:1}
+.skill-chip:hover{border-color:var(--border2);transform:translateY(-1px)}
+.skill-chip.owned{background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(6,182,212,0.05));border-color:rgba(16,185,129,0.35)}
+.skill-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:all 0.2s}
+.skill-chip.owned .skill-dot{background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.5)}
+.skill-name{font-size:0.75rem;font-weight:600;color:var(--text);line-height:1.2}
+.skill-cat{font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-top:1px}
 .skill-chip.owned .skill-name{color:var(--green)}
-.skill-cat{font-size:0.54rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em}
-.skills-note{font-size:0.67rem;color:var(--text3);margin-bottom:13px;line-height:1.5;padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px}
-.phase-wrap{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;margin-bottom:11px;overflow:hidden;transition:border-color 0.2s}
-.phase-wrap:hover{border-color:var(--border2)}
-.phase-head{display:flex;align-items:center;justify-content:space-between;padding:14px 17px;cursor:pointer;user-select:none;transition:background 0.2s}
-.phase-head:hover{background:var(--card)}
-.phase-left{display:flex;align-items:center;gap:10px}
-.phase-pip{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.phase-title{font-family:"Syne",sans-serif;font-size:0.87rem;font-weight:700}
-.phase-sub{font-size:0.61rem;color:var(--text3);margin-top:1px}
-.phase-right{display:flex;align-items:center;gap:8px}
-.phase-count{font-size:0.7rem;font-weight:700;padding:3px 9px;border-radius:12px;background:var(--card);border:1px solid var(--border)}
-.phase-chev{font-size:0.7rem;color:var(--text3);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1)}
+
+/* ===== PHASE CARDS ===== */
+.phase-wrap{margin-bottom:10px;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.phase-head{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background 0.2s;user-select:none}
+.phase-head:hover{background:rgba(99,179,255,0.04)}
+.phase-left{display:flex;align-items:center;gap:12px}
+.phase-pip{width:4px;height:40px;border-radius:2px;flex-shrink:0}
+.phase-title{font-family:'Orbitron',monospace;font-size:0.75rem;font-weight:700;letter-spacing:0.04em;color:var(--text);margin-bottom:3px}
+.phase-sub{font-size:0.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em}
+.phase-right{display:flex;align-items:center;gap:10px}
+.phase-count{font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700}
+.phase-chev{color:var(--text3);font-size:0.7rem;transition:transform 0.3s}
 .phase-chev.open{transform:rotate(180deg)}
-.phase-body{border-top:1px solid var(--border);padding:13px 17px;display:none}
-.phase-body.open{display:block}
-.phase-note{margin-top:11px;padding:9px 12px;border-radius:8px;font-size:0.69rem;line-height:1.5;font-weight:500}
-.new-badge{font-size:0.48rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:var(--green);color:#0A0B0F;padding:2px 6px;border-radius:3px;margin-left:6px;vertical-align:middle}
-.course-row{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--border)}
-.course-row:last-of-type{border-bottom:none}
-.cbox{width:21px;height:21px;border:2px solid var(--border2);border-radius:5px;flex-shrink:0;margin-top:1px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
-.cbox:hover{border-color:var(--accent)}
-.cbox.checked{background:var(--green);border-color:var(--green)}
-.cbox.checked::after{content:"✓";color:#fff;font-size:0.65rem;font-weight:700}
-.c-info{flex:1}
-.c-name{font-size:0.8rem;font-weight:500;margin-bottom:3px;line-height:1.3;transition:all 0.2s}
+.phase-body{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1)}
+.phase-body.open{max-height:9999px}
+.course-row{display:flex;align-items:flex-start;gap:12px;padding:11px 18px;border-top:1px solid var(--border);transition:background 0.15s}
+.course-row:hover{background:rgba(99,179,255,0.03)}
+.cbox{width:20px;height:20px;border:1.5px solid var(--border2);border-radius:6px;cursor:pointer;flex-shrink:0;margin-top:2px;transition:all 0.2s;display:flex;align-items:center;justify-content:center;position:relative}
+.cbox.checked{background:var(--accent);border-color:var(--accent);box-shadow:0 0 10px rgba(59,130,246,0.4)}
+.cbox.checked::after{content:'✓';color:#fff;font-size:0.7rem;font-weight:700}
+.c-info{flex:1;min-width:0}
+.c-name{font-size:0.8rem;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:3px}
 .c-name.done{color:var(--text3);text-decoration:line-through}
-.c-meta{font-size:0.63rem;color:var(--text3);margin-bottom:5px}
-.c-link{font-size:0.63rem;color:var(--accent);text-decoration:none;font-weight:500;margin-right:8px}
-.c-link:hover{text-decoration:underline}
-.skip-box{background:rgba(240,90,90,0.04);border:1.5px solid rgba(240,90,90,0.15);border-radius:12px;padding:13px 16px;margin-bottom:11px}
-.skip-title{font-family:"Syne",sans-serif;font-size:0.8rem;font-weight:700;color:var(--red);margin-bottom:9px}
-.skip-item{font-size:0.74rem;color:var(--text3);padding:5px 0;border-bottom:1px solid rgba(240,90,90,0.08);display:flex;align-items:flex-start;gap:8px}
-.skip-item:last-child{border-bottom:none}
-.skip-item::before{content:"✕";color:var(--red);font-size:0.78rem;font-weight:700;flex-shrink:0;margin-top:1px}
-.spl-block{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 13px;margin:5px 0;font-family:monospace;font-size:0.7rem;color:var(--blue);line-height:1.65;position:relative;white-space:pre-wrap;overflow-x:auto}
-.spl-label{font-size:0.57rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin:8px 0 4px}
-.spl-copy{position:absolute;top:7px;right:7px;background:var(--border);border:none;border-radius:4px;padding:3px 8px;font-size:0.57rem;color:var(--text2);cursor:pointer;transition:all 0.2s;font-family:"Inter",sans-serif}
-.spl-copy:hover{background:var(--accent);color:#0A0B0F}
-.siem-card{background:var(--surface);border-radius:14px;margin-bottom:13px;overflow:hidden}
-.siem-head{padding:15px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px}
-.siem-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.siem-title{font-family:"Syne",sans-serif;font-size:0.92rem;font-weight:800}
-.siem-sub{font-size:0.63rem;color:var(--text3);margin-top:2px}
-.siem-priority{margin-left:auto;font-size:0.58rem;font-weight:700;padding:4px 10px;border-radius:12px;white-space:nowrap}
-.siem-body{padding:15px 18px}
-.siem-course{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px}
-.siem-course-title{font-size:0.78rem;font-weight:600;color:var(--text);margin-bottom:3px}
-.siem-course-desc{font-size:0.63rem;color:var(--text3);margin-bottom:7px;line-height:1.5}
-.siem-tip{border-radius:8px;padding:9px 12px;margin-top:12px;font-size:0.69rem;font-weight:500}
-.cert-row{display:flex;align-items:center;gap:11px;padding:12px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;margin-bottom:8px;transition:all 0.2s}
-.cert-row:hover{border-color:var(--border2);transform:translateX(2px)}
-.cert-circle{width:21px;height:21px;border:2px solid var(--border2);border-radius:50%;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
-.cert-circle:hover{border-color:var(--accent)}
-.cert-circle.checked{background:var(--accent);border-color:var(--accent)}
-.cert-circle.checked::after{content:"✓";color:#0A0B0F;font-size:0.63rem;font-weight:700}
-.cert-info{flex:1}
-.cert-n{font-size:0.79rem;font-weight:500;transition:all 0.2s}
-.cert-n.done{color:var(--text3);text-decoration:line-through}
-.cert-t{font-size:0.61rem;color:var(--text3);margin-top:2px;margin-bottom:4px}
-.cbadge{font-size:0.57rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;padding:4px 9px;border-radius:4px;white-space:nowrap}
-.cb-now{background:rgba(34,201,122,0.1);color:var(--green);border:1px solid rgba(34,201,122,0.2)}
-.cb-goal{background:var(--accent-glow);color:var(--accent);border:1px solid rgba(232,160,32,0.2)}
-.cb-later{background:var(--card);color:var(--text3);border:1px solid var(--border)}
-.roles-intro{font-size:0.7rem;color:var(--text3);margin:-4px 0 13px;line-height:1.5}
-.role-card{border-radius:12px;border:1.5px solid var(--border);overflow:hidden;margin-bottom:9px;transition:all 0.3s;background:var(--surface)}
-.role-card.qualified{border-color:var(--green);background:linear-gradient(135deg,var(--surface) 0%,rgba(34,201,122,0.04) 100%);box-shadow:0 0 0 1px var(--green),0 8px 28px var(--green-glow)}
-.role-card.partial{border-color:rgba(232,160,32,0.4);background:linear-gradient(135deg,var(--surface) 0%,var(--accent-glow) 100%)}
-.role-card.locked{opacity:0.45;filter:grayscale(0.3)}
-.role-head{display:flex;align-items:center;gap:11px;padding:13px 15px;cursor:pointer;user-select:none;transition:background 0.2s}
-.role-head:hover{background:var(--card)}
-.role-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
-.role-card.qualified .role-dot{background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
-.role-card.partial .role-dot{background:var(--accent)}
-.role-card.locked .role-dot{background:var(--border2)}
-.role-info{flex:1}
-.role-name{font-family:"Syne",sans-serif;font-size:0.86rem;font-weight:700;line-height:1.2}
-.role-card.qualified .role-name{color:var(--green)}
-.role-card.partial .role-name{color:var(--accent)}
-.role-card.locked .role-name{color:var(--text3)}
-.role-remote{font-size:0.61rem;color:var(--text3);margin-top:2px}
-.role-badge{font-size:0.59rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 11px;border-radius:20px;white-space:nowrap}
-.rb-q{background:rgba(34,201,122,0.12);color:var(--green);border:1px solid rgba(34,201,122,0.25)}
-.rb-p{background:var(--accent-glow);color:var(--accent);border:1px solid rgba(232,160,32,0.25)}
-.rb-l{background:var(--card);color:var(--text3);border:1px solid var(--border)}
-.role-body{border-top:1px solid var(--border);padding:13px 15px;background:var(--card);display:none}
-.role-body.open{display:block;animation:fadeIn 0.22s ease forwards}
-.role-desc{font-size:0.74rem;color:var(--text2);line-height:1.6;margin-bottom:11px}
-.req-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:7px}
-.role-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
-.rtag{font-size:0.6rem;padding:4px 9px;border-radius:5px;display:flex;align-items:center;gap:4px;font-weight:500}
-.rtag-done{background:rgba(34,201,122,0.1);color:var(--green);border:1px solid rgba(34,201,122,0.2)}
-.rtag-miss{background:var(--surface);color:var(--text3);border:1px solid var(--border)}
-.rsk{font-size:0.6rem;padding:4px 9px;border-radius:5px;font-weight:500;display:inline-block;margin:2px}
-.rsk-have{background:rgba(34,201,122,0.1);color:var(--green);border:1px solid rgba(34,201,122,0.2)}
-.rsk-need{background:var(--surface);color:var(--text3);border:1px solid var(--border)}
-.role-salary{font-size:0.69rem;color:var(--text3);margin-bottom:9px}
-.salary-n{color:var(--green);font-weight:600;font-family:"Syne",sans-serif}
-.certs-needed{background:var(--surface);border:1px solid rgba(232,160,32,0.2);border-radius:8px;padding:9px 12px;margin-top:5px}
-.cn-label{font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:6px}
-.cn-item{font-size:0.7rem;color:var(--text2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px}
+.c-meta{font-size:0.67rem;color:var(--text3);line-height:1.5;margin-bottom:6px}
+.c-link{display:inline-block;font-size:0.67rem;font-weight:700;color:var(--accent2);text-decoration:none;margin-right:10px;padding:3px 8px;background:rgba(59,130,246,0.1);border-radius:5px;border:1px solid rgba(59,130,246,0.2);transition:all 0.15s;font-family:'Space Mono',monospace}
+.c-link:hover{background:rgba(59,130,246,0.2);color:#fff}
+.new-badge{font-size:0.55rem;background:linear-gradient(135deg,#10b981,#06b6d4);color:#fff;padding:2px 6px;border-radius:4px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;vertical-align:middle;margin-left:5px}
+.phase-note{padding:12px 18px;font-size:0.72rem;line-height:1.6;border-top:1px solid var(--border)}
+
+/* ===== SKIP BOX ===== */
+.skip-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:12px;padding:14px 16px;margin:12px 0 20px}
+.skip-title{font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.skip-item{font-size:0.73rem;color:var(--text3);padding:5px 0;border-bottom:1px solid var(--border);line-height:1.5}
+.skip-item:last-child{border-bottom:none;padding-bottom:0}
+.skip-item::before{content:'✕ ';color:var(--red);font-weight:700}
+
+/* ===== SPL QUERIES ===== */
+.spl-label{font-size:0.68rem;font-weight:700;color:var(--text2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:0.08em}
+.spl-block{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--cyan);line-height:1.8;white-space:pre-wrap;word-break:break-all;position:relative;margin-bottom:8px}
+.spl-copy{position:absolute;top:8px;right:8px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.25);border-radius:5px;color:var(--accent2);font-family:'DM Sans',sans-serif;font-size:0.62rem;font-weight:700;cursor:pointer;padding:3px 8px;transition:all 0.2s}
+.spl-copy:hover{background:var(--accent);color:#fff}
+.spl-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:15px 17px;margin-bottom:10px}
+.spl-section-title{font-family:'Orbitron',monospace;font-size:0.7rem;font-weight:700;margin-bottom:12px;letter-spacing:0.04em}
+
+/* ===== SIEM CARDS ===== */
+.siem-card{background:var(--surface);border-radius:16px;margin-bottom:12px;overflow:hidden}
+.siem-head{padding:16px 18px;display:flex;align-items:center;gap:13px;flex-wrap:wrap}
+.siem-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.siem-title{font-family:'Orbitron',monospace;font-size:0.75rem;font-weight:700;margin-bottom:3px;letter-spacing:0.02em}
+.siem-sub{font-size:0.65rem;color:var(--text3);line-height:1.4}
+.siem-priority{margin-left:auto;font-family:'Space Mono',monospace;font-size:0.6rem;font-weight:700;padding:5px 10px;border-radius:6px;letter-spacing:0.08em;flex-shrink:0}
+.siem-body{padding:0 18px 16px}
+.siem-course{border-top:1px solid var(--border);padding:12px 0}
+.siem-course-title{font-size:0.78rem;font-weight:700;color:var(--text);margin-bottom:4px}
+.siem-course-desc{font-size:0.69rem;color:var(--text2);line-height:1.5;margin-bottom:6px}
+.siem-tip{padding:10px 12px;border-radius:9px;font-size:0.7rem;line-height:1.6;margin-top:6px}
+
+/* ===== CERTS ===== */
+.cert-row{display:flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:8px;transition:border-color 0.2s}
+.cert-row:hover{border-color:var(--border2)}
+.cert-circle{width:22px;height:22px;border:2px solid var(--border2);border-radius:50%;cursor:pointer;flex-shrink:0;margin-top:2px;transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+.cert-circle.checked{background:linear-gradient(135deg,var(--purple),var(--accent));border-color:transparent;box-shadow:0 0 12px rgba(139,92,246,0.4)}
+.cert-circle.checked::after{content:'✓';color:#fff;font-size:0.65rem;font-weight:700}
+.cert-n{font-size:0.8rem;font-weight:700;color:var(--text);margin-bottom:3px}
+.cert-n.done{text-decoration:line-through;color:var(--text3)}
+.cert-t{font-size:0.68rem;color:var(--text3);line-height:1.5;margin-bottom:6px}
+.cbadge{font-size:0.57rem;font-weight:800;padding:4px 9px;border-radius:5px;text-transform:uppercase;letter-spacing:0.1em;white-space:nowrap;font-family:'Space Mono',monospace;margin-left:auto;align-self:flex-start;flex-shrink:0}
+.cb-now{background:rgba(16,185,129,0.15);color:#10b981;border:1px solid rgba(16,185,129,0.3)}
+.cb-goal{background:rgba(59,130,246,0.12);color:var(--accent2);border:1px solid rgba(59,130,246,0.25)}
+.cb-later{background:rgba(75,96,128,0.2);color:var(--text3);border:1px solid var(--border)}
+.cert-info{flex:1;min-width:0}
+
+/* ===== ROLE CARDS ===== */
+.roles-intro{font-size:0.73rem;color:var(--text2);line-height:1.6;margin-bottom:14px}
+.role-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden;transition:border-color 0.2s}
+.role-card.qualified{border-color:rgba(16,185,129,0.35)}
+.role-card.partial{border-color:rgba(59,130,246,0.25)}
+.role-head{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:background 0.15s}
+.role-head:hover{background:rgba(99,179,255,0.03)}
+.role-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);flex-shrink:0}
+.role-card.qualified .role-dot{background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.5)}
+.role-card.partial .role-dot{background:var(--accent);box-shadow:0 0 8px rgba(59,130,246,0.4)}
+.role-info{flex:1;min-width:0}
+.role-name{font-size:0.82rem;font-weight:700;color:var(--text)}
+.role-remote{font-size:0.63rem;color:var(--text3);margin-top:2px}
+.role-badge{font-size:0.6rem;font-weight:800;padding:5px 9px;border-radius:6px;font-family:'Space Mono',monospace;letter-spacing:0.06em;flex-shrink:0;white-space:nowrap}
+.rb-q{background:rgba(16,185,129,0.15);color:#10b981;border:1px solid rgba(16,185,129,0.3)}
+.rb-p{background:rgba(59,130,246,0.12);color:var(--accent2);border:1px solid rgba(59,130,246,0.25)}
+.rb-l{background:rgba(75,96,128,0.12);color:var(--text3);border:1px solid var(--border)}
+.role-body{max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.4,0,0.2,1)}
+.role-body.open{max-height:9999px}
+.role-desc{padding:12px 16px;font-size:0.73rem;color:var(--text2);line-height:1.6;border-top:1px solid var(--border)}
+.req-label{padding:8px 16px 4px;font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3)}
+.role-tags{display:flex;flex-wrap:wrap;gap:5px;padding:4px 16px 10px}
+.rtag{font-size:0.62rem;padding:3px 8px;border-radius:5px;font-family:'Space Mono',monospace;font-weight:700;letter-spacing:0.03em}
+.rtag-done{background:rgba(16,185,129,0.1);color:#10b981;border:1px solid rgba(16,185,129,0.25)}
+.rtag-miss{background:rgba(75,96,128,0.1);color:var(--text3);border:1px solid var(--border)}
+.rsk{font-size:0.63rem;padding:3px 8px;border-radius:5px;font-weight:700}
+.rsk-have{background:rgba(16,185,129,0.1);color:#10b981;border:1px solid rgba(16,185,129,0.2)}
+.rsk-need{background:rgba(75,96,128,0.1);color:var(--text3);border:1px solid var(--border)}
+.role-salary{padding:8px 16px;font-size:0.75rem;font-weight:700}
+.salary-n{color:var(--orange)}
+.certs-needed{margin:8px 16px 12px;background:rgba(99,179,255,0.05);border:1px solid var(--border);border-radius:9px;padding:10px 12px}
+.cn-label{font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:7px}
+.cn-item{font-size:0.72rem;color:var(--text2);padding:3px 0;border-bottom:1px solid var(--border)}
 .cn-item:last-child{border-bottom:none}
-.cn-item::before{content:"→";color:var(--accent);font-size:0.73rem}
-.ai-fab{position:fixed;bottom:22px;right:18px;z-index:500;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0A0B0F;border:none;border-radius:28px;padding:13px 18px;display:flex;align-items:center;gap:9px;cursor:pointer;box-shadow:0 8px 28px var(--accent-glow);transition:all 0.3s cubic-bezier(0.16,1,0.3,1);font-family:"Syne",sans-serif;animation:fabBreath 3s ease-in-out infinite}
-.ai-fab:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 12px 36px var(--accent-glow)}
-@keyframes fabBreath{0%,100%{box-shadow:0 8px 28px var(--accent-glow)}50%{box-shadow:0 8px 40px var(--accent-glow),0 0 0 8px rgba(232,160,32,0.06)}}
-.ai-fab-icon{font-size:1.15rem}
-.ai-fab-label{font-size:0.73rem;font-weight:700}
-.ai-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.52);z-index:600;opacity:0;pointer-events:none;transition:opacity 0.3s;backdrop-filter:blur(4px)}
+.cn-item::before{content:'→ ';color:var(--accent);font-weight:700}
+
+/* ===== AI FAB ===== */
+.ai-fab{position:fixed;bottom:22px;right:18px;z-index:40;display:flex;align-items:center;gap:8px;padding:12px 18px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:50px;color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:700;box-shadow:0 8px 30px rgba(59,130,246,0.45);transition:all 0.3s}
+.ai-fab:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(59,130,246,0.55)}
+.ai-fab-icon{font-size:1.1rem}
+
+/* ===== AI DRAWER ===== */
+.ai-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);z-index:80;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .ai-overlay.open{opacity:1;pointer-events:all}
-.ai-drawer{position:fixed;bottom:0;left:0;right:0;max-width:620px;margin:0 auto;background:var(--surface);border-radius:22px 22px 0 0;border:1px solid var(--border);border-bottom:none;z-index:700;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);max-height:86vh;display:flex;flex-direction:column}
-.ai-drawer.open{transform:translateY(0)}
-.ai-handle{width:34px;height:4px;background:var(--border2);border-radius:2px;margin:10px auto 0;flex-shrink:0}
-.ai-head{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.ai-head-left{display:flex;align-items:center;gap:10px}
-.ai-live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite;flex-shrink:0}
-.ai-title{font-family:"Syne",sans-serif;font-size:0.92rem;font-weight:700}
-.ai-sub{font-size:0.62rem;color:var(--text3);margin-top:1px}
-.ai-close{background:none;border:none;color:var(--text3);font-size:1.1rem;cursor:pointer;padding:6px;transition:color 0.2s;border-radius:6px}
-.ai-close:hover{color:var(--text);background:var(--card)}
-.ai-sugs{display:flex;flex-wrap:wrap;gap:6px;padding:12px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
-.ai-sug{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:6px 12px;font-size:0.7rem;color:var(--text2);cursor:pointer;transition:all 0.2s;font-family:"Inter",sans-serif;white-space:nowrap}
-.ai-sug:hover{border-color:var(--accent);color:var(--accent)}
-.ai-msgs{flex:1;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:9px;min-height:80px}
-.ai-msgs:empty::after{content:"Hi! I know everything in this app — courses, roles, SPL queries, Nigerian employers, your progress. Ask me anything!";color:var(--text3);font-size:0.72rem;font-style:italic;display:block;text-align:center;padding:22px 0;line-height:1.6}
-.bubble{max-width:90%;padding:10px 13px;border-radius:12px;font-size:0.8rem;line-height:1.55;animation:fadeIn 0.2s ease}
-.bubble-u{background:var(--accent);color:#0A0B0F;align-self:flex-end;border-bottom-right-radius:3px;font-weight:500}
-.bubble-ai{background:var(--card);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-bottom-left-radius:3px}
+.ai-drawer{position:fixed;bottom:-100%;left:0;right:0;max-height:85vh;background:var(--surface);border:1px solid var(--border2);border-radius:24px 24px 0 0;z-index:90;transition:bottom 0.4s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;overflow:hidden}
+.ai-drawer.open{bottom:0;box-shadow:0 -20px 60px rgba(0,0,0,0.5)}
+.ai-handle{width:40px;height:4px;background:var(--border2);border-radius:2px;margin:12px auto 4px}
+.ai-head{padding:10px 18px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.ai-head-left{display:flex;align-items:center;gap:11px}
+.ai-live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(16,185,129,0.6);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.ai-title{font-family:'Orbitron',monospace;font-size:0.78rem;font-weight:700;color:var(--text);letter-spacing:0.03em}
+.ai-sub{font-size:0.62rem;color:var(--text3);margin-top:2px}
+.ai-close{background:none;border:1px solid var(--border2);border-radius:7px;color:var(--text2);cursor:pointer;padding:5px 10px;font-size:0.8rem;transition:all 0.2s}
+.ai-close:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.ai-sugs{padding:12px 14px;display:flex;gap:7px;flex-wrap:wrap;border-bottom:1px solid var(--border)}
+.ai-sug{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:0.68rem;padding:6px 11px;cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.ai-sug:hover{background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.3);color:var(--accent2)}
+.ai-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.bubble{max-width:85%;padding:10px 13px;border-radius:13px;font-size:0.78rem;line-height:1.6}
+.bubble-u{align-self:flex-end;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border-radius:13px 13px 3px 13px}
+.bubble-ai{align-self:flex-start;background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:13px 13px 13px 3px}
 .bubble-thinking{color:var(--text3);font-style:italic}
-.ai-input-row{padding:10px 14px 14px;border-top:1px solid var(--border);display:flex;gap:9px;align-items:flex-end;flex-shrink:0}
-.ai-input{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:11px;padding:10px 13px;color:var(--text);font-family:"Inter",sans-serif;font-size:0.8rem;outline:none;resize:none;line-height:1.4;max-height:90px;transition:border-color 0.2s}
+.ai-input-row{padding:12px 14px;border-top:1px solid var(--border);display:flex;gap:9px;background:var(--surface)}
+.ai-input{flex:1;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:10px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;resize:none;outline:none;transition:border-color 0.2s}
 .ai-input:focus{border-color:var(--accent)}
-.ai-input::placeholder{color:var(--text3)}
-.ai-btn{background:var(--accent);color:#0A0B0F;border:none;border-radius:10px;padding:10px 15px;font-family:"Syne",sans-serif;font-size:0.78rem;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap}
-.ai-btn:hover{background:var(--accent2)}
-.ai-btn:disabled{opacity:0.45;cursor:not-allowed}
-.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--green);color:#fff;padding:9px 18px;border-radius:8px;font-size:0.76rem;font-weight:600;opacity:0;pointer-events:none;transition:all 0.3s;z-index:900;white-space:nowrap;box-shadow:0 4px 20px var(--green-glow)}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-#notifModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:800;align-items:flex-end;justify-content:center}
+.ai-btn{background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:10px;color:#fff;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:700;padding:0 18px;cursor:pointer;transition:all 0.2s}
+.ai-btn:hover{opacity:0.9}
+.ai-btn:disabled{opacity:0.5}
+
+/* ===== NOTIFICATION MODAL ===== */
+#notifModal{display:none;position:fixed;inset:0;z-index:95;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);align-items:flex-end;justify-content:center;padding:0}
 #notifModal.show{display:flex}
-.notif-sheet{background:var(--surface);border-radius:20px 20px 0 0;padding:22px 18px 30px;width:100%;border-top:1px solid var(--border);box-shadow:0 -8px 36px rgba(0,0,0,0.4);max-width:500px}
-.footer{margin-top:28px;padding:18px;text-align:center;font-size:0.66rem;color:var(--text3);border-top:1px solid var(--border);line-height:2}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(34,201,122,0.4)}50%{box-shadow:0 0 0 6px rgba(34,201,122,0)}}
-@keyframes bump{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
-.bump{animation:bump 0.35s ease}
-@media(max-width:520px){.skills-grid{grid-template-columns:1fr}.ai-fab-label{display:none}.ai-fab{border-radius:50%;width:54px;height:54px;padding:0;justify-content:center}}
+.notif-sheet{background:var(--surface);border:1px solid var(--border2);border-radius:20px 20px 0 0;padding:20px 22px 30px;width:100%;max-width:500px;animation:slideUp 0.35s cubic-bezier(0.16,1,0.3,1)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:10px 18px;font-size:0.79rem;font-weight:600;color:var(--text);z-index:200;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,0.4)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ===== FOOTER ===== */
+.footer{text-align:center;padding:30px 0 10px;font-size:0.67rem;color:var(--text3);line-height:1.8;font-family:'Space Mono',monospace}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:480px){
+  .skills-grid{grid-template-columns:1fr}
+  .stats-grid{gap:7px}
+  .stat-n{font-size:1.2rem}
+  .hero-title{font-size:0.92rem}
+}
 </style>
 </head>
 <body>
-<div class="grid-bg"></div>
 
-<div id="authPage">
-  <div class="auth-wrap">
-    <div class="auth-brand">
-      <div class="auth-icon-wrap"><img src="data:image/jpeg;base64,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" alt="Cyber Roadmap Pro"></div>
-      <div class="auth-brand-name">Cyber Roadmap Pro</div>
-      <div class="auth-brand-sub">SOC Analyst Path · 2026</div>
+<div id="authPage" style="display:flex">
+  <div class="auth-glow"></div>
+  <div class="auth-brand">
+    <div class="auth-brand-logo">🛡️</div>
+    <div class="auth-brand-name">Cyber Roadmap Pro</div>
+    <div class="auth-brand-sub">SOC Analyst Path · 2026</div>
+  </div>
+  <div class="auth-card">
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="setTab('login')">Login</button>
+      <button class="auth-tab" onclick="setTab('signup')">Sign Up</button>
     </div>
-    <div class="auth-card">
-      <div class="auth-tabs">
-        <button class="auth-tab active" onclick="setTab('login')">Login</button>
-        <button class="auth-tab" onclick="setTab('signup')">Sign Up</button>
-      </div>
-      <div id="nameField" class="field" style="display:none"><label>Full Name</label><input type="text" id="authName" placeholder="e.g. Godson Uzoezie" autocomplete="name"></div>
-      <div class="field"><label>Email</label><input type="email" id="authEmail" placeholder="your@email.com" autocomplete="email"></div>
-      <div class="field"><label>Password</label><div class="pass-wrap"><input type="password" id="authPass" placeholder="••••••••" autocomplete="current-password"><button class="pass-eye" id="passEye" onclick="togglePass()" type="button">👁</button></div></div>
-      <button class="btn-primary" id="authBtn" onclick="doAuth()">Login</button>
-      <div class="auth-err" id="authErr"></div>
-    </div>
+    <div id="nameField" class="field" style="display:none"><label>Full Name</label><input type="text" id="authName" placeholder="e.g. Godson Uzoezie" autocomplete="name"></div>
+    <div class="field"><label>Email</label><input type="email" id="authEmail" placeholder="your@email.com" autocomplete="email"></div>
+    <div class="field"><label>Password</label><div class="pass-wrap"><input type="password" id="authPass" placeholder="••••••••" autocomplete="current-password"><button class="pass-eye" id="passEye" onclick="togglePass()" type="button">👁</button></div></div>
+    <button class="btn-primary" id="authBtn" onclick="doAuth()">Login</button>
+    <div class="auth-err" id="authErr"></div>
   </div>
 </div>
 
-<div id="app">
+<div id="app" style="display:none">
   <nav class="nav">
     <div class="nav-inner">
-      <div class="nav-logo"><div class="nav-logo-img"><img src="data:image/jpeg;base64,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" alt="icon"></div><span class="nav-logo-text">Cyber Roadmap</span></div>
+      <div class="nav-logo">
+        <div class="nav-logo-img">🛡️</div>
+        <span class="nav-logo-text">Cyber Roadmap</span>
+      </div>
       <button class="hamburger" onclick="openMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
 
   <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
   <div class="menu-tray" id="menuTray">
-    <div class="menu-head"><span class="menu-head-title">Menu</span><button class="menu-close" onclick="closeMenu()">✕</button></div>
+    <div class="menu-head"><span class="menu-head-title">Navigation</span><button class="menu-close" onclick="closeMenu()">✕</button></div>
     <div class="menu-user"><div class="menu-user-label">Signed in as</div><div id="menuUserBlock"></div></div>
     <div class="menu-items">
       <button class="menu-item" onclick="closeMenu();scrollTo(0,0)"><span class="menu-icon">🏠</span>Dashboard</button>
@@ -318,15 +377,18 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
       <div><div class="hero-title">Your Cybersecurity Career Path</div><div class="hero-sub">Port Harcourt, Nigeria 🇳🇬 · Tick courses &amp; skills to unlock roles</div></div>
       <div class="hero-tag">🎯 Target: SOC L1</div>
     </div>
+
     <div class="stats-grid">
       <div class="stat"><span class="stat-n" id="statDone">0</span><span class="stat-l">Completed</span></div>
       <div class="stat"><span class="stat-n" id="statStreak">0</span><span class="stat-l">🔥 Streak</span></div>
       <div class="stat"><span class="stat-n" id="statPct">0%</span><span class="stat-l">Progress</span></div>
     </div>
+
     <div class="progress-card">
       <div class="progress-top"><span class="progress-label">Overall Roadmap Progress</span><span class="progress-val" id="progPct">0%</span></div>
       <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
     </div>
+
     <div class="streak-row">
       <div><div class="streak-lbl">Study Streak</div><div class="streak-num" id="streakVal">0<small>days in a row</small></div></div>
       <button class="btn-streak" id="streakBtn" onclick="markToday()">✓ Mark Today Done</button>
@@ -338,6 +400,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 
     <div class="sec-label" id="sec-courses">Courses</div>
 
+    <!-- Phase 1 -->
     <div class="phase-wrap">
       <div class="phase-head" onclick="togglePhase('p1')">
         <div class="phase-left"><div class="phase-pip" style="background:#7C6FF7"></div><div><div class="phase-title">Phase 1 — Foundation</div><div class="phase-sub">Months 1–2 · Start Here</div></div></div>
@@ -352,33 +415,35 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
         <div class="course-row"><div class="cbox" id="chk-5" onclick="toggleCourse(5)"></div><div class="c-info"><div class="c-name" id="nm-5">Google Cybersecurity Certificate</div><div class="c-meta">Coursera · Financial aid available · Includes SIEM intro + AI for cybersecurity module (2025)</div><a class="c-link" href="https://www.coursera.org/professional-certificates/google-cybersecurity" target="_blank">Enroll on Coursera ↗</a><a class="c-link" href="https://grow.google/certificates/cybersecurity/" target="_blank">Google Official ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-22" onclick="toggleCourse(22)"></div><div class="c-info"><div class="c-name" id="nm-22">LabEx — Cybersecurity Fundamentals (Hands-on Labs) <span class="new-badge">NEW</span></div><div class="c-meta">LabEx.io · Free tier · 20 interactive labs · Wireshark, Nmap, Hydra, OpenSSL — browser-based, no install</div><a class="c-link" href="https://labex.io/learn/cybersecurity" target="_blank">Start Free Labs ↗</a><a class="c-link" href="https://labex.io/free-labs/cybersecurity" target="_blank">Free Lab Catalog ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-23" onclick="toggleCourse(23)"></div><div class="c-info"><div class="c-name" id="nm-23">Cisco — Endpoint Security <span class="new-badge">NEW</span></div><div class="c-meta">Cisco NetAcad · Free · CCST Cybersecurity path · Secures endpoints, EDR concepts · Nigeria Cyber Challenge 2025</div><a class="c-link" href="https://www.netacad.com/courses/cybersecurity" target="_blank">NetAcad Cybersecurity ↗</a></div></div>
-        <div class="phase-note" style="background:rgba(124,111,247,0.07);border:1px solid rgba(124,111,247,0.18);color:#A5B4FC;">⚡ Move to Phase 2 after 6–8 weeks even if unready. Momentum beats perfection. LabEx is the fastest hands-on practice — use it daily in your browser.</div>
+        <div class="phase-note" style="background:rgba(124,111,247,0.06);border:1px solid rgba(124,111,247,0.18);color:#A5B4FC;">⚡ Move to Phase 2 after 6–8 weeks even if unready. Momentum beats perfection. LabEx is the fastest hands-on practice — use it daily in your browser.</div>
       </div>
     </div>
 
+    <!-- Phase 2 -->
     <div class="phase-wrap">
       <div class="phase-head" onclick="togglePhase('p2')">
-        <div class="phase-left"><div class="phase-pip" style="background:#3BBFD9"></div><div><div class="phase-title">Phase 2 — SOC Core + SIEM</div><div class="phase-sub">Months 3–4 · Core SOC &amp; Tool Skills</div></div></div>
-        <div class="phase-right"><span class="phase-count" id="cnt-p2" style="color:#3BBFD9">0/9</span><span class="phase-chev open" id="chev-p2">▼</span></div>
+        <div class="phase-left"><div class="phase-pip" style="background:#06b6d4"></div><div><div class="phase-title">Phase 2 — SOC Core + SIEM</div><div class="phase-sub">Months 3–4 · Core SOC &amp; Tool Skills</div></div></div>
+        <div class="phase-right"><span class="phase-count" id="cnt-p2" style="color:#06b6d4">0/9</span><span class="phase-chev open" id="chev-p2">▼</span></div>
       </div>
       <div class="phase-body open" id="body-p2">
         <div class="course-row"><div class="cbox" id="chk-6" onclick="toggleCourse(6)"></div><div class="c-info"><div class="c-name" id="nm-6">Palo Alto — Fundamentals of SOC</div><div class="c-meta">Palo Alto Networks · Free · Built directly for SOC L1 roles</div><a class="c-link" href="https://www.paloaltonetworks.com/cybersecurity-academy" target="_blank">Open Course ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-7" onclick="toggleCourse(7)"></div><div class="c-info"><div class="c-name" id="nm-7">Palo Alto — Fundamentals of Network Security</div><div class="c-meta">Palo Alto Networks · Free · Firewalls, IDS/IPS, IAM concepts</div><a class="c-link" href="https://www.paloaltonetworks.com/cybersecurity-academy" target="_blank">Open Course ↗</a></div></div>
-        <div class="course-row"><div class="cbox" id="chk-8" onclick="toggleCourse(8)"></div><div class="c-info"><div class="c-name" id="nm-8">Splunk — Free Training (Fundamentals 1 + Blue Team Academy)</div><div class="c-meta">Splunk · Free · SIEM in 78% of Nigerian SOC postings · SPL queries, dashboards, alerts, SOC operations</div><a class="c-link" href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank">Free Courses Hub ↗</a><a class="c-link" href="https://www.splunk.com/en_us/training/splunk-fundamentals.html" target="_blank">Fundamentals 1 ↗</a><a class="c-link" href="https://www.splunk.com/en_us/training/course-catalog.html" target="_blank">Full Catalog ↗</a></div></div>
+        <div class="course-row"><div class="cbox" id="chk-8" onclick="toggleCourse(8)"></div><div class="c-info"><div class="c-name" id="nm-8">Splunk — Free Training (Fundamentals 1 + Blue Team Academy)</div><div class="c-meta">Splunk · Free · SIEM in 78% of Nigerian SOC postings · SPL queries, dashboards, alerts, SOC operations</div><a class="c-link" href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank">Free Courses Hub ↗</a><a class="c-link" href="https://www.splunk.com/en_us/training/splunk-fundamentals.html" target="_blank">Fundamentals 1 ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-9" onclick="toggleCourse(9)"></div><div class="c-info"><div class="c-name" id="nm-9">Microsoft Student SOC + Sentinel</div><div class="c-meta">Microsoft · Free · Sentinel SIEM — used in real SOC jobs at Access Bank, Flutterwave</div><a class="c-link" href="https://microsoft.github.io/SOC/source/content/#/lessons/j362x-_7A1SESGqKqzF2uu5BRMAmkBTH" target="_blank">Start Microsoft SOC ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-10" onclick="toggleCourse(10)"></div><div class="c-info"><div class="c-name" id="nm-10">SC-200: Microsoft Security Operations</div><div class="c-meta">Microsoft Learn · Free · Sentinel + Defender training · Strong in fintech/banking sector</div><a class="c-link" href="https://learn.microsoft.com/en-us/training/paths/sc-200-mitigate-threats-using-microsoft-defender/" target="_blank">Start SC-200 Training ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-11" onclick="toggleCourse(11)"></div><div class="c-info"><div class="c-name" id="nm-11">TryHackMe — SOC Level 1 Path</div><div class="c-meta">TryHackMe.com · Free tier · Hands-on browser labs · Do at least 30 min daily</div><a class="c-link" href="https://tryhackme.com/path/outline/soclevel1" target="_blank">Start SOC Path ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-12" onclick="toggleCourse(12)"></div><div class="c-info"><div class="c-name" id="nm-12">Wireshark — Packet Analysis (Chris Greer)</div><div class="c-meta">YouTube · Free · Wireshark appears in Nigerian SOC job specs — essential skill</div><a class="c-link" href="https://www.youtube.com/@ChrisGreer" target="_blank">YouTube Channel ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-24" onclick="toggleCourse(24)"></div><div class="c-info"><div class="c-name" id="nm-24">LabEx — Linux for Security &amp; Network Analysis Labs <span class="new-badge">NEW</span></div><div class="c-meta">LabEx.io · Free · Browser Linux terminal · grep, awk, netstat, tcpdump — tested in every Nigerian SOC interview</div><a class="c-link" href="https://labex.io/learn" target="_blank">LabEx Learn Hub ↗</a><a class="c-link" href="https://labex.io/free-labs/cybersecurity" target="_blank">Free Security Labs ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-25" onclick="toggleCourse(25)"></div><div class="c-info"><div class="c-name" id="nm-25">Cisco — Network Defense <span class="new-badge">NEW</span></div><div class="c-meta">Cisco NetAcad · Free · Monitor networks, evaluate alerts, firewalls, cloud security · CCST Cybersecurity path</div><a class="c-link" href="https://www.netacad.com/catalogs/learn/cybersecurity" target="_blank">NetAcad Cybersecurity ↗</a></div></div>
-        <div class="phase-note" style="background:rgba(59,191,217,0.06);border:1px solid rgba(59,191,217,0.18);color:#7DD3FC;">⚡ Splunk + Sentinel appear in 78% of Nigerian SOC postings. Do both. The Splunk Blue Team Academy is free and builds an actual SOC analyst portfolio.</div>
+        <div class="phase-note" style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.18);color:#67e8f9;">⚡ Splunk + Sentinel appear in 78% of Nigerian SOC postings. Do both. The Splunk Blue Team Academy is free and builds an actual SOC analyst portfolio.</div>
       </div>
     </div>
 
+    <!-- Phase 3 -->
     <div class="phase-wrap">
       <div class="phase-head" onclick="togglePhase('p3')">
-        <div class="phase-left"><div class="phase-pip" style="background:#A855F7"></div><div><div class="phase-title">Phase 3 — Certifications + Apply</div><div class="phase-sub">Months 5–6 · Exam Prep &amp; Job Hunt</div></div></div>
-        <div class="phase-right"><span class="phase-count" id="cnt-p3" style="color:#A855F7">0/7</span><span class="phase-chev open" id="chev-p3">▼</span></div>
+        <div class="phase-left"><div class="phase-pip" style="background:#a855f7"></div><div><div class="phase-title">Phase 3 — Certifications + Apply</div><div class="phase-sub">Months 5–6 · Exam Prep &amp; Job Hunt</div></div></div>
+        <div class="phase-right"><span class="phase-count" id="cnt-p3" style="color:#a855f7">0/7</span><span class="phase-chev open" id="chev-p3">▼</span></div>
       </div>
       <div class="phase-body open" id="body-p3">
         <div class="course-row"><div class="cbox" id="chk-13" onclick="toggleCourse(13)"></div><div class="c-info"><div class="c-name" id="nm-13">Cisco CyberOps Associate (200-201 CBROPS)</div><div class="c-meta">Cisco NetAcad · Free study materials · SOC-specific cert · Strong employer recognition in Nigeria</div><a class="c-link" href="https://www.netacad.com/courses/cyberops-associate" target="_blank">Start CyberOps Associate ↗</a></div></div>
@@ -388,14 +453,15 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
         <div class="course-row"><div class="cbox" id="chk-17" onclick="toggleCourse(17)"></div><div class="c-info"><div class="c-name" id="nm-17">Cisco — Cyber Threat Management</div><div class="c-meta">Cisco NetAcad · Free · Governance, threat analysis, compliance · Nigeria Cyber Challenge 2025</div><a class="c-link" href="https://www.netacad.com/courses/cybersecurity" target="_blank">NetAcad Cybersecurity ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-26" onclick="toggleCourse(26)"></div><div class="c-info"><div class="c-name" id="nm-26">Cybrary — SOC Analyst Career Path (Free) <span class="new-badge">NEW</span></div><div class="c-meta">Cybrary.it · Free account · SOC-focused career path, Security+ prep, hands-on virtual labs</div><a class="c-link" href="https://www.cybrary.it/free-content" target="_blank">Free Cybrary Content ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-27" onclick="toggleCourse(27)"></div><div class="c-info"><div class="c-name" id="nm-27">Splunk SIEM — SOC Analyst Training (Udemy) <span class="new-badge">NEW</span></div><div class="c-meta">Udemy · ~₦3,000–₦6,000 on sale · 60hrs · SPL queries, dashboards, alerts, incident triage</div><a class="c-link" href="https://www.udemy.com/course/cyber-security-soc-analyst-training-siem-splunk-60-hrs/" target="_blank">Splunk SOC Course ↗</a></div></div>
-        <div class="phase-note" style="background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.18);color:#D8B4FE;">⚡ NDPR knowledge puts you ahead of candidates with only international certs. Every Nigerian bank and fintech must comply. Mention it in every interview.</div>
+        <div class="phase-note" style="background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.18);color:#d8b4fe;">⚡ NDPR knowledge puts you ahead of candidates with only international certs. Every Nigerian bank and fintech must comply. Mention it in every interview.</div>
       </div>
     </div>
 
+    <!-- Phase 4 -->
     <div class="phase-wrap">
       <div class="phase-head" onclick="togglePhase('p4')">
-        <div class="phase-left"><div class="phase-pip" style="background:#F97316"></div><div><div class="phase-title">Phase 4 — Broaden &amp; Advance</div><div class="phase-sub">Month 6+ · While Job Hunting</div></div></div>
-        <div class="phase-right"><span class="phase-count" id="cnt-p4" style="color:#F97316">0/6</span><span class="phase-chev" id="chev-p4">▼</span></div>
+        <div class="phase-left"><div class="phase-pip" style="background:#f59e0b"></div><div><div class="phase-title">Phase 4 — Broaden &amp; Advance</div><div class="phase-sub">Month 6+ · While Job Hunting</div></div></div>
+        <div class="phase-right"><span class="phase-count" id="cnt-p4" style="color:#f59e0b">0/6</span><span class="phase-chev" id="chev-p4">▼</span></div>
       </div>
       <div class="phase-body" id="body-p4">
         <div class="course-row"><div class="cbox" id="chk-18" onclick="toggleCourse(18)"></div><div class="c-info"><div class="c-name" id="nm-18">Palo Alto — Fundamentals of Cloud Security</div><div class="c-meta">Palo Alto Networks · Free · Bridges your AWS Udacity background into security</div><a class="c-link" href="https://www.paloaltonetworks.com/cybersecurity-academy" target="_blank">Open Course ↗</a></div></div>
@@ -404,7 +470,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
         <div class="course-row"><div class="cbox" id="chk-21" onclick="toggleCourse(21)"></div><div class="c-info"><div class="c-name" id="nm-21">GRC Mastery — Governance, Risk &amp; Compliance</div><div class="c-meta">MyDFIR / Udemy · Practical GRC — your HSE Indorama background transfers directly here</div><a class="c-link" href="https://www.udemy.com/courses/search/?q=grc+governance+risk+compliance" target="_blank">GRC Courses ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-28" onclick="toggleCourse(28)"></div><div class="c-info"><div class="c-name" id="nm-28">AI for Cybersecurity — Cisco NetAcad <span class="new-badge">NEW</span></div><div class="c-meta">Cisco NetAcad · Free · AI in cybersecurity tools, prompt engineering for security · AI/automation in 64% of 2026 job postings</div><a class="c-link" href="https://www.netacad.com/" target="_blank">NetAcad AI Courses ↗</a></div></div>
         <div class="course-row"><div class="cbox" id="chk-29" onclick="toggleCourse(29)"></div><div class="c-info"><div class="c-name" id="nm-29">LabEx — CTF Challenges &amp; Advanced Security Labs <span class="new-badge">NEW</span></div><div class="c-meta">LabEx.io · Free tier · CTF-style: hidden files, weak passwords, log analysis, port scanning · Builds real portfolio</div><a class="c-link" href="https://labex.io/learn/cybersecurity" target="_blank">LabEx Cybersecurity ↗</a></div></div>
-        <div class="phase-note" style="background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.18);color:#FED7AA;">⚡ Shell, Chevron, TotalEnergies in PH pay ₦500K–₦1.2M/month. Your Indorama background is a foot in the door Lagos candidates don't have. Lead with that in oil &amp; gas interviews.</div>
+        <div class="phase-note" style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.18);color:#fde68a;">⚡ Shell, Chevron, TotalEnergies in PH pay ₦500K–₦1.2M/month. Your Indorama background is a foot in the door Lagos candidates don't have. Lead with that in oil &amp; gas interviews.</div>
       </div>
     </div>
 
@@ -419,29 +485,29 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
     <div class="sec-label" id="sec-splunk">Splunk SPL Practice Queries</div>
     <div class="skills-note">🔍 Real SPL queries Nigerian SOC employers test in interviews. Practice in the free Splunk Trial or TryHackMe Splunk rooms. <strong>Knowing SPL = instant credibility in every Nigerian SOC interview.</strong></div>
 
-    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:15px 17px;margin-bottom:10px">
-      <div style="font-family:'Syne',sans-serif;font-size:0.84rem;font-weight:700;margin-bottom:12px">🔐 Authentication &amp; Failed Login Detection</div>
+    <div class="spl-section">
+      <div class="spl-section-title" style="color:#f59e0b">🔐 Authentication &amp; Failed Login Detection</div>
       <div class="spl-label">Find all failed login attempts</div>
       <div class="spl-block"><button class="spl-copy" onclick="copySPL(this)">Copy</button>index=main sourcetype=WinEventLog EventCode=4625
 | stats count by src_ip, user
-| where count &gt; 5
+| where count > 5
 | sort -count</div>
       <div class="spl-label">Brute force detection — 10+ failures in 5 minutes</div>
       <div class="spl-block"><button class="spl-copy" onclick="copySPL(this)">Copy</button>index=security sourcetype=WinEventLog EventCode=4625
 | bin _time span=5m
 | stats count by _time, src_ip, user
-| where count &gt;= 10
+| where count >= 10
 | rename count as "Failed Attempts"</div>
       <div class="spl-label">Successful logins after multiple failures (credential stuffing)</div>
       <div class="spl-block"><button class="spl-copy" onclick="copySPL(this)">Copy</button>index=security (EventCode=4625 OR EventCode=4624)
 | stats count(eval(EventCode=4625)) as failures,
   count(eval(EventCode=4624)) as successes by src_ip, user
-| where failures &gt; 5 AND successes &gt; 0
+| where failures > 5 AND successes > 0
 | eval risk="High"</div>
     </div>
 
-    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:15px 17px;margin-bottom:10px">
-      <div style="font-family:'Syne',sans-serif;font-size:0.84rem;font-weight:700;margin-bottom:12px">🌐 Network &amp; Firewall Analysis</div>
+    <div class="spl-section">
+      <div class="spl-section-title" style="color:#06b6d4">🌐 Network &amp; Firewall Analysis</div>
       <div class="spl-label">Top talkers — highest network traffic by source IP</div>
       <div class="spl-block"><button class="spl-copy" onclick="copySPL(this)">Copy</button>index=network sourcetype=firewall
 | stats sum(bytes) as TotalBytes by src_ip
@@ -451,18 +517,18 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
       <div class="spl-label">Blocked/denied firewall connections</div>
       <div class="spl-block"><button class="spl-copy" onclick="copySPL(this)">Copy</button>index=firewall action=blocked
 | stats count by src_ip, dest_ip, dest_port
-| where count &gt; 10
+| where count > 10
 | sort -count</div>
       <div class="spl-label">Port scan detection — single IP hitting many ports</div>
       <div class="spl-block"><button class="spl-copy" onclick="copySPL(this)">Copy</button>index=network
 | stats dc(dest_port) as unique_ports by src_ip
-| where unique_ports &gt; 20
+| where unique_ports > 20
 | eval threat="Possible Port Scan"
 | sort -unique_ports</div>
     </div>
 
-    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:15px 17px;margin-bottom:10px">
-      <div style="font-family:'Syne',sans-serif;font-size:0.84rem;font-weight:700;margin-bottom:12px">🛡️ Threat Detection &amp; Alert Triage</div>
+    <div class="spl-section">
+      <div class="spl-section-title" style="color:#ef4444">🛡️ Threat Detection &amp; Alert Triage</div>
       <div class="spl-label">Suspicious PowerShell execution (common attacker tool)</div>
       <div class="spl-block"><button class="spl-copy" onclick="copySPL(this)">Copy</button>index=endpoint sourcetype=WinEventLog EventCode=4688
 | where match(CommandLine,"(?i)(encodedcommand|bypass|hidden|invoke-expression|iex|downloadstring)")
@@ -475,8 +541,8 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
 | head 25</div>
     </div>
 
-    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:15px 17px;margin-bottom:10px">
-      <div style="font-family:'Syne',sans-serif;font-size:0.84rem;font-weight:700;margin-bottom:12px">📊 SOC Dashboard Queries</div>
+    <div class="spl-section">
+      <div class="spl-section-title" style="color:#8b5cf6">📊 SOC Dashboard Queries</div>
       <div class="spl-label">Real-time event volume by severity</div>
       <div class="spl-block"><button class="spl-copy" onclick="copySPL(this)">Copy</button>index=* earliest=-1h
 | eval severity=if(isnull(severity),"info",severity)
@@ -485,58 +551,61 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
       <div class="spl-block"><button class="spl-copy" onclick="copySPL(this)">Copy</button>index=endpoint
 | stats count by mitre_technique, mitre_tactic
 | sort -count
-| eval risk_score=case(count&gt;100,"Critical",count&gt;50,"High",count&gt;10,"Medium",true(),"Low")</div>
+| eval risk_score=case(count>100,"Critical",count>50,"High",count>10,"Medium",true(),"Low")</div>
       <div class="spl-label">User account created outside business hours (insider threat)</div>
       <div class="spl-block"><button class="spl-copy" onclick="copySPL(this)">Copy</button>index=security EventCode=4720
 | eval hour=strftime(_time,"%H")
-| where hour &lt; 8 OR hour &gt; 18
+| where hour < 8 OR hour > 18
 | table _time, user, Account_Name, Computer</div>
     </div>
 
-    <div class="sec-label" id="sec-siem">SIEM Platform Training — Direct Official Courses</div>
+    <div class="sec-label" id="sec-siem">SIEM Platform Training</div>
     <div class="skills-note">🛡️ The <strong>3 SIEMs that appear in Nigerian SOC job postings</strong>. Each offers official free training directly from their own website. Study Splunk + Sentinel first (78% of postings), then IBM QRadar as a bonus.</div>
 
-    <div class="siem-card" style="border:2px solid rgba(232,160,32,0.35)">
-      <div class="siem-head" style="background:linear-gradient(135deg,rgba(232,160,32,0.1),rgba(232,160,32,0.03))">
-        <div class="siem-icon" style="background:rgba(232,160,32,0.15);border:1px solid rgba(232,160,32,0.3)">🔍</div>
-        <div><div class="siem-title" style="color:#E8A020">Splunk — Official Free Training</div><div class="siem-sub">splunk.com · SIEM #1 in Nigerian SOC postings · In 78% of job ads · Free directly from Splunk</div></div>
-        <div class="siem-priority" style="background:rgba(232,160,32,0.15);color:#E8A020;border:1px solid rgba(232,160,32,0.3)">DO FIRST</div>
+    <!-- Splunk -->
+    <div class="siem-card" style="border:1.5px solid rgba(232,160,32,0.35)">
+      <div class="siem-head" style="background:linear-gradient(135deg,rgba(232,160,32,0.08),transparent)">
+        <div class="siem-icon" style="background:rgba(232,160,32,0.12);border:1px solid rgba(232,160,32,0.3)">🔍</div>
+        <div style="flex:1"><div class="siem-title" style="color:#f59e0b">Splunk — Official Free Training</div><div class="siem-sub">splunk.com · SIEM #1 in Nigerian SOC postings · In 78% of job ads</div></div>
+        <div class="siem-priority" style="background:rgba(232,160,32,0.12);color:#f59e0b;border:1px solid rgba(232,160,32,0.3)">DO FIRST</div>
       </div>
       <div class="siem-body">
-        <div class="siem-course"><div class="siem-course-title">All Splunk Free Courses (Main Hub)</div><div class="siem-course-desc">Blue Team Academy · SOC Operations · Security Use Cases · Threat Hunting · SOAR · UBA — all in one place</div><a class="c-link" href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank">splunk.com/en_us/training/free-courses/overview.html ↗</a></div>
+        <div class="siem-course"><div class="siem-course-title">All Splunk Free Courses (Main Hub)</div><div class="siem-course-desc">Blue Team Academy · SOC Operations · Security Use Cases · Threat Hunting · SOAR · UBA — all in one place</div><a class="c-link" href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank">Free Courses Hub ↗</a></div>
         <div class="siem-course"><div class="siem-course-title">Splunk Fundamentals 1, 2 &amp; 3</div><div class="siem-course-desc">Official Splunk search, SPL, dashboards, alerts, reports — the core skill employers test in every Nigerian SOC interview</div><a class="c-link" href="https://www.splunk.com/en_us/training/splunk-fundamentals.html" target="_blank">Splunk Fundamentals ↗</a></div>
-        <div class="siem-course"><div class="siem-course-title">TryHackMe — Splunk 101 &amp; 201 (Free Browser Labs)</div><div class="siem-course-desc">Practice SPL queries in a browser SOC environment — no install needed. "Splunk 101", "Splunk 201", "Investigating with Splunk" rooms</div><a class="c-link" href="https://tryhackme.com/room/splunk101" target="_blank">Splunk 101 ↗</a><a class="c-link" href="https://tryhackme.com/room/splunk201" target="_blank">Splunk 201 ↗</a><a class="c-link" href="https://tryhackme.com/room/investigatingwithsplunk" target="_blank">Investigating with Splunk ↗</a></div>
+        <div class="siem-course"><div class="siem-course-title">TryHackMe — Splunk 101 &amp; 201 (Free Browser Labs)</div><div class="siem-course-desc">Practice SPL queries in a browser SOC environment — no install needed. "Splunk 101", "Splunk 201", "Investigating with Splunk" rooms</div><a class="c-link" href="https://tryhackme.com/room/splunk101" target="_blank">Splunk 101 ↗</a><a class="c-link" href="https://tryhackme.com/room/splunk201" target="_blank">Splunk 201 ↗</a></div>
         <div class="siem-course"><div class="siem-course-title">Cybrary — Intro to Splunk (Free + Certificate)</div><div class="siem-course-desc">Install Splunk trial, ingest data, write searches, build alerts &amp; dashboards — 100% free with certificate of completion</div><a class="c-link" href="https://www.cybrary.it/course/intro-to-splunk" target="_blank">Cybrary Splunk Course ↗</a></div>
-        <div class="siem-tip" style="background:rgba(232,160,32,0.06);border:1px solid rgba(232,160,32,0.18);color:#E8A020">⚡ Nigerian employers ask "Write an SPL query to find failed logins" in round 1. Use the SPL Queries section above — you will immediately stand out from every other candidate.</div>
+        <div class="siem-tip" style="background:rgba(232,160,32,0.06);border:1px solid rgba(232,160,32,0.18);color:#fbbf24">⚡ Nigerian employers ask "Write an SPL query to find failed logins" in round 1. Use the SPL Queries section above — you will immediately stand out from every other candidate.</div>
       </div>
     </div>
 
-    <div class="siem-card" style="border:2px solid rgba(79,142,247,0.35)">
-      <div class="siem-head" style="background:linear-gradient(135deg,rgba(79,142,247,0.08),rgba(79,142,247,0.02))">
-        <div class="siem-icon" style="background:rgba(79,142,247,0.15);border:1px solid rgba(79,142,247,0.3)">🔷</div>
-        <div><div class="siem-title" style="color:#4F8EF7">Microsoft Sentinel — Official Free Training</div><div class="siem-sub">learn.microsoft.com · SIEM #2 in Nigerian postings · Used by Access Bank, Flutterwave, fintechs</div></div>
-        <div class="siem-priority" style="background:rgba(79,142,247,0.12);color:#4F8EF7;border:1px solid rgba(79,142,247,0.3)">DO SECOND</div>
+    <!-- Sentinel -->
+    <div class="siem-card" style="border:1.5px solid rgba(59,130,246,0.35)">
+      <div class="siem-head" style="background:linear-gradient(135deg,rgba(59,130,246,0.08),transparent)">
+        <div class="siem-icon" style="background:rgba(59,130,246,0.12);border:1px solid rgba(59,130,246,0.3)">🔷</div>
+        <div style="flex:1"><div class="siem-title" style="color:#60a5fa">Microsoft Sentinel — Official Free Training</div><div class="siem-sub">learn.microsoft.com · SIEM #2 in Nigerian postings · Used by Access Bank, Flutterwave, fintechs</div></div>
+        <div class="siem-priority" style="background:rgba(59,130,246,0.12);color:#60a5fa;border:1px solid rgba(59,130,246,0.3)">DO SECOND</div>
       </div>
       <div class="siem-body">
         <div class="siem-course"><div class="siem-course-title">Introduction to Microsoft Sentinel (Free Module)</div><div class="siem-course-desc">What Sentinel is, its components, use cases vs traditional SIEM — perfect starting point before the deeper courses</div><a class="c-link" href="https://learn.microsoft.com/en-us/training/modules/intro-to-azure-sentinel/" target="_blank">Intro to Sentinel ↗</a></div>
         <div class="siem-course"><div class="siem-course-title">SC-200 Full Learning Path — Sentinel + Defender</div><div class="siem-course-desc">Complete Microsoft exam prep — covers Sentinel, Microsoft Defender XDR, KQL for threat detection. Free on Microsoft Learn.</div><a class="c-link" href="https://learn.microsoft.com/en-us/training/paths/sc-200-mitigate-threats-using-microsoft-defender/" target="_blank">SC-200 Full Path ↗</a></div>
         <div class="siem-course"><div class="siem-course-title">Microsoft Sentinel Skill-Up Training (21 Modules)</div><div class="siem-course-desc">SOC lifecycle, threat detection, analytics rules, incident response, SOAR automation, threat intelligence — the full professional training</div><a class="c-link" href="https://learn.microsoft.com/en-us/azure/sentinel/skill-up-resources" target="_blank">Sentinel Skill-Up ↗</a></div>
-        <div class="siem-course"><div class="siem-course-title">SC-200 KQL Learning Path — Key Skill</div><div class="siem-course-desc">KQL is to Sentinel what SPL is to Splunk. Example: <code style="background:var(--card);padding:2px 5px;border-radius:3px;color:#4F8EF7;font-size:0.62rem">SecurityEvent | where EventID == 4625 | summarize count() by Account, IpAddress</code></div><a class="c-link" href="https://learn.microsoft.com/en-us/training/paths/sc-200-utilize-kql-for-azure-sentinel/" target="_blank">KQL Learning Path ↗</a></div>
-        <div class="siem-tip" style="background:rgba(79,142,247,0.06);border:1px solid rgba(79,142,247,0.18);color:#4F8EF7">⚡ SC-200 cert + Sentinel experience = strongest combo for Nigerian fintech and banking SOC jobs. Access Bank, Flutterwave, and Kuda all use Azure infrastructure.</div>
+        <div class="siem-course"><div class="siem-course-title">KQL Learning Path — Key Skill</div><div class="siem-course-desc">KQL is to Sentinel what SPL is to Splunk. Example: <code style="background:var(--bg);padding:2px 6px;border-radius:4px;color:#60a5fa;font-size:0.62rem;font-family:'Space Mono',monospace">SecurityEvent | where EventID == 4625 | summarize count() by Account, IpAddress</code></div><a class="c-link" href="https://learn.microsoft.com/en-us/training/paths/sc-200-utilize-kql-for-azure-sentinel/" target="_blank">KQL Learning Path ↗</a></div>
+        <div class="siem-tip" style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.18);color:#93c5fd">⚡ SC-200 cert + Sentinel experience = strongest combo for Nigerian fintech and banking SOC jobs. Access Bank, Flutterwave, and Kuda all use Azure infrastructure.</div>
       </div>
     </div>
 
-    <div class="siem-card" style="border:2px solid rgba(34,201,122,0.25)">
-      <div class="siem-head" style="background:linear-gradient(135deg,rgba(34,201,122,0.07),rgba(34,201,122,0.01))">
-        <div class="siem-icon" style="background:rgba(34,201,122,0.12);border:1px solid rgba(34,201,122,0.25)">🟢</div>
-        <div><div class="siem-title" style="color:#22C97A">IBM QRadar — Official Free Training</div><div class="siem-sub">ibm.com/training · Used by large enterprises &amp; telecoms in Nigeria · Bonus skill</div></div>
-        <div class="siem-priority" style="background:rgba(34,201,122,0.1);color:#22C97A;border:1px solid rgba(34,201,122,0.2)">BONUS</div>
+    <!-- QRadar -->
+    <div class="siem-card" style="border:1.5px solid rgba(16,185,129,0.25)">
+      <div class="siem-head" style="background:linear-gradient(135deg,rgba(16,185,129,0.06),transparent)">
+        <div class="siem-icon" style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25)">🔬</div>
+        <div style="flex:1"><div class="siem-title" style="color:#34d399">IBM QRadar — Official Free Training</div><div class="siem-sub">ibm.com/training · Used by large enterprises &amp; telecoms in Nigeria · Bonus skill</div></div>
+        <div class="siem-priority" style="background:rgba(16,185,129,0.1);color:#34d399;border:1px solid rgba(16,185,129,0.2)">BONUS</div>
       </div>
       <div class="siem-body">
         <div class="siem-course"><div class="siem-course-title">IBM QRadar SIEM Foundations (Official Free)</div><div class="siem-course-desc">QRadar architecture, navigation, investigating offenses, log sources, event analysis. Hands-on labs. 24 hours self-paced.</div><a class="c-link" href="https://www.ibm.com/training/course/ibm-qradar-siem-foundations-BQ104G" target="_blank">IBM QRadar Foundations ↗</a></div>
         <div class="siem-course"><div class="siem-course-title">Using IBM QRadar SIEM — Free Lab (Class Central)</div><div class="siem-course-desc">Navigate QRadar interface, investigate offenses, review Pulse app, create reports — completely free with IBM lab access</div><a class="c-link" href="https://www.classcentral.com/course/ibm-training-using-ibm-qradar-siem-478473" target="_blank">Class Central QRadar ↗</a></div>
-        <div class="siem-course"><div class="siem-course-title">IBM QRadar SIEM — Step-by-Step Bootcamp (Udemy)</div><div class="siem-course-desc">Architecture, offense investigation, AQL queries (QRadar's query language), log integration, custom rules, threat hunting</div><a class="c-link" href="https://www.udemy.com/course/ibm-qradar-siem-a-step-by-step-bootcamp/" target="_blank">QRadar Bootcamp ↗</a></div>
-        <div class="siem-tip" style="background:rgba(34,201,122,0.05);border:1px solid rgba(34,201,122,0.18);color:#22C97A">⚡ QRadar is used by MTN Nigeria, large Nigerian banks, and telecoms. Knowing all 3 SIEMs (Splunk + Sentinel + QRadar) makes you the strongest SOC L1 candidate in Port Harcourt.</div>
+        <div class="siem-course"><div class="siem-course-title">IBM QRadar SIEM — Step-by-Step Bootcamp (Udemy)</div><div class="siem-course-desc">Architecture, offense investigation, AQL queries, log integration, custom rules, threat hunting</div><a class="c-link" href="https://www.udemy.com/course/ibm-qradar-siem-a-step-by-step-bootcamp/" target="_blank">QRadar Bootcamp ↗</a></div>
+        <div class="siem-tip" style="background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.18);color:#6ee7b7">⚡ QRadar is used by MTN Nigeria, large Nigerian banks, and telecoms. Knowing all 3 SIEMs (Splunk + Sentinel + QRadar) makes you the strongest SOC L1 candidate in Port Harcourt.</div>
       </div>
     </div>
 
@@ -554,7 +623,7 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
     <div id="rolesWrap"></div>
 
     <div class="footer">
-      <span>Cyber Roadmap Pro</span> · Port Harcourt, Nigeria 🇳🇬 · 2026<br>
+      Cyber Roadmap Pro · Port Harcourt, Nigeria 🇳🇬 · 2026<br>
       <span style="color:var(--text3);font-size:0.6rem">Target employers: Certfort · GVA Partners · Cardinal Security · Access Bank · Flutterwave · Shell Nigeria · TotalEnergies · Chevron</span>
     </div>
   </div>
@@ -587,16 +656,16 @@ body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-h
       <button class="ai-btn" id="aiBtn" onclick="askGroq()">Send ↑</button>
     </div>
   </div>
+</div>
 
-  <div id="notifModal">
-    <div class="notif-sheet">
-      <div style="width:34px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 16px"></div>
-      <div style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:5px">🔔 Daily Study Reminder</div>
-      <div style="font-size:0.71rem;color:var(--text3);margin-bottom:16px;line-height:1.5">Pick a time for your daily reminder while the app is open.<br><strong style="color:var(--accent)">For true background notifications</strong> — enable in phone Settings → Apps → Notifications.</div>
-      <div style="margin-bottom:14px"><label style="font-size:0.63rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:7px">Reminder Time</label><input type="time" id="notifTime" value="08:00" style="width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:9px;padding:11px 13px;color:var(--text);font-family:'Inter',sans-serif;font-size:1rem;outline:none"></div>
-      <button onclick="saveNotifTime()" style="width:100%;padding:12px;background:var(--accent);color:#0A0B0F;border:none;border-radius:9px;font-family:'Syne',sans-serif;font-size:0.87rem;font-weight:700;cursor:pointer;margin-bottom:9px">Enable Reminder</button>
-      <button onclick="closeNotifModal()" style="width:100%;padding:10px;background:transparent;color:var(--text3);border:1.5px solid var(--border);border-radius:9px;font-family:'Inter',sans-serif;font-size:0.81rem;cursor:pointer">Cancel</button>
-    </div>
+<div id="notifModal">
+  <div class="notif-sheet">
+    <div style="width:34px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 18px"></div>
+    <div style="font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:700;margin-bottom:6px">🔔 Daily Study Reminder</div>
+    <div style="font-size:0.72rem;color:var(--text3);margin-bottom:18px;line-height:1.6">Pick a time for your daily reminder while the app is open.<br><strong style="color:var(--accent2)">For true background notifications</strong> — enable in phone Settings → Apps → Notifications.</div>
+    <div style="margin-bottom:16px"><label style="font-size:0.63rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:7px">Reminder Time</label><input type="time" id="notifTime" value="08:00" style="width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:9px;padding:11px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:1rem;outline:none"></div>
+    <button onclick="saveNotifTime()" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.87rem;font-weight:700;cursor:pointer;margin-bottom:9px">Enable Reminder</button>
+    <button onclick="closeNotifModal()" style="width:100%;padding:10px;background:transparent;color:var(--text3);border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.81rem;cursor:pointer">Cancel</button>
   </div>
 </div>
 
@@ -658,6 +727,7 @@ function toggleTheme(){const c=document.documentElement.getAttribute("data-theme
 
 function setTab(m){authMode=m;document.querySelectorAll(".auth-tab").forEach((t,i)=>t.classList.toggle("active",(m==="login"&&i===0)||(m==="signup"&&i===1)));document.getElementById("authBtn").textContent=m==="login"?"Login":"Create Account";document.getElementById("authErr").textContent="";document.getElementById("nameField").style.display=m==="signup"?"block":"none";if(m==="login")document.getElementById("authName").value=""}
 function togglePass(){const i=document.getElementById("authPass"),e=document.getElementById("passEye");if(i.type==="password"){i.type="text";e.textContent="🙈"}else{i.type="password";e.textContent="👁"}}
+
 function doAuth(){
   const e=document.getElementById("authEmail").value.trim(),p=document.getElementById("authPass").value,name=document.getElementById("authName").value.trim(),err=document.getElementById("authErr");
   err.textContent="";if(!e||!p){err.textContent="Please fill in all fields.";return}
@@ -668,9 +738,10 @@ function doAuth(){
       .then(cred=>Promise.all([cred.user.updateProfile({displayName:name}),db.collection("users").doc(cred.user.uid).set({name,courses:new Array(TOTAL_COURSES).fill(false),certs:new Array(TOTAL_CERTS).fill(false),skills:{},streak:0,lastDay:""})]).then(()=>cred.user.uid))
       .then(newUid=>{uid=newUid;signupInProgress=false;document.getElementById("authPage").style.display="none";document.getElementById("app").style.display="block";loadData()})
       .catch(ex=>{signupInProgress=false;err.textContent=ex.message.replace("Firebase: ","")})
-  } else {auth.signInWithEmailAndPassword(e,p).catch(ex=>{err.textContent=ex.message.replace("Firebase: ","")})};
+  } else {auth.signInWithEmailAndPassword(e,p).catch(ex=>{err.textContent=ex.message.replace("Firebase: ","")})}
 }
 function doLogout(){auth.signOut();closeMenu()}
+
 auth.onAuthStateChanged(user=>{
   if(user){if(signupInProgress||uid===user.uid)return;uid=user.uid;document.getElementById("authPage").style.display="none";document.getElementById("app").style.display="block";loadData()}
   else{uid=null;currentUserName="";currentUserEmail="";document.getElementById("authPage").style.display="flex";document.getElementById("app").style.display="none"}
@@ -707,11 +778,14 @@ function updatePhaseCounts(){
   const pc={p1:[0,1,2,3,4,5,22,23],p2:[6,7,8,9,10,11,12,24,25],p3:[13,14,15,16,17,26,27],p4:[18,19,20,21,28,29]};
   Object.entries(pc).forEach(([pid,ids])=>{const el=document.getElementById("cnt-"+pid);if(el)el.textContent=ids.filter(i=>courses[i]).length+"/"+ids.length})
 }
+
 function updateStats(){
   const done=courses.filter(Boolean).length+certs.filter(Boolean).length;
   const pct=Math.round(done/(TOTAL_COURSES+TOTAL_CERTS)*100);
-  document.getElementById("statDone").textContent=done;document.getElementById("statPct").textContent=pct+"%";
-  document.getElementById("progFill").style.width=pct+"%";document.getElementById("progPct").textContent=pct+"%";
+  document.getElementById("statDone").textContent=done;
+  document.getElementById("statPct").textContent=pct+"%";
+  document.getElementById("progFill").style.width=pct+"%";
+  document.getElementById("progPct").textContent=pct+"%";
 }
 
 function renderSkills(){
@@ -724,6 +798,7 @@ function renderSkills(){
     grid.appendChild(chip)
   })
 }
+
 function toggleSkill(id,chip){skills[id]=!skills[id];if(!skills[id])delete skills[id];chip.classList.toggle("owned",Boolean(skills[id]));db.collection("users").doc(uid).update({skills});renderRoles();if(skills[id])showToast("✅ Skill added!")}
 
 function markToday(){
@@ -743,6 +818,7 @@ function getRoleStatus(r){
   if(r.needC.some(i=>courses[i])||r.needT.some(i=>certs[i])||r.needSkills.some(s=>skills[s]))return"partial";
   return"locked"
 }
+
 function renderRoles(){
   const wrap=document.getElementById("rolesWrap");wrap.innerHTML="";
   ROLES.forEach((role,ri)=>{
@@ -753,17 +829,18 @@ function renderRoles(){
     role.needC.slice(0,3).forEach(i=>{tags+=`<span class="rtag ${courses[i]?"rtag-done":"rtag-miss"}">${courses[i]?"✓":"○"} Course ${i+1}</span>`});
     if(role.needC.length>3){const e=role.needC.length-3,d=role.needC.slice(3).filter(i=>courses[i]).length;tags+=`<span class="rtag ${d===e?"rtag-done":"rtag-miss"}">+${e} more</span>`}
     role.needT.forEach(i=>{tags+=`<span class="rtag ${certs[i]?"rtag-done":"rtag-miss"}">${certs[i]?"✓":"○"} ${CERT_NAMES[i]||"Cert"}</span>`});
-    let skHtml="";if(role.needSkills.length>0){skHtml=`<div class="req-label" style="margin-top:6px">Skills needed</div><div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">`;role.needSkills.forEach(s=>{const h=Boolean(skills[s]),sk=SKILLS_LIST.find(x=>x.id===s);skHtml+=`<span class="rsk ${h?"rsk-have":"rsk-need"}">${h?"✓":"○"} ${sk?sk.name:s}</span>`});skHtml+=`</div>`}
+    let skHtml="";if(role.needSkills.length>0){skHtml=`<div class="req-label" style="margin-top:6px">Skills needed</div><div style="display:flex;flex-wrap:wrap;gap:4px;padding:0 16px 10px">`;role.needSkills.forEach(s=>{const h=Boolean(skills[s]),sk=SKILLS_LIST.find(x=>x.id===s);skHtml+=`<span class="rsk ${h?"rsk-have":"rsk-need"}">${h?"✓":"○"} ${sk?sk.name:s}</span>`});skHtml+=`</div>`}
     let cHtml="";if(st!=="qualified"){cHtml=`<div class="certs-needed"><div class="cn-label">To land this role</div>${role.certsToLand.map(c=>`<div class="cn-item">${c}</div>`).join("")}</div>`}
     const ao=st!=="locked"?"open":"";
     const card=document.createElement("div");card.className="role-card "+st;
-    card.innerHTML=`<div class="role-head" onclick="toggleRole(${ri})"><div class="role-dot"></div><div class="role-info"><div class="role-name">${role.title}</div><div class="role-remote">${role.remote}</div></div><span class="role-badge ${bC}">${bT}</span></div><div class="role-body ${ao}" id="rbody-${ri}"><div class="role-desc">${role.desc}</div><div class="req-label">Course requirements</div><div class="role-tags">${tags}</div>${skHtml}<div class="role-salary">💰 <span class="salary-n">${role.salary}</span></div><div style="font-size:0.63rem;color:var(--text3);margin-bottom:8px">🏢 ${role.employers}</div>${cHtml}</div>`;
+    card.innerHTML=`<div class="role-head" onclick="toggleRole(${ri})"><div class="role-dot"></div><div class="role-info"><div class="role-name">${role.title}</div><div class="role-remote">${role.remote}</div></div><span class="role-badge ${bC}">${bT}</span></div><div class="role-body ${ao}" id="rbody-${ri}"><div class="role-desc">${role.desc}</div><div class="req-label">Course requirements</div><div class="role-tags">${tags}</div>${skHtml}<div class="role-salary" style="padding:8px 16px">💰 <span class="salary-n">${role.salary}</span></div><div style="font-size:0.63rem;color:var(--text3);padding:0 16px 10px">🏢 ${role.employers}</div>${cHtml}</div>`;
     wrap.appendChild(card)
   })
 }
+
 function toggleRole(i){document.getElementById("rbody-"+i)?.classList.toggle("open")}
 
-function copySPL(btn){const text=btn.parentElement.innerText.replace("Copy","").trim();navigator.clipboard.writeText(text).then(()=>{btn.textContent="Copied!";setTimeout(()=>btn.textContent="Copy",2000)})}
+function copySPL(btn){const text=btn.parentElement.innerText.replace("Copy","").replace("Copied!","").trim();navigator.clipboard.writeText(text).then(()=>{btn.textContent="Copied!";setTimeout(()=>btn.textContent="Copy",2000)})}
 
 function openNotifModal(){document.getElementById("notifModal").classList.add("show")}
 function closeNotifModal(){document.getElementById("notifModal").classList.remove("show")}
@@ -778,58 +855,7 @@ function buildAISystemPrompt(){
   const done=courses.filter(Boolean).length;const certsDone=certs.filter(Boolean).length;
   const pct=Math.round((done+certsDone)/(TOTAL_COURSES+TOTAL_CERTS)*100);
   const ownedSkills=SKILLS_LIST.filter(s=>skills[s.id]).map(s=>s.name).join(", ")||"none yet";
-  return `You are the built-in AI Cybersecurity Mentor inside Cyber Roadmap Pro — an app specifically designed for ${name} in Port Harcourt, Nigeria targeting SOC Analyst Level 1.
-
-ABOUT ${name.toUpperCase()}:
-- Location: Port Harcourt, Nigeria
-- Background: HSE experience at Indorama, two Udacity AWS AI certifications
-- Current progress: ${pct}% complete (${done+certsDone}/${TOTAL_COURSES+TOTAL_CERTS} items done)
-- Completed courses: ${done} of 30
-- Earned certifications: ${certsDone} of 7
-- Skills marked: ${ownedSkills}
-
-APP COURSES (30 total):
-PHASE 1 — Foundation (Months 1-2): Palo Alto Intro to Cybersecurity (free, paloaltonetworks.com/cybersecurity-academy), Cisco Intro to Cybersecurity (free, netacad.com/courses/cybersecurity/introduction-cybersecurity), Networking Fundamentals Cisco (free, netacad.com/courses/networking-basics), Linux Essentials Cisco (free, netacad.com/courses/linux-essentials), Professor Messer Security+ SY0-701 YouTube (free, youtube.com/@professormesser), Google Cybersecurity Certificate (Coursera, financial aid available), LabEx Cybersecurity Fundamentals browser labs (free, labex.io/learn/cybersecurity and labex.io/free-labs/cybersecurity), Cisco Endpoint Security (free, netacad.com).
-PHASE 2 — SOC Core + SIEM (Months 3-4): Palo Alto Fundamentals of SOC (free), Palo Alto Fundamentals of Network Security (free), Splunk Free Training including Fundamentals 1 and Blue Team Academy (free at splunk.com/en_us/training/free-courses/overview.html and splunk.com/en_us/training/splunk-fundamentals.html and splunk.com/en_us/training/course-catalog.html), Microsoft Student SOC + Sentinel (free, microsoft.github.io), SC-200 Microsoft Security Operations on Microsoft Learn (free), TryHackMe SOC Level 1 Path (free tier, tryhackme.com/path/outline/soclevel1), Wireshark Packet Analysis Chris Greer YouTube (free, youtube.com/@ChrisGreer), LabEx Linux for Security labs (free, labex.io/learn and labex.io/free-labs/cybersecurity), Cisco Network Defense (free, netacad.com/catalogs/learn/cybersecurity).
-PHASE 3 — Certifications + Apply (Months 5-6): Cisco CyberOps Associate 200-201 (free study, netacad.com/courses/cyberops-associate), CyberDefenders SOC Analyst L1 Path (cyberdefenders.org/blueteam-ctf-challenges/), NDPR Compliance Fundamentals (free, nitda.gov.ng/nit/ndpr/), ISO 27001/NIST/PCI-DSS Basics (free, nist.gov/cyberframework), Cisco Cyber Threat Management (free, netacad.com), Cybrary SOC Analyst Career Path (free, cybrary.it/free-content), Splunk SIEM SOC Analyst Training Udemy 60hrs (~N3000-6000 on sale).
-PHASE 4 — Broaden (Month 6+): Palo Alto Cloud Security (free), Cisco Ethical Hacker (free), Hack The Box Starting Point (free, only after 6 months TryHackMe), GRC Mastery Udemy, AI for Cybersecurity Cisco NetAcad (free, netacad.com), LabEx CTF Challenges (free, labex.io/learn/cybersecurity).
-
-APP CERTIFICATIONS (7 targets):
-1. CompTIA Security+ SY0-701 — Primary #1. Appears in nearly every Nigerian SOC posting. ~$200 USD. NITDA offers 50% subsidy via Digital Nigeria program. Buy via getcertified4less.com for Nigeria discount. Promo code PEARSON10 for 10% off comptia.org.
-2. Cisco CyberOps Associate 200-201 — Primary #2. Free study via NetAcad. Built specifically for SOC roles. cisco.com.
-3. SC-200 Microsoft Security Operations Analyst — Phase 2-3 goal. Pairs with Sentinel. Strong in fintech/banking. learn.microsoft.com.
-4. CompTIA CySA+ — After first SOC L1 job. Step up from Security+.
-5. Splunk Core Certified User — Entry SIEM cert. Validates SPL skills. Free training available. splunk.com/en_us/training/certification-track/splunk-core-certified-user.html.
-6. CyberDefenders Blue Team Analyst — SOC path cert. Free labs build toward it. cyberdefenders.org.
-7. CISSP — Long-term. Requires 5 years experience. Study after first job.
-
-APP SKILLS TRACKER (18 skills):
-SIEM Splunk/Sentinel, Splunk SPL Queries, Wireshark/Packet Analysis, Linux CLI, Windows Event Logs, TCP/IP/Networking, Firewalls/IDS/IPS, IAM/Access Control, EDR Tools, VirusTotal/Threat Intel, NDPR/Nigerian Compliance, ISO 27001/NIST, PCI-DSS, Cloud Security AWS/Azure, Python/Scripting, AI Security Tools, Incident Response basics, Alert Triage.
-
-APP SPL QUERIES SECTION (real interview queries):
-Authentication: failed logins (EventCode=4625 stats by src_ip/user where count>5), brute force (bin 5m where count>=10), credential stuffing (4625 OR 4624 failures+successes). Network: top talkers (sum bytes by src_ip), blocked connections (action=blocked), port scan (dc dest_port >20). Threat: suspicious PowerShell (EventCode=4688 match encodedcommand/bypass/hidden), critical alerts last 24h. Dashboard: timechart by severity, MITRE ATT&CK mapping, insider threat accounts outside hours.
-
-APP SIEM PLATFORM COURSES SECTION:
-1. SPLUNK (DO FIRST): Free courses at splunk.com/en_us/training/free-courses/overview.html. Fundamentals 1/2/3 at splunk.com/en_us/training/splunk-fundamentals.html. TryHackMe rooms: splunk101, splunk201, investigatingwithsplunk. Cybrary free Intro to Splunk course with certificate. Certification: Splunk Core Certified User.
-2. MICROSOFT SENTINEL (DO SECOND): Intro module at learn.microsoft.com/en-us/training/modules/intro-to-azure-sentinel/. SC-200 full path. Sentinel Skill-Up 21 modules at learn.microsoft.com/en-us/azure/sentinel/skill-up-resources. KQL learning path. Key skill: KQL queries (e.g. SecurityEvent | where EventID == 4625 | summarize count() by Account, IpAddress).
-3. IBM QRADAR (BONUS): Official free foundations at ibm.com/training (BQ104G). Class Central free lab. Udemy bootcamp. Used by MTN Nigeria, large banks, telecoms.
-
-APP CAREER ROLES (7 roles with Nigerian salary data):
-IT Helpdesk (N150K-300K/month, needs courses 0,1,2 + tcpip/windows skills). Junior GRC Analyst (N200K-450K/month local, $800-1500 remote, needs courses 0,1,5,15,16 + Security+ cert + ndpr/iso27001 skills). SOC L1 TARGET (N150K-350K/month local, $800-2000 remote, needs 9 courses + Security+ + siem/spl/linux/windows/triage/incident skills, employers: Certfort/Cardinal Security/GVA Partners/Access Bank). SOC Oil & Gas PH (N500K-1.2M/month, 10 courses + Security+/CyberOps certs, Shell/Chevron/TotalEnergies/Indorama). Cloud Security Analyst (N350K-700K/month, $1500-3000 remote, cloud/siem/iam/linux skills, Flutterwave/Kuda/Paystack). SOC L2 (N400K-900K/month, $2000-4000 remote, 13 courses + Security+/SC-200/CySA+ certs). Penetration Tester (N500K-1.5M/month, $2500-6000 remote).
-
-KEY FACTS:
-- SIEM in 78% of Nigerian SOC postings — Splunk and Sentinel are #1 and #2
-- AI/automation skills in 64% of 2026 job postings
-- NDPR (Nigeria Data Protection Regulation) = key differentiator — every Nigerian bank and fintech must comply
-- Top employers: Certfort, GVA Partners, Cardinal Security, Access Bank, GTBank, Zenith, Flutterwave, Kuda, Paystack, MTN Nigeria, Shell Nigeria, Chevron, TotalEnergies, Indorama, Seplat
-- Port Harcourt oil & gas (Shell/Chevron/TotalEnergies) = highest Nigerian salaries: N500K-1.2M/month
-- Remote international SOC roles: $800-2,000/month after first local job
-- Splunk-certified analysts earn 40% more (Splunk 2025 Career Impact Report)
-- LabEx.io = free browser-based hands-on labs, no install needed
-- Indorama HSE background = massive advantage for oil & gas SOC roles in PH
-- ${name}'s AWS Udacity certs = head start for Cloud Security Analyst roles
-
-Always address ${name} by name. Be practical, specific to their situation, encouraging. Reference their actual progress (${pct}% done) when relevant. Under 200 words. Give specific URLs when recommending resources.`;
+  return `You are the built-in AI Cybersecurity Mentor inside Cyber Roadmap Pro — an app specifically designed for ${name} in Port Harcourt, Nigeria targeting SOC Analyst Level 1. ABOUT ${name.toUpperCase()}: Location: Port Harcourt, Nigeria. Background: HSE experience at Indorama, two Udacity AWS AI certifications. Current progress: ${pct}% complete (${done+certsDone}/${TOTAL_COURSES+TOTAL_CERTS} items done). Completed courses: ${done} of 30. Earned certifications: ${certsDone} of 7. Skills marked: ${ownedSkills}. KEY FACTS: SIEM in 78% of Nigerian SOC postings. AI/automation skills in 64% of 2026 job postings. NDPR = key differentiator. Top employers: Certfort, GVA Partners, Cardinal Security, Access Bank, GTBank, Flutterwave, Shell Nigeria, Chevron, TotalEnergies. Port Harcourt oil & gas pays ₦500K-1.2M/month. Always address ${name} by name. Be practical, specific, encouraging. Under 200 words. Give specific URLs when recommending resources.`
 }
 
 let aiOpen=false;
@@ -848,15 +874,15 @@ async function askGroq(questionOverride){
   try{
     const res=await fetch("https://api.groq.com/openai/v1/chat/completions",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+GROQ_KEY},body:JSON.stringify({model:"llama-3.1-8b-instant",max_tokens:700,messages:[{role:"system",content:buildAISystemPrompt()},...aiHistory.slice(-10)]})});
     const data=await res.json();let reply="";
-    if(res.status===429){aB.innerHTML=`<strong>⚠️ Rate limit.</strong> Wait 1 min.<br><a href="https://tryhackme.com" target="_blank" style="color:var(--accent)">TryHackMe ↗</a> · <a href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank" style="color:var(--accent)">Splunk Free ↗</a> · <a href="https://labex.io/free-labs/cybersecurity" target="_blank" style="color:var(--accent)">LabEx ↗</a>`}
-    else if(res.status===401){aB.innerHTML=`⚠️ API key issue. Get free key at <a href="https://console.groq.com" target="_blank" style="color:var(--accent)">console.groq.com ↗</a>`}
+    if(res.status===429){aB.innerHTML=`<strong>⚠️ Rate limit.</strong> Wait 1 min.<br><a href="https://tryhackme.com" target="_blank" style="color:var(--accent2)">TryHackMe ↗</a> · <a href="https://www.splunk.com/en_us/training/free-courses/overview.html" target="_blank" style="color:var(--accent2)">Splunk Free ↗</a>`}
+    else if(res.status===401){aB.innerHTML=`⚠️ API key issue. Get free key at <a href="https://console.groq.com" target="_blank" style="color:var(--accent2)">console.groq.com ↗</a>`}
     else if(!res.ok){aB.className="bubble bubble-ai";aB.textContent="⚠️ Error "+res.status+". Try again."}
     else{reply=data.choices?.[0]?.message?.content||"No response.";aB.className="bubble bubble-ai";aB.textContent=reply;aiHistory.push({role:"assistant",content:reply})}
   }catch(e){aB.className="bubble bubble-ai";aB.textContent="⚠️ No internet. Check your connection."}
   btn.disabled=false;msgs.scrollTop=msgs.scrollHeight;
 }
-function askSug(btn){askGroq(btn.textContent)}
 
+function askSug(btn){askGroq(btn.textContent)}
 function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3000)}
 
 document.addEventListener("DOMContentLoaded",()=>{
