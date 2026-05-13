@@ -118,6 +118,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .streak-num small{font-size:0.55rem;color:var(--text3);display:block;font-family:'DM Sans',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px}
 .btn-streak{background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(6,182,212,0.1));border:1px solid rgba(16,185,129,0.35);color:#10b981;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:700;padding:9px 14px;border-radius:10px;cursor:pointer;transition:all 0.22s;white-space:nowrap}
 .btn-streak:hover{background:rgba(16,185,129,0.22);border-color:rgba(16,185,129,0.6)}
+.btn-streak:disabled{opacity:0.6;cursor:not-allowed}
 .sec-label{font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin:0 0 14px;display:flex;align-items:center;gap:10px}
 .sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent)}
 
@@ -140,7 +141,6 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .path-tile:hover .pt-arrow{transform:translateX(4px)}
 .pt-progress{margin:0 16px 12px;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
 .pt-progress-fill{height:100%;border-radius:2px;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1)}
-.path-tile.tile-active .pt-progress-fill{background:currentColor}
 
 /* ── PATH DETAIL VIEW ── */
 #pathView{display:none;animation:slideRight 0.35s cubic-bezier(0.16,1,0.3,1) both}
@@ -157,7 +157,6 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .ph-meta-label{font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:5px}
 .ph-meta-val{font-size:0.8rem;font-weight:700;color:var(--text);line-height:1.4}
 
-/* progress in detail */
 .detail-progress{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:20px}
 .dp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .dp-label{font-size:0.7rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.08em}
@@ -315,7 +314,12 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
     </div>
     <div id="nameField" class="field" style="display:none"><label>Full Name</label><input type="text" id="authName" placeholder="e.g. Godson Uzoezie" autocomplete="name"></div>
     <div class="field"><label>Email</label><input type="email" id="authEmail" placeholder="your@email.com" autocomplete="email"></div>
-    <div class="field"><label>Password</label><div class="pass-wrap"><input type="password" id="authPass" placeholder="••••••••" autocomplete="current-password"><button class="pass-eye" id="passEye" onclick="togglePass()" type="button">👁</button></div></div>
+    <div class="field"><label>Password</label>
+      <div class="pass-wrap">
+        <input type="password" id="authPass" placeholder="••••••••" autocomplete="current-password">
+        <button class="pass-eye" id="passEye" onclick="togglePass()" type="button">👁</button>
+      </div>
+    </div>
     <button class="btn-primary" id="authBtn" onclick="doAuth()">Login</button>
     <div class="auth-err" id="authErr"></div>
   </div>
@@ -323,7 +327,6 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 
 <!-- ══ APP ══ -->
 <div id="app" style="display:none">
-
   <nav class="nav">
     <div class="nav-inner">
       <div class="nav-logo" onclick="goHome()">
@@ -340,7 +343,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
   <div class="menu-tray" id="menuTray">
     <div class="menu-head"><span class="menu-head-title">Navigation</span><button class="menu-close" onclick="closeMenu()">✕</button></div>
-    <div class="menu-user"><div class="menu-user-label">Signed in as</div><div id="menuUserBlock"></div></div>
+    <div class="menu-user"><div class="menu-user-label">Signed in as</div><div id="menuUserBlock" style="font-size:0.8rem;color:var(--text2);font-weight:600"></div></div>
     <div class="menu-items">
       <button class="menu-item" onclick="closeMenu();goHome()"><span class="menu-icon">🏠</span>Career Paths</button>
       <button class="menu-item" onclick="closeMenu();openNotifModal()"><span class="menu-icon">🔔</span>Study Reminder</button>
@@ -350,34 +353,28 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 
   <div class="main">
-
     <!-- ── DASHBOARD ── -->
     <div id="dashView">
       <div class="dash-hero">
         <div class="dash-welcome" id="dashWelcome">Welcome back 👋</div>
         <div class="dash-sub">Port Harcourt, Nigeria 🇳🇬 · Choose a career path below to view your full roadmap</div>
       </div>
-
       <div class="dash-stats">
         <div class="d-stat"><span class="d-stat-n" id="dStatPaths">0</span><span class="d-stat-l">Paths Started</span></div>
         <div class="d-stat"><span class="d-stat-n" id="dStatStreak">0</span><span class="d-stat-l">🔥 Streak</span></div>
         <div class="d-stat"><span class="d-stat-n" id="dStatTotal">0</span><span class="d-stat-l">Total Done</span></div>
       </div>
-
       <div class="streak-row">
         <div><div class="streak-lbl">Study Streak</div><div class="streak-num" id="streakVal">0<small>days in a row</small></div></div>
         <button class="btn-streak" id="streakBtn" onclick="markToday()">✓ Mark Today Done</button>
       </div>
-
       <div class="sec-label">Choose Your Career Path</div>
       <div class="paths-grid" id="pathsGrid"></div>
-
       <div class="footer">Cyber Roadmap Pro · Port Harcourt, Nigeria 🇳🇬 · 2026<br><span style="color:var(--text3);font-size:0.6rem">8 Career Paths · Real 2026 Nigerian Job Market Data</span></div>
     </div>
 
     <!-- ── PATH DETAIL ── -->
     <div id="pathView"></div>
-
   </div>
 
   <button class="ai-fab" onclick="toggleAIDrawer()"><span>🤖</span><span>Ask AI Mentor</span></button>
@@ -421,10 +418,18 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 /* ══════════════════════════════════════════════
    CONFIG
 ══════════════════════════════════════════════ */
-const firebaseConfig={apiKey:"AIzaSyDe2ngASIsjK2lflmjcb-SoqkrxvH12mNI",authDomain:"godson-cyber-roadmap.firebaseapp.com",projectId:"godson-cyber-roadmap",storageBucket:"godson-cyber-roadmap.firebasestorage.app",messagingSenderId:"597821979440",appId:"1:597821979440:web:2cbbc17da0f71352d9a6f5"};
+const firebaseConfig={
+  apiKey:"AIzaSyDe2ngASIsjK2lflmjcb-SoqkrxvH12mNI",
+  authDomain:"godson-cyber-roadmap.firebaseapp.com",
+  projectId:"godson-cyber-roadmap",
+  storageBucket:"godson-cyber-roadmap.firebasestorage.app",
+  messagingSenderId:"597821979440",
+  appId:"1:597821979440:web:2cbbc17da0f71352d9a6f5"
+};
 const GROQ_KEY="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";
+
 firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth(),db=firebase.firestore();
+const auth=firebase.auth(), db=firebase.firestore();
 
 /* ══════════════════════════════════════════════
    CAREER PATHS DATA
@@ -575,7 +580,7 @@ const PATHS=[
      {title:'Phase 2 — Web Application Penetration Testing',subtitle:'Months 3–5',color:'#f59e0b',open:false,
       note:'⚡ Web app testing is the most in-demand pentest specialization. PortSwigger is world-class and completely free.',
       courses:[
-       {n:'OWASP Top 10 — Complete Guide',p:'OWASP',free:true,m:'Foundation of web security — every pentest interviews tests this',links:[{t:'OWASP Top 10 ↗',u:'https://owasp.org/www-project-top-ten/'}]},
+       {n:'OWASP Top 10 — Complete Guide',p:'OWASP',free:true,m:'Foundation of web security — every pentest interview tests this',links:[{t:'OWASP Top 10 ↗',u:'https://owasp.org/www-project-top-ten/'}]},
        {n:'TryHackMe — Jr Penetration Tester Path',p:'TryHackMe',free:true,m:'Hands-on browser labs for full pentest workflow',links:[{t:'Jr Pentest Path ↗',u:'https://tryhackme.com/path/outline/jrpenetrationtester'}]},
        {n:'Burp Suite Essentials — PortSwigger',p:'PortSwigger',free:true,m:'Official Burp Suite training from the makers',links:[{t:'Burp Suite Training ↗',u:'https://portswigger.net/burp/documentation/desktop/getting-started'}]},
        {n:'SQLmap & SQL Injection',p:'TryHackMe + OWASP',free:true,m:'Most common web vulnerability in Nigerian organizations',links:[{t:'SQL Injection TryHackMe ↗',u:'https://tryhackme.com/module/sql-injection'}]},
@@ -619,7 +624,7 @@ const PATHS=[
    timeline:'4–6 months',demand:'Very High in Banking 🏦',
    salaryLocal:'₦200K–₦600K/mo',salaryRemote:'$800–$2,000/mo',
    prereqs:'None — perfect for career changers from compliance/legal/HSE',
-   description:'Ensure organizations comply with security frameworks and regulations. Your HSE background from Indorama directly transfers — compliance docs, risk registers, audit trails are the same discipline.',
+   description:'Ensure organizations comply with security frameworks and regulations. Your HSE background directly transfers — compliance docs, risk registers, audit trails are the same discipline.',
    tools:['GRC Platforms (ServiceNow/Archer)','Microsoft Compliance Center','NIST Framework','ISO 27001 Toolkit'],
    employers:['Access Bank','GTBank','Zenith Bank','Flutterwave','KPMG Nigeria','PwC Nigeria','CBN'],
    nigeriaTip:'<strong>NDPA 2023 enforcement creates massive GRC demand in Nigeria.</strong> The ₦766M fine against Multichoice = banks and fintechs are hiring urgently. NDPR + ISO 27001 = immediate job.',
@@ -642,9 +647,9 @@ const PATHS=[
        {n:'PCI DSS v4.0 Fundamentals',p:'PCI Security Standards Council',free:true,m:'Payment card compliance — required for all fintech/banking GRC roles',links:[{t:'PCI DSS ↗',u:'https://www.pcisecuritystandards.org'}]},
       ]},
      {title:'Phase 3 — Audit & Compliance',subtitle:'Months 5–6',color:'#8b5cf6',open:false,
-      note:'⚡ SOC 2 Type II reports are now required for Nigerian fintech companies expanding internationally. Learn this.',
+      note:'⚡ SOC 2 Type II reports are now required for Nigerian fintech companies expanding internationally.',
       courses:[
-       {n:'SOC 2 Compliance — Complete Guide',p:'AICPA / Udemy',free:false,m:'Required for fintech international expansion — $20–30 on Udemy',links:[{t:'SOC 2 Guide ↗',u:'https://www.aicpa.org/resources/download/soc-2-reporting-on-an-examination-of-controls-at-a-service-organization-relevant-to-security'},{t:'SOC 2 Udemy ↗',u:'https://www.udemy.com/courses/search/?q=soc+2+compliance'}]},
+       {n:'SOC 2 Compliance — Complete Guide',p:'AICPA / Udemy',free:false,m:'Required for fintech international expansion — $20–30 on Udemy',links:[{t:'SOC 2 Udemy ↗',u:'https://www.udemy.com/courses/search/?q=soc+2+compliance'}]},
        {n:'GDPR Compliance — Complete Course',p:'Udemy / LinkedIn Learning',free:false,m:'Applies to all Nigerian companies with EU customers',links:[{t:'GDPR Course ↗',u:'https://www.udemy.com/courses/search/?q=gdpr+compliance'}]},
        {n:'Internal Audit Fundamentals',p:'IIA (Institute of Internal Auditors)',free:true,m:'Audit methodology used in all Nigerian banks',links:[{t:'IIA Nigeria ↗',u:'https://www.iia.org.ng'}]},
        {n:'Cybersecurity Audit — ISACA',p:'ISACA',free:true,m:'Technical audit guide for cybersecurity programs',links:[{t:'ISACA Audit Guide ↗',u:'https://www.isaca.org/resources/isaca-journal/issues/2022/volume-3/cybersecurity-audit'}]},
@@ -700,7 +705,7 @@ const PATHS=[
       courses:[
        {n:'DevSecOps Fundamentals — LinkedIn Learning',p:'LinkedIn Learning',free:false,m:'Integrate security into CI/CD pipelines',links:[{t:'DevSecOps Learning ↗',u:'https://www.linkedin.com/learning/search?keywords=devsecops'}]},
        {n:'Container Security — Docker & Kubernetes',p:'Linux Foundation',free:true,m:'Container security fundamentals and CVE scanning',links:[{t:'LF Free Courses ↗',u:'https://training.linuxfoundation.org/resources/?_sft_content_type=free-course'}]},
-       {n:'AWS Well-Architected — Security Pillar',p:'AWS',free:true,m:'Official AWS security architecture guide',links:[{t:'Well-Architected ↗',u:'https://aws.amazon.com/architecture/well-architected/?wa-lens-whitepapers.sort-by=item.additionalFields.sortDate'}]},
+       {n:'AWS Well-Architected — Security Pillar',p:'AWS',free:true,m:'Official AWS security architecture guide',links:[{t:'Well-Architected ↗',u:'https://aws.amazon.com/architecture/well-architected/'}]},
       ]},
    ],
    certs:[
@@ -782,13 +787,13 @@ const PATHS=[
    description:'Gather, analyze and share intelligence about threats before they hit your organization. Highly valued by Nigerian banks and oil companies defending against nation-state and criminal threats.',
    tools:['MITRE ATT&CK','OpenCTI','MISP','Maltego','Shodan','VirusTotal','TheHive','Cortex'],
    employers:['Nigerian banks (threat monitoring)','Shell Nigeria','MTN Nigeria','International CTI firms (remote)','INTERPOL Africa'],
-   nigeriaTip:'<strong>West African cybercrime groups (including Nigerian fraud syndicates) are tracked by global CTI teams.</strong> Nigerian analysts who understand local threat context are hired at premium by international firms.',
+   nigeriaTip:'<strong>West African cybercrime groups are tracked by global CTI teams.</strong> Nigerian analysts who understand local threat context are hired at premium by international firms.',
    phases:[
      {title:'Phase 1 — CTI Foundations & OSINT',subtitle:'Months 1–2',color:'#ec4899',open:true,
       note:'⚡ OSINT is free, starts immediately, and builds real skills. Create accounts on Shodan, Censys today.',
       courses:[
        {n:'Introduction to Cyber Threat Intelligence',p:'Recorded Future / TryHackMe',free:true,m:'CTI lifecycle, threat actors, indicators of compromise',links:[{t:'TryHackMe CTI ↗',u:'https://tryhackme.com/room/cyberthreatintel'},{t:'Recorded Future Free ↗',u:'https://www.recordedfuture.com/university'}]},
-       {n:'OSINT Fundamentals — TryHackMe',p:'TryHackMe',free:true,m:'Open source intelligence techniques — free and powerful',links:[{t:'OSINT TryHackMe ↗',u:'https://tryhackme.com/module/open-source-intelligence'},{t:'Trace Labs OSINT ↗',u:'https://www.tracelabs.org/competitions/search'}]},
+       {n:'OSINT Fundamentals — TryHackMe',p:'TryHackMe',free:true,m:'Open source intelligence techniques',links:[{t:'OSINT TryHackMe ↗',u:'https://tryhackme.com/module/open-source-intelligence'},{t:'Trace Labs OSINT ↗',u:'https://www.tracelabs.org/competitions/search'}]},
        {n:'Shodan & Censys — Internet Scanning',p:'Shodan / Censys',free:true,m:'Discover exposed infrastructure — essential CTI tool',links:[{t:'Shodan ↗',u:'https://www.shodan.io'},{t:'Censys ↗',u:'https://search.censys.io'}]},
        {n:'VirusTotal for Threat Analysis',p:'Google/VirusTotal',free:true,m:'Analyze files, URLs, IPs for threat indicators',links:[{t:'VirusTotal ↗',u:'https://www.virustotal.com'},{t:'VT Academy ↗',u:'https://www.virustotal.com/learn/'}]},
       ]},
@@ -831,10 +836,10 @@ const PATHS=[
    timeline:'12–24 months',demand:'Very High 💎',
    salaryLocal:'₦500K–₦1.5M/mo',salaryRemote:'$3,000–$8,000/mo',
    prereqs:'SOC L1/L2 experience + programming skills',
-   description:'Build, test and harden security systems at the engineering level. The highest-paying cybersecurity path — requires programming, architecture, and hands-on building. Path: SOC L1 → L2 → Security Engineer.',
+   description:'Build, test and harden security systems at the engineering level. The highest-paying cybersecurity path — requires programming, architecture, and hands-on building.',
    tools:['Python','Burp Suite','SAST/DAST tools','Terraform','GitHub Actions','AWS Security Hub','WAF','SIEM API'],
    employers:['Flutterwave','Kuda','Paystack','Andela','Remote-first global companies','Google','Meta (remote)'],
-   nigeriaTip:'<strong>Security Engineers are the rarest cybersecurity role in Nigeria.</strong> Only ~200 Nigerians have this title. Landing one puts you in the top 0.1% earners. $3,000–$8,000/month remote is achievable.',
+   nigeriaTip:'<strong>Security Engineers are the rarest cybersecurity role in Nigeria.</strong> Only ~200 Nigerians have this title. $3,000–$8,000/month remote is achievable.',
    phases:[
      {title:'Phase 1 — Security Programming',subtitle:'Months 1–4 · Python is non-negotiable',color:'#f59e0b',open:true,
       note:'⚡ Python is the primary language for security engineering. Every automation, tool, and integration uses it.',
@@ -848,7 +853,7 @@ const PATHS=[
       note:'⚡ SAST/DAST + secure code review are asked in every security engineer interview.',
       courses:[
        {n:'Application Security Testing — OWASP',p:'OWASP',free:true,m:'SAST, DAST, IAST methodologies and tools',links:[{t:'OWASP ASVS ↗',u:'https://owasp.org/www-project-application-security-verification-standard/'},{t:'OWASP Testing Guide ↗',u:'https://owasp.org/www-project-web-security-testing-guide/'}]},
-       {n:'DevSecOps Foundations — SANS / Linux Foundation',p:'Linux Foundation',free:true,m:'Integrate security into CI/CD pipelines — free LF course',links:[{t:'LF DevSecOps ↗',u:'https://training.linuxfoundation.org/resources/?_sft_content_type=free-course'}]},
+       {n:'DevSecOps Foundations — Linux Foundation',p:'Linux Foundation',free:true,m:'Integrate security into CI/CD pipelines — free LF course',links:[{t:'LF DevSecOps ↗',u:'https://training.linuxfoundation.org/resources/?_sft_content_type=free-course'}]},
        {n:'GitHub Actions for Security',p:'GitHub Learning Lab',free:true,m:'Automate security scanning in CI/CD',links:[{t:'GitHub Actions ↗',u:'https://docs.github.com/en/actions/security-guides'}]},
        {n:'Security Architecture Fundamentals — SABSA',p:'SABSA Institute',free:true,m:'Enterprise security architecture framework',links:[{t:'SABSA Institute ↗',u:'https://sabsa.org/free-resources/'}]},
        {n:'Cloudflare WAF & DDoS Protection',p:'Cloudflare',free:true,m:'Production WAF configuration — free Cloudflare developer docs',links:[{t:'Cloudflare Learning ↗',u:'https://www.cloudflare.com/learning/'}]},
@@ -859,7 +864,7 @@ const PATHS=[
        {n:'Cryptography for Developers — Stanford (Coursera)',p:'Coursera / Stanford',free:true,m:'Audit for free · Essential cryptography for security engineers',links:[{t:'Stanford Cryptography ↗',u:'https://www.coursera.org/learn/crypto'}]},
        {n:'Zero Trust Architecture — NIST SP 800-207',p:'NIST',free:true,m:'Official NIST Zero Trust guide — required reading',links:[{t:'NIST Zero Trust ↗',u:'https://csrc.nist.gov/publications/detail/sp/800-207/final'}]},
        {n:'PKI & Certificate Management',p:'Linux Foundation / DigiCert',free:true,m:'Public key infrastructure for enterprise security',links:[{t:'DigiCert PKI Guide ↗',u:'https://www.digicert.com/what-is-pki'}]},
-       {n:'CISSP Study — (ISC)2 Official Materials',p:'(ISC)2',free:true,m:'Begin CISSP prep after 2+ years experience',links:[{t:'ISC2 Free Resources ↗',u:'https://www.isc2.org/candidates/free-cybersecurity-resources'},{t:'CISSP Study Guide ↗',u:'https://www.isc2.org/certifications/cissp/cissp-student-workbook'}]},
+       {n:'CISSP Study — (ISC)2 Official Materials',p:'(ISC)2',free:true,m:'Begin CISSP prep after 2+ years experience',links:[{t:'ISC2 Free Resources ↗',u:'https://www.isc2.org/candidates/free-cybersecurity-resources'}]},
       ]},
    ],
    certs:[
@@ -888,7 +893,13 @@ let currentUserName='', currentUserEmail='', aiHistory=[], aiOpen=false;
 /* ══════════════════════════════════════════════
    UTILS
 ══════════════════════════════════════════════ */
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200)}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+
 function goHome(){
   currentPathId=null;
   document.getElementById('dashView').style.display='';
@@ -897,37 +908,96 @@ function goHome(){
   renderDashboard();
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+/* ── Theme ── */
 const savedTheme=localStorage.getItem('crp-theme')||'dark';
 document.documentElement.setAttribute('data-theme',savedTheme);
-function applyThemeUI(t){const b=document.getElementById('themeBtn'),l=document.getElementById('themeLabel');if(b)b.textContent=t==='dark'?'☀️':'🌙';if(l)l.textContent=t==='dark'?'Light Mode':'Dark Mode'}
+
+function applyThemeUI(t){
+  const b=document.getElementById('themeBtn'),l=document.getElementById('themeLabel');
+  if(b) b.textContent=t==='dark'?'☀️':'🌙';
+  if(l) l.textContent=t==='dark'?'Light Mode':'Dark Mode';
+}
 applyThemeUI(savedTheme);
-function toggleTheme(){const c=document.documentElement.getAttribute('data-theme'),n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('crp-theme',n);applyThemeUI(n)}
+
+function toggleTheme(){
+  const c=document.documentElement.getAttribute('data-theme');
+  const n=c==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',n);
+  localStorage.setItem('crp-theme',n);
+  applyThemeUI(n);
+}
 
 /* ══════════════════════════════════════════════
    AUTH
 ══════════════════════════════════════════════ */
 function setTab(m){
   authMode=m;
-  document.querySelectorAll('.auth-tab').forEach((t,i)=>t.classList.toggle('active',(m==='login'&&i===0)||(m==='signup'&&i===1)));
+  document.querySelectorAll('.auth-tab').forEach((t,i)=>
+    t.classList.toggle('active',(m==='login'&&i===0)||(m==='signup'&&i===1))
+  );
   document.getElementById('authBtn').textContent=m==='login'?'Login':'Create Account';
   document.getElementById('authErr').textContent='';
   document.getElementById('nameField').style.display=m==='signup'?'block':'none';
 }
-function togglePass(){const i=document.getElementById('authPass'),e=document.getElementById('passEye');i.type=i.type==='password'?'text':'password';e.textContent=i.type==='password'?'👁':'🙈'}
+
+function togglePass(){
+  const i=document.getElementById('authPass');
+  const e=document.getElementById('passEye');
+  i.type=i.type==='password'?'text':'password';
+  e.textContent=i.type==='password'?'👁':'🙈';
+}
 
 function doAuth(){
-  const e=document.getElementById('authEmail').value.trim(),p=document.getElementById('authPass').value,name=document.getElementById('authName').value.trim(),err=document.getElementById('authErr');
-  err.textContent='';if(!e||!p){err.textContent='Please fill in all fields.';return}
+  const e=document.getElementById('authEmail').value.trim();
+  const p=document.getElementById('authPass').value;
+  const name=document.getElementById('authName').value.trim();
+  const err=document.getElementById('authErr');
+  err.textContent='';
+
+  if(!e||!p){err.textContent='Please fill in all fields.';return;}
+
   if(authMode==='signup'){
-    if(!name){err.textContent='Please enter your full name.';return}
+    if(!name){err.textContent='Please enter your full name.';return;}
     signupInProgress=true;
     auth.createUserWithEmailAndPassword(e,p)
-      .then(cred=>Promise.all([cred.user.updateProfile({displayName:name}),db.collection('users').doc(cred.user.uid).set({name,pathProgress:{},streak:0,lastDay:''})]).then(()=>cred.user.uid))
-      .then(newUid=>{uid=newUid;signupInProgress=false;document.getElementById('authPage').style.display='none';document.getElementById('app').style.display='block';loadData()})
-      .catch(ex=>{signupInProgress=false;err.textContent=ex.message.replace('Firebase: ','')});
-  }else{auth.signInWithEmailAndPassword(e,p).catch(ex=>{err.textContent=ex.message.replace('Firebase: ','')})}
+      .then(cred=>{
+        return Promise.all([
+          cred.user.updateProfile({displayName:name}),
+          db.collection('users').doc(cred.user.uid).set({
+            name,pathProgress:{},streak:0,lastDay:''
+          })
+        ]).then(()=>cred.user);
+      })
+      .then(user=>{
+        uid=user.uid;
+        currentUserName=name;
+        currentUserEmail=e;
+        signupInProgress=false;
+        document.getElementById('authPage').style.display='none';
+        document.getElementById('app').style.display='block';
+        loadData();
+      })
+      .catch(ex=>{
+        signupInProgress=false;
+        err.textContent=ex.message.replace('Firebase: ','');
+      });
+  } else {
+    auth.signInWithEmailAndPassword(e,p)
+      .catch(ex=>{
+        err.textContent=ex.message.replace('Firebase: ','');
+      });
+  }
 }
-function doLogout(){auth.signOut();closeMenu()}
 
+function doLogout(){
+  auth.signOut();
+  closeMenu();
+}
+
+/* ══════════════════════════════════════════════
+   FIREBASE AUTH LISTENER  ← THE FIX IS HERE
+══════════════════════════════════════════════ */
 auth.onAuthStateChanged(user=>{
-  if(user){if(signupInProgress||uid===user.uid)return;uid=user.uid;document.getElementById('authPage').style.display='none';document.getElementById('app').style.displa
+  if(user){
+    if(signupInProgress||uid===us
