@@ -1,0 +1,27 @@
+{
+  "name": "Cyber Roadmap Pro",
+  "short_name": "CyberRoadmap",
+  "description": "8 Cybersecurity Career Paths for Nigeria 2026",
+  "start_url": "/cyber-roadmap/",
+  "scope": "/cyber-roadmap/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#080b12",
+  "theme_color": "#3b82f6",
+  "icons": [
+    {
+      "src": "logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "lang": "en"
+}
