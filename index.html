@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cyber Roadmap Pro · Career Paths 2026</title>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CyberRoadmap">
+<meta name="theme-color" content="#3b82f6">
+<link rel="apple-touch-icon" href="logo.jpg">
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Orbitron:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -1562,6 +1571,15 @@ Keep responses concise, actionable, and encouraging. Max 3 short paragraphs.`;
     thinking.classList.remove('bubble-thinking');
   }
   btn.disabled=false;
+}
+
+/* ── PWA Service Worker ── */
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("/cyber-roadmap/sw.js")
+      .then(()=>console.log("SW registered"))
+      .catch(err=>console.log("SW error:",err));
+  });
 }
 
 /* Enter to send in AI chat */
