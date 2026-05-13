@@ -1000,4 +1000,574 @@ function doLogout(){
 ══════════════════════════════════════════════ */
 auth.onAuthStateChanged(user=>{
   if(user){
-    if(signupInProgress||uid===us
+    if(signupInProgress||uid===user.uid) return;
+    uid=user.uid;
+    currentUserName=user.displayName||'Analyst';
+    currentUserEmail=user.email||'';
+    document.getElementById('authPage').style.display='none';
+    document.getElementById('app').style.display='block';
+    loadData();
+  } else {
+    uid=null;
+    userData={};
+    currentUserName='';
+    currentUserEmail='';
+    document.getElementById('authPage').style.display='flex';
+    document.getElementById('app').style.display='none';
+  }
+});
+
+/* ══════════════════════════════════════════════
+   DATA — FIRESTORE
+══════════════════════════════════════════════ */
+function loadData(){
+  db.collection('users').doc(uid).get()
+    .then(doc=>{
+      if(doc.exists){
+        userData=doc.data();
+        currentUserName=userData.name||auth.currentUser.displayName||'Analyst';
+      } else {
+        userData={name:currentUserName,pathProgress:{},streak:0,lastDay:''};
+      }
+      const mu=document.getElementById('menuUserBlock');
+      if(mu) mu.textContent=currentUserEmail;
+      renderDashboard();
+    })
+    .catch(()=>{
+      userData={name:currentUserName,pathProgress:{},streak:0,lastDay:''};
+      renderDashboard();
+    });
+}
+
+function saveData(){
+  if(!uid) return;
+  db.collection('users').doc(uid).set(userData,{merge:true}).catch(console.error);
+}
+
+/* ══════════════════════════════════════════════
+   PROGRESS HELPERS
+══════════════════════════════════════════════ */
+function getProgress(pathId){
+  if(!userData.pathProgress) userData.pathProgress={};
+  if(!userData.pathProgress[pathId]) userData.pathProgress[pathId]={courses:{},certs:{},skills:{}};
+  return userData.pathProgress[pathId];
+}
+
+function makeCourseKey(phaseIdx,courseName){
+  return `${phaseIdx}_${courseName.slice(0,24).replace(/[^a-zA-Z0-9]/g,'_')}`;
+}
+
+function countDone(pathId){
+  const p=getProgress(pathId);
+  return Object.values(p.courses||{}).filter(Boolean).length
+       + Object.values(p.certs||{}).filter(Boolean).length;
+}
+
+function countTotal(pathId){
+  const path=PATHS.find(p=>p.id===pathId);
+  if(!path) return 0;
+  let t=0;
+  path.phases.forEach(ph=>t+=ph.courses.length);
+  t+=path.certs.length;
+  return t;
+}
+
+/* ══════════════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════════════ */
+function renderDashboard(){
+  const first=currentUserName.split(' ')[0]||'Analyst';
+  const w=document.getElementById('dashWelcome');
+  if(w) w.textContent=`Welcome back, ${first} 👋`;
+
+  const pp=userData.pathProgress||{};
+  const pathsStarted=Object.keys(pp).filter(pid=>countDone(pid)>0).length;
+  const streak=userData.streak||0;
+  let totalDone=0;
+  PATHS.forEach(p=>totalDone+=countDone(p.id));
+
+  const ds=document.getElementById('dStatPaths');
+  const dstr=document.getElementById('dStatStreak');
+  const dt=document.getElementById('dStatTotal');
+  if(ds) ds.textContent=pathsStarted;
+  if(dstr) dstr.textContent=streak;
+  if(dt) dt.textContent=totalDone;
+
+  const sv=document.getElementById('streakVal');
+  if(sv) sv.innerHTML=`${streak}<small>days in a row</small>`;
+
+  const today=new Date().toISOString().slice(0,10);
+  const btn=document.getElementById('streakBtn');
+  if(btn){
+    if(userData.lastDay===today){
+      btn.textContent='✓ Done for Today!';
+      btn.disabled=true;
+    } else {
+      btn.textContent='✓ Mark Today Done';
+      btn.disabled=false;
+    }
+  }
+
+  renderPathTiles();
+}
+
+function renderPathTiles(){
+  const grid=document.getElementById('pathsGrid');
+  if(!grid) return;
+  grid.innerHTML='';
+
+  PATHS.forEach((path,i)=>{
+    const done=countDone(path.id);
+    const total=countTotal(path.id);
+    const pct=total>0?Math.round(done/total*100):0;
+    const started=done>0;
+
+    const tile=document.createElement('div');
+    tile.className='path-tile reveal'+(started?' tile-active':'');
+
+    tile.innerHTML=`
+      <div class="pt-header" style="background:linear-gradient(135deg,${path.color}18,transparent)">
+        <div class="pt-glow" style="background:${path.glowColor}"></div>
+        <span class="pt-icon">${path.icon}</span>
+        <div class="pt-title">${path.title}</div>
+        <div class="pt-tagline">${path.tagline}</div>
+      </div>
+      <div class="pt-badges">
+        <span class="pt-badge" style="background:${path.diffBg};color:${path.diffClr}">${path.difficulty}</span>
+        <span class="pt-badge" style="background:rgba(245,158,11,0.12);color:#f59e0b">${path.timeline}</span>
+        ${started?`<span class="pt-badge" style="background:rgba(16,185,129,0.12);color:#10b981">${pct}% done</span>`:''}
+      </div>
+      ${started?`<div class="pt-progress"><div class="pt-progress-fill" style="width:${pct}%;background:${path.color}"></div></div>`:''}
+      <div class="pt-footer">
+        <span class="pt-salary">Remote: <span>${path.salaryRemote}</span></span>
+        <span class="pt-arrow">→</span>
+      </div>`;
+
+    tile.addEventListener('click',()=>openPath(path.id));
+    grid.appendChild(tile);
+    setTimeout(()=>tile.classList.add('visible'),50+i*70);
+  });
+}
+
+/* ══════════════════════════════════════════════
+   STREAK
+══════════════════════════════════════════════ */
+function markToday(){
+  const today=new Date().toISOString().slice(0,10);
+  if(userData.lastDay===today){showToast('Already marked today! 🔥');return;}
+  const yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  userData.streak=(userData.lastDay===yesterday)?(userData.streak||0)+1:1;
+  userData.lastDay=today;
+  saveData();
+
+  const sv=document.getElementById('streakVal');
+  if(sv){
+    sv.innerHTML=`${userData.streak}<small>days in a row</small>`;
+    sv.classList.add('fire');
+    setTimeout(()=>sv.classList.remove('fire'),600);
+  }
+  const dstr=document.getElementById('dStatStreak');
+  if(dstr) dstr.textContent=userData.streak;
+
+  const btn=document.getElementById('streakBtn');
+  if(btn){btn.textContent='✓ Done for Today!';btn.disabled=true;}
+  showToast(`🔥 Day ${userData.streak} streak! Keep going!`);
+}
+
+/* ══════════════════════════════════════════════
+   MENU
+══════════════════════════════════════════════ */
+function openMenu(){
+  document.getElementById('menuOverlay').classList.add('open');
+  document.getElementById('menuTray').classList.add('open');
+  const mu=document.getElementById('menuUserBlock');
+  if(mu) mu.textContent=currentUserEmail||'';
+}
+
+function closeMenu(){
+  document.getElementById('menuOverlay').classList.remove('open');
+  document.getElementById('menuTray').classList.remove('open');
+}
+
+/* ══════════════════════════════════════════════
+   NOTIFICATION MODAL
+══════════════════════════════════════════════ */
+function openNotifModal(){
+  document.getElementById('notifModal').classList.add('show');
+}
+function closeNotifModal(){
+  document.getElementById('notifModal').classList.remove('show');
+}
+function saveNotifTime(){
+  const t=document.getElementById('notifTime').value;
+  if(!t){showToast('Please select a time');return;}
+  localStorage.setItem('crp-reminder',t);
+  closeNotifModal();
+  showToast(`⏰ Reminder set for ${t} daily`);
+}
+
+/* ══════════════════════════════════════════════
+   PATH DETAIL
+══════════════════════════════════════════════ */
+function openPath(pathId){
+  currentPathId=pathId;
+  const path=PATHS.find(p=>p.id===pathId);
+  if(!path) return;
+
+  document.getElementById('dashView').style.display='none';
+  const pv=document.getElementById('pathView');
+  pv.style.display='block';
+  document.getElementById('navBack').classList.add('show');
+  pv.innerHTML=buildPathHTML(path);
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  setTimeout(()=>{
+    pv.querySelectorAll('.reveal').forEach((el,i)=>{
+      setTimeout(()=>el.classList.add('visible'),i*50);
+    });
+  },60);
+}
+
+function buildPathHTML(path){
+  const pp=getProgress(path.id);
+  const done=countDone(path.id);
+  const total=countTotal(path.id);
+  const pct=total>0?Math.round(done/total*100):0;
+
+  let html=`
+  <div class="path-hero reveal">
+    <div class="ph-top">
+      <div class="ph-icon-wrap" style="background:${path.color}18;border-color:${path.color}33">
+        <span>${path.icon}</span>
+      </div>
+      <div>
+        <div class="ph-title">${path.title}</div>
+        <div class="ph-tagline">${path.tagline}</div>
+      </div>
+    </div>
+    <div class="ph-badges">
+      <span class="ph-badge" style="background:${path.diffBg};color:${path.diffClr}">${path.difficulty}</span>
+      <span class="ph-badge" style="background:rgba(245,158,11,0.12);color:#f59e0b">⏱ ${path.timeline}</span>
+      <span class="ph-badge" style="background:rgba(239,68,68,0.1);color:#f87171">🔥 ${path.demand}</span>
+    </div>
+    <div class="ph-desc">${path.description}</div>
+    <div class="ph-meta-row">
+      <div class="ph-meta-card">
+        <div class="ph-meta-label">🇳🇬 Local Salary</div>
+        <div class="ph-meta-val">${path.salaryLocal}</div>
+      </div>
+      <div class="ph-meta-card">
+        <div class="ph-meta-label">🌍 Remote Salary</div>
+        <div class="ph-meta-val">${path.salaryRemote}</div>
+      </div>
+      <div class="ph-meta-card">
+        <div class="ph-meta-label">📋 Prerequisites</div>
+        <div class="ph-meta-val" style="font-size:0.7rem">${path.prereqs}</div>
+      </div>
+      <div class="ph-meta-card">
+        <div class="ph-meta-label">🛠️ Key Tools</div>
+        <div class="ph-meta-val" style="font-size:0.68rem">${path.tools.slice(0,4).join(', ')}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-progress reveal" id="detailProgressBox">
+    <div class="dp-top">
+      <span class="dp-label">Path Progress</span>
+      <span class="dp-val" id="dpVal">${done}/${total} · ${pct}%</span>
+    </div>
+    <div class="dp-track">
+      <div class="dp-fill" id="dpFill" style="width:${pct}%;background:linear-gradient(90deg,${path.color},${path.color}88)"></div>
+    </div>
+  </div>
+
+  <div class="ng-tip reveal">🇳🇬 <strong>Nigeria Insight:</strong> ${path.nigeriaTip}</div>`;
+
+  /* ── Phases ── */
+  html+=`<div class="sec-label reveal">📚 Learning Roadmap</div>`;
+
+  path.phases.forEach((phase,pi)=>{
+    const phaseDoneCnt=phase.courses.filter(c=>{
+      const k=makeCourseKey(pi,c.n);
+      return !!(pp.courses||{})[k];
+    }).length;
+
+    html+=`
+    <div class="phase-wrap reveal">
+      <div class="phase-head" onclick="togglePhase(this)">
+        <div class="phase-left">
+          <div class="phase-pip" style="background:${phase.color}"></div>
+          <div>
+            <div class="phase-title">${phase.title}</div>
+            <div class="phase-sub">${phase.subtitle}</div>
+          </div>
+        </div>
+        <div class="phase-right">
+          <span class="phase-count" style="color:${phase.color}">${phaseDoneCnt}/${phase.courses.length}</span>
+          <span class="phase-chev ${phase.open?'open':''}">▾</span>
+        </div>
+      </div>
+      <div class="phase-body ${phase.open?'open':''}">`;
+
+    phase.courses.forEach(c=>{
+      const k=makeCourseKey(pi,c.n);
+      const ck=!!(pp.courses||{})[k];
+      const links=c.links.map(l=>`<a class="c-link" href="${l.u}" target="_blank" rel="noopener">${l.t}</a>`).join('');
+      const freeBadge=c.free?`<span class="free-badge">FREE</span>`:'';
+      const extraBadge=c.badge?`<span class="${c.badge==='NEW'?'new-badge':'free-badge'}">${c.badge}</span>`:'';
+
+      html+=`
+        <div class="course-row">
+          <div class="cbox${ck?' checked':''}" data-path="${path.id}" data-key="${k}" onclick="toggleCourse(this)"></div>
+          <div class="c-info">
+            <div class="c-name${ck?' done':''}">${c.n}${extraBadge}${freeBadge}</div>
+            <div class="c-meta">${c.p} · ${c.m}</div>
+            <div>${links}</div>
+          </div>
+        </div>`;
+    });
+
+    html+=`<div class="phase-note" style="color:${phase.color};background:${phase.color}08">${phase.note}</div>`;
+    html+=`</div></div>`;
+  });
+
+  /* ── Certifications ── */
+  html+=`<div class="sec-label reveal" style="margin-top:20px">🎓 Certifications</div>`;
+  path.certs.forEach((cert,ci)=>{
+    const k=`cert_${ci}`;
+    const ck=!!(pp.certs||{})[k];
+    html+=`
+    <div class="cert-row reveal">
+      <div class="cert-circle${ck?' checked':''}" data-path="${path.id}" data-key="${k}" onclick="toggleCert(this)"></div>
+      <div class="cert-info">
+        <div class="cert-n${ck?' done':''}">${cert.n}</div>
+        <div class="cert-t">${cert.timing} · ${cert.cost}<br>${cert.desc}</div>
+        <a class="c-link" href="${cert.url}" target="_blank" rel="noopener">Learn More ↗</a>
+      </div>
+      <span class="cbadge ${cert.tiercls}">${cert.tier}</span>
+    </div>`;
+  });
+
+  /* ── Skills ── */
+  html+=`<div class="sec-label reveal" style="margin-top:20px">⚡ Skills to Build</div>`;
+  html+=`<div class="skills-note reveal">Click to mark skills you've learned. Build these progressively through the phases above.</div>`;
+  html+=`<div class="skills-grid">`;
+  path.skills.forEach(sk=>{
+    const owned=!!(pp.skills||{})[sk.id];
+    html+=`
+    <div class="skill-chip${owned?' owned':''} reveal" data-path="${path.id}" data-id="${sk.id}" onclick="toggleSkill(this)">
+      <div class="skill-dot"></div>
+      <div>
+        <div class="skill-name">${sk.n}</div>
+        <div class="skill-cat">${sk.c}</div>
+      </div>
+    </div>`;
+  });
+  html+=`</div>`;
+
+  /* ── Tools ── */
+  html+=`<div class="sec-label reveal" style="margin-top:20px">🛠️ Tools You'll Use</div>`;
+  html+=`<div class="tools-grid reveal">${path.tools.map(t=>`<div class="tool-chip">${t}</div>`).join('')}</div>`;
+
+  /* ── Employers ── */
+  html+=`<div class="sec-label reveal" style="margin-top:16px">🏢 Where You'll Work</div>`;
+  html+=`<div class="employers-grid reveal">${path.employers.map(e=>`<div class="emp-chip">${e}</div>`).join('')}</div>`;
+
+  /* ── SPL for SOC1 ── */
+  if(path.hasSpl){
+    html+=`
+    <div class="sec-label reveal" style="margin-top:20px">🔍 Essential SPL Queries</div>
+    <div class="spl-section reveal">
+      <div class="spl-section-title" style="color:var(--cyan)">Splunk Search Processing Language</div>
+      <div class="spl-label">Failed Login Detection</div>
+      <div class="spl-block">index=* sourcetype=WinEventLog EventCode=4625
+| stats count by Account_Name, ComputerName, src_ip
+| where count > 5
+| sort -count<button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
+      <div class="spl-label">Malware Communication</div>
+      <div class="spl-block">index=network_logs dest_port IN (4444, 1337, 31337, 8080, 8443)
+| stats count by src_ip, dest_ip, dest_port
+| where count > 3<button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
+      <div class="spl-label">High-Volume Data Transfer</div>
+      <div class="spl-block">index=* sourcetype=proxy bytes_out > 100000000
+| eval GB=round(bytes_out/1073741824,2)
+| table src_ip, dest_ip, dest_domain, GB
+| sort -GB<button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
+    </div>`;
+  }
+
+  return html;
+}
+
+/* ── Phase toggle ── */
+function togglePhase(head){
+  const body=head.nextElementSibling;
+  const chev=head.querySelector('.phase-chev');
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+/* ── Course toggle ── */
+function toggleCourse(el){
+  const pathId=el.dataset.path;
+  const key=el.dataset.key;
+  const pp=getProgress(pathId);
+  if(!pp.courses) pp.courses={};
+  const was=!!pp.courses[key];
+  pp.courses[key]=!was;
+  el.classList.toggle('checked',!was);
+  const nameEl=el.nextElementSibling?.querySelector('.c-name');
+  if(nameEl) nameEl.classList.toggle('done',!was);
+  /* update phase counter */
+  const phaseWrap=el.closest('.phase-wrap');
+  if(phaseWrap){
+    const allCboxes=phaseWrap.querySelectorAll('.cbox');
+    const doneCnt=Array.from(allCboxes).filter(b=>b.classList.contains('checked')).length;
+    const countEl=phaseWrap.querySelector('.phase-count');
+    if(countEl){
+      const parts=countEl.textContent.split('/');
+      countEl.textContent=`${doneCnt}/${parts[1]}`;
+    }
+  }
+  saveData();
+  refreshDetailProgress(pathId);
+  showToast(!was?'✅ Course marked complete!':'↩ Unmarked');
+}
+
+/* ── Cert toggle ── */
+function toggleCert(el){
+  const pathId=el.dataset.path;
+  const key=el.dataset.key;
+  const pp=getProgress(pathId);
+  if(!pp.certs) pp.certs={};
+  const was=!!pp.certs[key];
+  pp.certs[key]=!was;
+  el.classList.toggle('checked',!was);
+  const nameEl=el.nextElementSibling?.querySelector('.cert-n');
+  if(nameEl) nameEl.classList.toggle('done',!was);
+  saveData();
+  refreshDetailProgress(pathId);
+  showToast(!was?'🎓 Cert marked earned!':'↩ Unmarked');
+}
+
+/* ── Skill toggle ── */
+function toggleSkill(el){
+  const pathId=el.dataset.path;
+  const id=el.dataset.id;
+  const pp=getProgress(pathId);
+  if(!pp.skills) pp.skills={};
+  const was=!!pp.skills[id];
+  pp.skills[id]=!was;
+  el.classList.toggle('owned',!was);
+  saveData();
+  showToast(!was?'⚡ Skill added!':'↩ Skill removed');
+}
+
+/* ── Refresh progress bar inside detail view ── */
+function refreshDetailProgress(pathId){
+  const done=countDone(pathId);
+  const total=countTotal(pathId);
+  const pct=total>0?Math.round(done/total*100):0;
+  const valEl=document.getElementById('dpVal');
+  const fillEl=document.getElementById('dpFill');
+  if(valEl) valEl.textContent=`${done}/${total} · ${pct}%`;
+  if(fillEl) fillEl.style.width=pct+'%';
+}
+
+/* ── Copy SPL ── */
+function copySpl(btn){
+  const block=btn.parentElement;
+  const text=block.childNodes[0].textContent.trim();
+  navigator.clipboard.writeText(text)
+    .then(()=>{btn.textContent='✓ Copied!';setTimeout(()=>btn.textContent='Copy',2200);})
+    .catch(()=>showToast('Copy unavailable'));
+}
+
+/* ══════════════════════════════════════════════
+   AI DRAWER
+══════════════════════════════════════════════ */
+function toggleAIDrawer(){
+  aiOpen?closeAIDrawer():openAIDrawer();
+}
+
+function openAIDrawer(){
+  aiOpen=true;
+  document.getElementById('aiOverlay').classList.add('open');
+  document.getElementById('aiDrawer').classList.add('open');
+  if(aiHistory.length===0){
+    const path=currentPathId?PATHS.find(p=>p.id===currentPathId):null;
+    addBubble('ai',`Hi ${currentUserName.split(' ')[0]||'there'}! I'm your AI Cybersecurity Mentor. ${path?`You're on the <strong>${path.title}</strong> path. `:''}Ask me anything about your cybersecurity career in Nigeria 🇳🇬`);
+  }
+}
+
+function closeAIDrawer(){
+  aiOpen=false;
+  document.getElementById('aiOverlay').classList.remove('open');
+  document.getElementById('aiDrawer').classList.remove('open');
+}
+
+function addBubble(role,text){
+  const msgs=document.getElementById('aiMsgs');
+  const div=document.createElement('div');
+  div.className=`bubble bubble-${role==='user'?'u':'ai'}`;
+  div.innerHTML=text;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+function askSug(btn){
+  document.getElementById('aiInput').value=btn.textContent;
+  askGroq();
+}
+
+async function askGroq(){
+  const input=document.getElementById('aiInput');
+  const q=input.value.trim();
+  if(!q) return;
+  const btn=document.getElementById('aiBtn');
+  btn.disabled=true;
+  input.value='';
+  addBubble('user',q);
+  const thinking=addBubble('ai','<em>Thinking...</em>');
+  thinking.classList.add('bubble-thinking');
+
+  const path=currentPathId?PATHS.find(p=>p.id===currentPathId):null;
+  const systemPrompt=`You are an expert cybersecurity career mentor specializing in Nigerian students and professionals.
+The user is based in Port Harcourt, Nigeria and actively building a cybersecurity career.
+${path?`They are currently studying the "${path.title}" path.`:''}
+Give practical, Nigeria-specific advice. Reference local employers (Access Bank, GTBank, Flutterwave, MTN Nigeria, Shell Nigeria, EFCC, Certfort, GVA Partners) and local programs (NITDA subsidies, NDPR, NDPA 2023) where relevant.
+Keep responses concise, actionable, and encouraging. Max 3 short paragraphs.`;
+
+  aiHistory.push({role:'user',content:q});
+
+  try{
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':`Bearer ${GROQ_KEY}`},
+      body:JSON.stringify({
+        model:'llama3-8b-8192',
+        messages:[{role:'system',content:systemPrompt},...aiHistory.slice(-10)],
+        max_tokens:450,
+        temperature:0.7
+      })
+    });
+    const data=await res.json();
+    const reply=data.choices?.[0]?.message?.content||'Sorry, no response received. Please try again.';
+    aiHistory.push({role:'assistant',content:reply});
+    thinking.innerHTML=reply.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+    thinking.classList.remove('bubble-thinking');
+  }catch(err){
+    thinking.innerHTML='⚠️ Connection error. Check your internet and try again.';
+    thinking.classList.remove('bubble-thinking');
+  }
+  btn.disabled=false;
+}
+
+/* Enter to send in AI chat */
+document.getElementById('aiInput').addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();askGroq();}
+});
+</script>
+</body>
+</html>
