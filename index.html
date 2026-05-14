@@ -1109,10 +1109,16 @@ function renderDashboard(){
   const btn=document.getElementById('streakBtn');
   if(btn){
     if(userData.lastDay===today){
-      btn.textContent='✓ Done for Today!';
-      btn.disabled=true;
+      btn.textContent='↩ Unmark Today';
+      btn.style.background='linear-gradient(135deg,rgba(239,68,68,0.15),rgba(239,68,68,0.1))';
+      btn.style.borderColor='rgba(239,68,68,0.35)';
+      btn.style.color='#ef4444';
+      btn.disabled=false;
     } else {
       btn.textContent='✓ Mark Today Done';
+      btn.style.background='';
+      btn.style.borderColor='';
+      btn.style.color='';
       btn.disabled=false;
     }
   }
@@ -1163,24 +1169,44 @@ function renderPathTiles(){
 ══════════════════════════════════════════════ */
 function markToday(){
   const today=new Date().toISOString().slice(0,10);
-  if(userData.lastDay===today){showToast('Already marked today! 🔥');return;}
   const yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
-  userData.streak=(userData.lastDay===yesterday)?(userData.streak||0)+1:1;
-  userData.lastDay=today;
-  saveData();
-
-  const sv=document.getElementById('streakVal');
-  if(sv){
-    sv.innerHTML=`${userData.streak}<small>days in a row</small>`;
-    sv.classList.add('fire');
-    setTimeout(()=>sv.classList.remove('fire'),600);
-  }
-  const dstr=document.getElementById('dStatStreak');
-  if(dstr) dstr.textContent=userData.streak;
-
   const btn=document.getElementById('streakBtn');
-  if(btn){btn.textContent='✓ Done for Today!';btn.disabled=true;}
-  showToast(`🔥 Day ${userData.streak} streak! Keep going!`);
+  const sv=document.getElementById('streakVal');
+  const dstr=document.getElementById('dStatStreak');
+
+  if(userData.lastDay===today){
+    // UNMARK — user wants to undo today
+    userData.lastDay='';
+    userData.streak=Math.max((userData.streak||1)-1,0);
+    saveData();
+    if(sv) sv.innerHTML=`${userData.streak}<small>days in a row</small>`;
+    if(dstr) dstr.textContent=userData.streak;
+    if(btn){
+      btn.textContent='✓ Mark Today Done';
+      btn.style.background='';
+      btn.style.borderColor='';
+      btn.style.color='';
+    }
+    showToast('↩ Today unmarked');
+  } else {
+    // MARK — log today
+    userData.streak=(userData.lastDay===yesterday)?(userData.streak||0)+1:1;
+    userData.lastDay=today;
+    saveData();
+    if(sv){
+      sv.innerHTML=`${userData.streak}<small>days in a row</small>`;
+      sv.classList.add('fire');
+      setTimeout(()=>sv.classList.remove('fire'),600);
+    }
+    if(dstr) dstr.textContent=userData.streak;
+    if(btn){
+      btn.textContent='↩ Unmark Today';
+      btn.style.background='linear-gradient(135deg,rgba(239,68,68,0.15),rgba(239,68,68,0.1))';
+      btn.style.borderColor='rgba(239,68,68,0.35)';
+      btn.style.color='#ef4444';
+    }
+    showToast(`🔥 Day ${userData.streak} streak! Keep going!`);
+  }
 }
 
 /* ══════════════════════════════════════════════
