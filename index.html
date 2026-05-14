@@ -1107,7 +1107,7 @@ function renderDashboard(){
   const sv=document.getElementById('streakVal');
   if(sv) sv.innerHTML=`${streak}<small>days in a row</small>`;
 
-  const today=new Date().toISOString().slice(0,10);
+  const today=localDate();
   const btn=document.getElementById('streakBtn');
   if(btn){
     if(userData.lastDay===today){
@@ -1165,9 +1165,14 @@ function renderPathTiles(){
 /* ══════════════════════════════════════════════
    STREAK
 ══════════════════════════════════════════════ */
+function localDate(offset=0){
+  const d=new Date(Date.now()+offset);
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+
 function markToday(){
-  const today=new Date().toISOString().slice(0,10);
-  const yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  const today=localDate();
+  const yesterday=localDate(-86400000);
   const btn=document.getElementById('streakBtn');
   const sv=document.getElementById('streakVal');
   const dstr=document.getElementById('dStatStreak');
@@ -1577,13 +1582,15 @@ Keep responses concise, actionable, and encouraging. Max 3 short paragraphs.`;
       })
     });
     const data=await res.json();
-    const reply=data.choices?.[0]?.message?.content||'Sorry, no response received. Please try again.';
+    if(data.error){throw new Error(data.error.message||'API error');}
+    const reply=data.choices?.[0]?.message?.content||'No response — please try again.';
     aiHistory.push({role:'assistant',content:reply});
     thinking.innerHTML=reply.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
     thinking.classList.remove('bubble-thinking');
   }catch(err){
-    thinking.innerHTML='⚠️ Connection error. Check your internet and try again.';
+    thinking.innerHTML=`⚠️ Error: ${err.message||'Connection failed'}. Check internet & try again.`;
     thinking.classList.remove('bubble-thinking');
+    console.error('AI error:',err);
   }
   btn.disabled=false;
 }
@@ -1598,9 +1605,12 @@ if("serviceWorker" in navigator){
 }
 
 /* Enter to send in AI chat */
-document.getElementById('aiInput').addEventListener('keydown',e=>{
-  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();askGroq();}
-});
+const aiInputEl=document.getElementById('aiInput');
+if(aiInputEl){
+  aiInputEl.addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();askGroq();}
+  });
+}
 </script>
 </body>
 </html>
