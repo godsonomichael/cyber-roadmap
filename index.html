@@ -1575,7 +1575,7 @@ Keep responses concise, actionable, and encouraging. Max 3 short paragraphs.`;
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        model:'llama-3.3-70b-versatile',
+        model:'llama-3.1-8b-instant',
         messages:[{role:'system',content:systemPrompt},...aiHistory.slice(-10)],
         max_tokens:450,
         temperature:0.7
