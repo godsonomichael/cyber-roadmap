@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="CyberRoadmap">
 <meta name="theme-color" content="#3b82f6">
-<link rel="apple-touch-icon" href="logo.jpg">
+<link rel="apple-touch-icon" href="logo.svg">
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -306,6 +306,42 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 
 .footer{text-align:center;padding:30px 0 10px;font-size:0.67rem;color:var(--text3);line-height:1.8;font-family:'Space Mono',monospace}
 @media(max-width:500px){.paths-grid{grid-template-columns:1fr}.dash-stats{gap:7px}.skills-grid{grid-template-columns:1fr}}
+
+/* ══ COUNTRY & GUIDE ADDITIONS ══ */
+.country-modal{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+.country-modal.show{display:flex}
+.cm-card{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:24px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,0.5)}
+.cm-title{font-family:'Orbitron',monospace;font-size:.88rem;font-weight:800;color:var(--accent2);margin-bottom:4px}
+.cm-sub{font-size:.72rem;color:var(--text2);margin-bottom:16px;line-height:1.6}
+.country-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+.country-opt{background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;transition:all .22s;text-align:center}
+.country-opt:hover{border-color:var(--accent);transform:translateY(-2px)}
+.country-opt.selected{border-color:var(--green);background:rgba(16,185,129,0.08)}
+.co-flag{font-size:1.5rem;margin-bottom:4px}
+.co-name{font-size:.76rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.co-sub{font-size:.6rem;color:var(--text3);font-family:'Space Mono',monospace}
+.cm-confirm-btn{width:100%;padding:12px;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border:none;border-radius:10px;font-family:'Orbitron',monospace;font-size:.74rem;font-weight:700;cursor:pointer;transition:all .22s;letter-spacing:.06em;box-shadow:0 6px 20px rgba(59,130,246,0.35)}
+.cm-confirm-btn:hover{transform:translateY(-2px)}
+.country-banner{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:0 14px 14px 0;padding:13px 16px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.cb-left{display:flex;align-items:center;gap:10px}
+.cb-flag{font-size:1.4rem}
+.cb-info{flex:1}
+.cb-country{font-family:'Orbitron',monospace;font-size:.76rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.cb-sub{font-size:.68rem;color:var(--text2);line-height:1.5}
+.cb-change{font-size:.63rem;color:var(--accent2);cursor:pointer;text-decoration:underline;font-family:'Space Mono',monospace;white-space:nowrap}
+.guide-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:14px}
+.guide-box-title{font-family:'Orbitron',monospace;font-size:.65rem;color:var(--cyan);margin-bottom:8px;letter-spacing:.1em}
+.guide-body{font-size:.76rem;color:var(--text2);line-height:1.75}
+.guide-body code{font-family:'Space Mono',monospace;color:var(--green);background:rgba(16,185,129,0.1);padding:1px 5px;border-radius:4px;font-size:.72rem}
+.guide-body strong{color:var(--text);font-weight:600}
+.guide-step{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start}
+.guide-step-num{background:var(--accent);color:#fff;font-family:'Orbitron',monospace;font-size:.58rem;font-weight:700;min-width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.guide-tip{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-left:3px solid var(--orange);border-radius:0 10px 10px 0;padding:10px 14px;margin-top:10px;font-size:.73rem;color:var(--text2);line-height:1.6}
+.guide-tip::before{content:"💡 TIP: ";font-weight:700;color:var(--orange)}
+@keyframes floatXpUp{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-60px);opacity:0}}
+.xp-float-crp{position:fixed;font-family:'Orbitron',monospace;font-size:1rem;font-weight:900;color:var(--orange);pointer-events:none;z-index:500;animation:floatXpUp 1.2s ease-out forwards}
+@media(max-width:480px){.country-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -314,7 +350,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 <div id="authPage" style="display:flex">
   <div class="auth-glow"></div>
   <div class="auth-brand">
-    <div class="auth-brand-logo"><img src="https://godsonomichael.github.io/cyber-roadmap/logo.jpg" alt="CRP" onerror="this.parentElement.innerHTML='<div style=&quot;font-family:Orbitron,monospace;font-size:1.1rem;font-weight:900;color:#ff0080;text-shadow:0 0 12px #ff0080&quot;>CRP</div>'"></div>
+    <div class="auth-brand-logo"><img src="logo.svg" onerror="this.src='https://godsonomichael.github.io/cyber-roadmap/logo.jpg'" alt="CRP" onerror="this.parentElement.innerHTML='<div style=&quot;font-family:Orbitron,monospace;font-size:1.1rem;font-weight:900;color:#ff0080;text-shadow:0 0 12px #ff0080&quot;>CRP</div>'"></div>
     <div class="auth-brand-name" data-text="Cyber Roadmap Pro">Cyber Roadmap Pro</div>
     <div class="auth-brand-sub">8 Career Paths · Nigeria 🇳🇬 · 2026</div>
   </div>
@@ -358,6 +394,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
     <div class="menu-items">
       <button class="menu-item" onclick="closeMenu();goHome()"><span class="menu-icon">🏠</span>Career Paths</button>
       <button class="menu-item" onclick="closeMenu();openNotifModal()"><span class="menu-icon">🔔</span>Study Reminder</button>
+      <button class="menu-item" onclick="closeMenu();openCountryModalCRP()"><span class="menu-icon">🌍</span>Change Country</button>
       <button class="menu-item" onclick="toggleTheme();closeMenu()"><span class="menu-icon" id="themeBtn">☀️</span><span id="themeLabel">Light Mode</span></button>
     </div>
     <div class="menu-bottom"><button class="menu-item menu-danger" onclick="doLogout()"><span class="menu-icon">🚪</span>Sign Out</button></div>
@@ -370,6 +407,19 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
         <div class="dash-welcome" id="dashWelcome">Welcome back 👋</div>
         <div class="dash-sub">Port Harcourt, Nigeria 🇳🇬 · Choose a career path below to view your full roadmap</div>
       </div>
+      
+      <!-- Country Banner -->
+      <div class="country-banner" id="crpCountryBanner" style="display:none">
+        <div class="cb-left">
+          <span class="cb-flag" id="crpFlag">🌍</span>
+          <div class="cb-info">
+            <div class="cb-country" id="crpCountryName">Loading...</div>
+            <div class="cb-sub" id="crpCountrySub">Personalised for your location</div>
+          </div>
+        </div>
+        <span class="cb-change" onclick="openCountryModalCRP()">Change country</span>
+      </div>
+
       <div class="dash-stats">
         <div class="d-stat"><span class="d-stat-n" id="dStatPaths">0</span><span class="d-stat-l">Paths Started</span></div>
         <div class="d-stat"><span class="d-stat-n" id="dStatStreak">0</span><span class="d-stat-l">🔥 Streak</span></div>
@@ -420,6 +470,17 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
     <div style="margin-bottom:16px"><label style="font-size:0.63rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:7px">Reminder Time</label><input type="time" id="notifTime" value="08:00" style="width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:9px;padding:11px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:1rem;outline:none"></div>
     <button onclick="saveNotifTime()" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.87rem;font-weight:700;cursor:pointer;margin-bottom:9px">Enable Reminder</button>
     <button onclick="closeNotifModal()" style="width:100%;padding:10px;background:transparent;color:var(--text3);border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.81rem;cursor:pointer">Cancel</button>
+  </div>
+</div>
+
+
+<!-- COUNTRY MODAL -->
+<div class="country-modal" id="countryModal">
+  <div class="cm-card">
+    <div class="cm-title">🌍 Select Your Country</div>
+    <div class="cm-sub">Personalises employers, salaries, compliance requirements and job market data for your location. You can change this anytime from the menu.</div>
+    <div class="country-grid" id="countryGridCRP"></div>
+    <button class="cm-confirm-btn" onclick="confirmCountryCRP()">Confirm →</button>
   </div>
 </div>
 
@@ -913,7 +974,7 @@ function showToast(msg){
 
 function goHome(){
   currentPathId=null;
-  document.getElementById('dashView').style.display='';
+  document.getElementById('dashView').style.display='';loadCRPCountry();
   document.getElementById('pathView').style.display='none';
   document.getElementById('navBack').classList.remove('show');
   renderDashboard();
@@ -1341,7 +1402,7 @@ function buildPathHTML(path){
     phase.courses.forEach(c=>{
       const k=makeCourseKey(pi,c.n);
       const ck=!!(pp.courses||{})[k];
-      const links=c.links.map(l=>`<a class="c-link" href="${l.u}" target="_blank" rel="noopener">${l.t}</a>`).join('');
+      const links=c.links.map(l=>`<a class="c-link" href="${l.u}" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener">${l.t}</a>`).join('');
       const freeBadge=c.free?`<span class="free-badge">FREE</span>`:'';
       const extraBadge=c.badge?`<span class="${c.badge==='NEW'?'new-badge':'free-badge'}">${c.badge}</span>`:'';
 
@@ -1371,7 +1432,7 @@ function buildPathHTML(path){
       <div class="cert-info">
         <div class="cert-n${ck?' done':''}">${cert.n}</div>
         <div class="cert-t">${cert.timing} · ${cert.cost}<br>${cert.desc}</div>
-        <a class="c-link" href="${cert.url}" target="_blank" rel="noopener">Learn More ↗</a>
+        <a class="c-link" href="${cert.url}" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener">Learn More ↗</a>
       </div>
       <span class="cbadge ${cert.tiercls}">${cert.tier}</span>
     </div>`;
@@ -1593,6 +1654,220 @@ Keep responses concise, actionable, and encouraging. Max 3 short paragraphs.`;
     console.error('AI error:',err);
   }
   btn.disabled=false;
+}
+
+
+/* ===================== NAVIGATION MANAGEMENT ===================== */
+// Push initial history state
+if(!window.history.state || !window.history.state.crp_view){
+  window.history.replaceState({crp_view:'dash'}, '', window.location.href);
+}
+
+// Wrap goHome to push history
+const _origGoHome = window.goHome;
+window.goHome = function(){
+  window.history.pushState({crp_view:'dash'}, '', window.location.href);
+  if(_origGoHome) _origGoHome();
+};
+
+// Wrap openPath to push history
+const _origOpenPath = window.openPath;
+window.openPath = function(pathId){
+  window.history.pushState({crp_view:'path', pathId:pathId}, '', window.location.href);
+  if(_origOpenPath) _origOpenPath(pathId);
+};
+
+// Handle browser/Android back button
+window.addEventListener('popstate', function(e){
+  if(e.state && e.state.crp_view){
+    const v = e.state.crp_view;
+    if(v === 'dash'){
+      // Call original goHome directly (no history push)
+      currentPathId = null;
+      document.getElementById('dashView').style.display = '';
+      document.getElementById('pathView').style.display = 'none';
+      document.getElementById('navBack').classList.remove('show');
+      renderDashboard();
+      window.scrollTo({top:0, behavior:'smooth'});
+    } else if(v === 'path' && e.state.pathId){
+      if(_origOpenPath) _origOpenPath(e.state.pathId);
+    }
+  } else {
+    // At root — double-tap to exit
+    _crpBackPress();
+    window.history.pushState({crp_view:'dash'}, '', window.location.href);
+  }
+});
+
+// Double-tap back to exit
+let _crpBackCount = 0;
+let _crpBackTimer = null;
+function _crpBackPress(){
+  _crpBackCount++;
+  if(_crpBackTimer) clearTimeout(_crpBackTimer);
+  if(_crpBackCount === 1){
+    showToast('Press back again to exit');
+    _crpBackTimer = setTimeout(()=>{ _crpBackCount = 0; }, 2500);
+  } else if(_crpBackCount >= 2){
+    _crpBackCount = 0;
+    if(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
+      window.close();
+    }
+  }
+}
+
+// External links — open in new tab, preserve session
+document.addEventListener('click', function(e){
+  const link = e.target.closest('a[href]');
+  if(!link) return;
+  const href = link.getAttribute('href');
+  if(!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:')) return;
+  if(href.startsWith('/') || href.includes(window.location.hostname)) return;
+  // External — new tab
+  e.preventDefault();
+  window.open(href, '_blank', 'noopener,noreferrer');
+}, true);
+
+// Make sure all task/cert links have target="_blank" dynamically
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('a.c-link, a.cert-link').forEach(a=>{
+    if(!a.getAttribute('target')) a.setAttribute('target','_blank');
+    a.setAttribute('rel','noopener noreferrer');
+  });
+});
+
+// Save current view on unload
+window.addEventListener('beforeunload', function(){
+  try{
+    sessionStorage.setItem('crp-last-view', currentPathId ? 'path:'+currentPathId : 'dash');
+  }catch(e){}
+});
+
+// Restore view on load
+window.addEventListener('load', function(){
+  try{
+    const last = sessionStorage.getItem('crp-last-view');
+    if(last && last.startsWith('path:')){
+      const pathId = last.split(':')[1];
+      setTimeout(()=>{
+        if(typeof openPath === 'function') openPath(pathId);
+      }, 600);
+    }
+    window.history.replaceState({crp_view: last&&last.startsWith('path:')?'path':'dash'}, '', window.location.href);
+  }catch(e){}
+});
+
+
+/* ===================== COUNTRY SELECTOR (ROADMAP) ===================== */
+const CRP_COUNTRIES = [
+  {id:'ng',flag:'🇳🇬',name:'Nigeria',sub:'Lagos · Abuja · Port Harcourt',
+   salaryLocal:'₦150K–₦900K/mo',salaryRemote:'$800–$4,000/mo',
+   compliance:['NDPR 2019','NDPA 2023','CBN Cybersecurity Framework'],
+   employers:['Access Bank','GTBank','Flutterwave','MTN Nigeria','Interswitch','Zenith Bank','Shell Nigeria'],
+   certNotes:'NITDA offers 50% subsidy on CompTIA Security+.',
+   demandNote:'78% of Nigerian SOC postings require Splunk or Sentinel.'},
+  {id:'gh',flag:'🇬🇭',name:'Ghana',sub:'Accra · Kumasi',
+   salaryLocal:'GH₵3,000–15,000/mo',salaryRemote:'$700–$3,000/mo',
+   compliance:['Data Protection Act 2012','Bank of Ghana Cyber Directive'],
+   employers:['Ecobank Ghana','MTN Ghana','Stanbic Bank','Vodafone Ghana'],
+   certNotes:'NITA-Ghana supports digital skills. Check nita.gov.gh.',
+   demandNote:'Ghanaian fintechs rapidly expanding cybersecurity teams.'},
+  {id:'ke',flag:'🇰🇪',name:'Kenya',sub:'Nairobi · Mombasa',
+   salaryLocal:'KSh 80K–400K/mo',salaryRemote:'$900–$4,000/mo',
+   compliance:['Kenya Data Protection Act 2019','CBK Cybersecurity Guidelines'],
+   employers:['Safaricom','Equity Bank','KCB Group','M-Pesa Africa','Andela'],
+   certNotes:'Kenya ICT Authority supports cyber skills development.',
+   demandNote:'M-Pesa ecosystem drives massive fintech security demand.'},
+  {id:'za',flag:'🇿🇦',name:'South Africa',sub:'Johannesburg · Cape Town',
+   salaryLocal:'R25,000–R80,000/mo',salaryRemote:'$1,200–$5,000/mo',
+   compliance:['POPIA 2020','ECTA','SARB Cybersecurity Guidelines'],
+   employers:['Standard Bank','FirstRand','Absa','MTN SA','Vodacom','Discovery'],
+   certNotes:'Most mature cybersecurity market in Africa.',
+   demandNote:'POPIA compliance drives massive security hiring.'},
+  {id:'gb',flag:'🇬🇧',name:'United Kingdom',sub:'London · Manchester',
+   salaryLocal:'£35,000–£90,000/yr',salaryRemote:'$2,000–$7,000/mo',
+   compliance:['UK GDPR','NIS Regulations 2018','Cyber Essentials'],
+   employers:['GCHQ','BAE Systems','BT Security','HSBC','Barclays','Darktrace'],
+   certNotes:'NCSC Cyber Accelerator. Cyber Essentials highly valued.',
+   demandNote:'50,000+ unfilled UK cybersecurity roles. African talent in demand.'},
+  {id:'us',flag:'🇺🇸',name:'United States',sub:'New York · San Francisco',
+   salaryLocal:'$70,000–$180,000/yr',salaryRemote:'$3,000–$10,000/mo',
+   compliance:['NIST CSF','HIPAA','SOX','PCI DSS','CMMC'],
+   employers:['Microsoft','Google','Amazon','CrowdStrike','Palo Alto Networks'],
+   certNotes:'DoD 8570 requires Security+/CISSP for government contracts.',
+   demandNote:'3.5M unfilled global cybersecurity jobs. Remote roles available worldwide.'},
+  {id:'ca',flag:'🇨🇦',name:'Canada',sub:'Toronto · Vancouver',
+   salaryLocal:'CA$65,000–150,000/yr',salaryRemote:'$2,500–$6,000/mo',
+   compliance:['PIPEDA','Quebec Law 25','OSFI Guidelines'],
+   employers:['RBC','TD Bank','Shopify','BlackBerry','CGI Group'],
+   certNotes:'Global Skills Strategy visa for tech workers.',
+   demandNote:'Canada has immigration pathways for tech workers.'},
+  {id:'de',flag:'🇩🇪',name:'Germany',sub:'Berlin · Munich · Frankfurt',
+   salaryLocal:'€50,000–€110,000/yr',salaryRemote:'$2,000–$6,000/mo',
+   compliance:['GDPR','BSI-Grundschutz','NIS2 Directive'],
+   employers:['SAP','Deutsche Telekom','Siemens','Allianz','Deutsche Bank'],
+   certNotes:'BSI certifications highly valued.',
+   demandNote:'137,000+ unfilled IT jobs. NIS2 (2024) increased security demand massively.'},
+];
+
+let crpUserCountry = null;
+let crpSelectedId = 'ng';
+
+function openCountryModalCRP(){
+  renderCountryGridCRP();
+  document.getElementById('countryModal').classList.add('show');
+}
+function renderCountryGridCRP(){
+  const grid = document.getElementById('countryGridCRP');
+  if(!grid) return;
+  grid.innerHTML = CRP_COUNTRIES.map(co => `
+    <div class="country-opt ${co.id===crpSelectedId?'selected':''}"
+         onclick="crpSelectCountry('${co.id}')">
+      <div class="co-flag">${co.flag}</div>
+      <div class="co-name">${co.name}</div>
+      <div class="co-sub">${co.sub}</div>
+    </div>`).join('');
+}
+function crpSelectCountry(id){
+  crpSelectedId = id;
+  document.querySelectorAll('.country-opt').forEach(el=>{
+    const oc = el.getAttribute('onclick')||'';
+    el.classList.toggle('selected', oc.includes("'"+id+"'"));
+  });
+}
+function confirmCountryCRP(){
+  crpUserCountry = CRP_COUNTRIES.find(c=>c.id===crpSelectedId)||CRP_COUNTRIES[0];
+  localStorage.setItem('crp-country', crpSelectedId);
+  document.getElementById('countryModal').classList.remove('show');
+  updateCRPCountryBanner();
+  if(typeof userData !== 'undefined' && uid){
+    userData.country = crpSelectedId;
+    if(typeof saveData==='function') saveData();
+  }
+  showToast('🌍 Location set to '+crpUserCountry.name);
+}
+function updateCRPCountryBanner(){
+  if(!crpUserCountry) return;
+  const banner = document.getElementById('crpCountryBanner');
+  const flag   = document.getElementById('crpFlag');
+  const name   = document.getElementById('crpCountryName');
+  const sub    = document.getElementById('crpCountrySub');
+  if(banner) banner.style.display='flex';
+  if(flag)   flag.textContent = crpUserCountry.flag;
+  if(name)   name.textContent = crpUserCountry.name+' · Cybersecurity Market';
+  if(sub)    sub.innerHTML = crpUserCountry.salaryRemote+' remote · '+
+             crpUserCountry.compliance[0]+' · '+
+             crpUserCountry.employers.length+' local employers tracked';
+}
+function loadCRPCountry(){
+  const saved = (typeof userData!=='undefined'&&userData.country)||
+                localStorage.getItem('crp-country')||'ng';
+  crpSelectedId = saved;
+  crpUserCountry = CRP_COUNTRIES.find(c=>c.id===saved)||CRP_COUNTRIES[0];
+  updateCRPCountryBanner();
+  if(!localStorage.getItem('crp-country')){
+    setTimeout(()=>openCountryModalCRP(), 1000);
+  }
 }
 
 /* ── PWA Service Worker ── */
