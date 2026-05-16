@@ -10,8 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="CyberRoadmap">
-<meta name="theme-color" content="#3b82f6">
-<link rel="apple-touch-icon" href="logo.svg">
+<link rel="apple-touch-icon" href="logo.jpg">
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -342,17 +341,43 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .xp-float-crp{position:fixed;font-family:'Orbitron',monospace;font-size:1rem;font-weight:900;color:var(--orange);pointer-events:none;z-index:500;animation:floatXpUp 1.2s ease-out forwards}
 @media(max-width:480px){.country-grid{grid-template-columns:1fr}}
 
+/* ── PWA INSTALL BANNER ── */
+.pwa-banner{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--surface);border-top:2px solid var(--border2);padding:11px 14px;display:flex;align-items:center;gap:10px;transform:translateY(100%);transition:transform .4s cubic-bezier(.16,1,.3,1);box-shadow:0 -4px 24px rgba(59,130,246,.12)}
+.pwa-banner.visible{transform:translateY(0)}
+.pwa-banner-logo{width:36px;height:36px;border-radius:10px;overflow:hidden;flex-shrink:0;box-shadow:0 0 12px var(--pink-glow)}
+.pwa-banner-logo img{width:100%;height:100%;object-fit:cover;display:block}
+.pwa-banner-text{flex:1}
+.pwa-banner-text strong{font-family:'Orbitron',monospace;font-size:.62rem;color:var(--accent2);display:block;margin-bottom:2px;letter-spacing:.04em}
+.pwa-banner-text span{font-size:.6rem;color:var(--text3);font-family:'Space Mono',monospace}
+.pwa-install-btn{background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:9px;color:#fff;font-family:'Orbitron',monospace;font-size:.58rem;font-weight:700;padding:8px 13px;cursor:pointer;white-space:nowrap;letter-spacing:.04em;box-shadow:0 4px 14px rgba(59,130,246,.4);transition:all .2s}
+.pwa-install-btn:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(59,130,246,.5)}
+.pwa-dismiss-btn{background:none;border:1.5px solid var(--border2);border-radius:8px;color:var(--text3);padding:7px 9px;cursor:pointer;font-size:.7rem;flex-shrink:0;transition:all .18s}
+.pwa-dismiss-btn:hover{border-color:var(--red);color:var(--red)}
+
 </style>
+<meta name="theme-color" id="crpThemeMeta" content="#3b82f6">
+<script>(function(){var t=localStorage.getItem('crp-theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
 </head>
 <body>
+
+<!-- ══ PWA INSTALL BANNER ══ -->
+<div class="pwa-banner" id="crpPwaBanner">
+  <div class="pwa-banner-logo"><img src="logo.jpg" alt="CRP"></div>
+  <div class="pwa-banner-text">
+    <strong>Install Cyber Roadmap Pro</strong>
+    <span>Add to home screen · Works offline</span>
+  </div>
+  <button class="pwa-install-btn" onclick="doCRPInstall()">INSTALL</button>
+  <button class="pwa-dismiss-btn" onclick="dismissCRPPwa()">✕</button>
+</div>
 
 <!-- ══ AUTH PAGE ══ -->
 <div id="authPage" style="display:flex">
   <div class="auth-glow"></div>
   <div class="auth-brand">
-    <div class="auth-brand-logo"><img src="logo.svg" onerror="this.src='https://godsonomichael.github.io/cyber-roadmap/logo.jpg'" alt="CRP" onerror="this.parentElement.innerHTML='<div style=&quot;font-family:Orbitron,monospace;font-size:1.1rem;font-weight:900;color:#ff0080;text-shadow:0 0 12px #ff0080&quot;>CRP</div>'"></div>
+    <div class="auth-brand-logo"><img src="logo.jpg" alt="CRP" onerror="this.parentElement.innerHTML='CRP'"></div>
     <div class="auth-brand-name" data-text="Cyber Roadmap Pro">Cyber Roadmap Pro</div>
-    <div class="auth-brand-sub">8 Career Paths · Nigeria 🇳🇬 · 2026</div>
+    <div class="auth-brand-sub">8 Career Paths · Worldwide · 2026</div>
   </div>
   <div class="auth-card">
     <div class="auth-tabs">
@@ -377,7 +402,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   <nav class="nav">
     <div class="nav-inner">
       <div class="nav-logo" onclick="goHome()">
-        <div class="nav-logo-img"><img src="https://godsonomichael.github.io/cyber-roadmap/logo.jpg" alt="CRP" onerror="this.style.display='none'"></div>
+        <div class="nav-logo-img"><img src="logo.jpg" alt="CRP" onerror="this.style.display='none'"></div>
         <span class="nav-logo-text">Cyber Roadmap</span>
       </div>
       <div class="nav-right">
@@ -405,7 +430,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
     <div id="dashView">
       <div class="dash-hero">
         <div class="dash-welcome" id="dashWelcome">Welcome back 👋</div>
-        <div class="dash-sub">Port Harcourt, Nigeria 🇳🇬 · Choose a career path below to view your full roadmap</div>
+        <div class="dash-sub" id="dashSubCRP">🌍 Choose a career path below to view your full roadmap</div>
       </div>
       
       <!-- Country Banner -->
@@ -431,7 +456,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
       </div>
       <div class="sec-label">Choose Your Career Path</div>
       <div class="paths-grid" id="pathsGrid"></div>
-      <div class="footer">Cyber Roadmap Pro · Port Harcourt, Nigeria 🇳🇬 · 2026<br><span style="color:var(--text3);font-size:0.6rem">8 Career Paths · Real 2026 Nigerian Job Market Data</span></div>
+      <div class="footer">Cyber Roadmap Pro · <span id="crpFooterCountry">🌍 Worldwide</span> · 2026<br><span style="color:var(--text3);font-size:0.6rem">8 Career Paths · Real 2026 Job Market Data</span></div>
     </div>
 
     <!-- ── PATH DETAIL ── -->
@@ -1586,7 +1611,7 @@ function openAIDrawer(){
   document.getElementById('aiDrawer').classList.add('open');
   if(aiHistory.length===0){
     const path=currentPathId?PATHS.find(p=>p.id===currentPathId):null;
-    addBubble('ai',`Hi ${currentUserName.split(' ')[0]||'there'}! I'm your AI Cybersecurity Mentor. ${path?`You're on the <strong>${path.title}</strong> path. `:''}Ask me anything about your cybersecurity career in Nigeria 🇳🇬`);
+    addBubble('ai',`Hi ${currentUserName.split(' ')[0]||'there'}! I'm your AI Cybersecurity Mentor. ${path?`You're on the <strong>${path.title}</strong> path. `:''}Ask me anything about your cybersecurity career${crpUserCountry?' in '+crpUserCountry.name+' '+crpUserCountry.flag:''}!`);
   }
 }
 
@@ -1623,11 +1648,14 @@ async function askGroq(){
   thinking.classList.add('bubble-thinking');
 
   const path=currentPathId?PATHS.find(p=>p.id===currentPathId):null;
-  const systemPrompt=`You are an expert cybersecurity career mentor specializing in Nigerian students and professionals.
-The user is based in Port Harcourt, Nigeria and actively building a cybersecurity career.
+  const ctxCountry = crpUserCountry || {name:'Nigeria',employers:['Access Bank','GTBank','Flutterwave','MTN Nigeria','Shell Nigeria'],compliance:['NDPR','NDPA 2023'],certNotes:'NITDA 50% subsidy available.',demandNote:'78% of Nigerian SOC postings require Splunk or Sentinel.'};
+  const systemPrompt=`You are an expert cybersecurity career mentor specializing in ${ctxCountry.name} students and professionals.
+The user is based in ${ctxCountry.name} and actively building a cybersecurity career.
 ${path?`They are currently studying the "${path.title}" path.`:''}
-Give practical, Nigeria-specific advice. Reference local employers (Access Bank, GTBank, Flutterwave, MTN Nigeria, Shell Nigeria, EFCC, Certfort, GVA Partners) and local programs (NITDA subsidies, NDPR, NDPA 2023) where relevant.
-Keep responses concise, actionable, and encouraging. Max 3 short paragraphs.`;
+Local employers in ${ctxCountry.name}: ${ctxCountry.employers.slice(0,5).join(', ')}.
+Compliance frameworks relevant: ${ctxCountry.compliance.join(', ')}.
+${ctxCountry.certNotes} ${ctxCountry.demandNote}
+Give practical, location-specific advice. Keep responses concise, actionable, and encouraging. Max 3 short paragraphs.`;
 
   aiHistory.push({role:'user',content:q});
 
@@ -1886,6 +1914,71 @@ if(aiInputEl){
     if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();askGroq();}
   });
 }
+/* ── PWA INSTALL ── */
+let _crpDeferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  _crpDeferredPrompt = e;
+  if(!localStorage.getItem('crp-pwa-dismissed')){
+    setTimeout(()=>{
+      const b = document.getElementById('crpPwaBanner');
+      if(b) b.classList.add('visible');
+    }, 3500);
+  }
+});
+async function doCRPInstall(){
+  if(!_crpDeferredPrompt) return;
+  _crpDeferredPrompt.prompt();
+  const {outcome} = await _crpDeferredPrompt.userChoice;
+  if(outcome==='accepted') showToast('✓ Cyber Roadmap Pro installed!');
+  _crpDeferredPrompt = null;
+  dismissCRPPwa();
+}
+function dismissCRPPwa(){
+  const b = document.getElementById('crpPwaBanner');
+  if(b) b.classList.remove('visible');
+  localStorage.setItem('crp-pwa-dismissed','1');
+}
+window.addEventListener('appinstalled', () => {
+  dismissCRPPwa();
+  showToast('✓ App installed successfully!');
+});
+
+/* ── COUNTRY BANNER + FOOTER + SUBTITLE UPDATE ── */
+const _origUpdateCRPBanner = window.updateCRPCountryBanner;
+window.updateCRPCountryBanner = function(){
+  if(_origUpdateCRPBanner) _origUpdateCRPBanner();
+  const co = crpUserCountry;
+  if(!co) return;
+  const sub = document.getElementById('dashSubCRP');
+  if(sub) sub.textContent = co.flag + ' ' + co.name + ' · Choose a career path below to view your full roadmap';
+  const ft = document.getElementById('crpFooterCountry');
+  if(ft) ft.textContent = co.flag + ' ' + co.name;
+};
+
+/* ── THEME TOGGLE FIX ── */
+function toggleTheme(){
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('crp-theme', next);
+  const btn = document.getElementById('themeBtn');
+  const lbl = document.getElementById('themeLabel');
+  const meta = document.getElementById('crpThemeMeta');
+  if(btn) btn.textContent = next === 'dark' ? '☀️' : '🌙';
+  if(lbl) lbl.textContent = next === 'dark' ? 'Light Mode' : 'Dark Mode';
+  if(meta) meta.content = next === 'dark' ? '#3b82f6' : '#1d4ed8';
+  showToast(next === 'light' ? '☀️ Light mode on' : '🌙 Dark mode on');
+}
+/* Sync theme icon on load */
+(function(){
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const btn = document.getElementById('themeBtn');
+  const lbl = document.getElementById('themeLabel');
+  if(btn) btn.textContent = isDark ? '☀️' : '🌙';
+  if(lbl) lbl.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+})();
+
 </script>
 </body>
 </html>
