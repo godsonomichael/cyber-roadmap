@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyber Roadmap Pro · Career Paths 2026</title>
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CyberRoadmap">
+<meta name="theme-color" content="#3b82f6">
+<link rel="apple-touch-icon" href="logo.svg">
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Orbitron:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<style>
+:root{--bg:#080b12;--bg2:#0d1220;--surface:#111827;--surface2:#162035;--card:#0f1a2e;--border:rgba(99,179,255,0.10);--border2:rgba(99,179,255,0.18);--accent:#3b82f6;--accent2:#60a5fa;--accent3:#93c5fd;--cyan:#06b6d4;--green:#10b981;--purple:#8b5cf6;--orange:#f59e0b;--red:#ef4444;--text:#f0f6ff;--text2:#94a3b8;--text3:#4b6080;--glow:rgba(59,130,246,0.15);--pink:#ff0080;--pink-glow:rgba(255,0,128,0.3)}
+[data-theme="light"]{--bg:#f0f4fc;--bg2:#e8eef8;--surface:#ffffff;--surface2:#f5f8ff;--card:#eef2fc;--border:rgba(59,130,246,0.12);--border2:rgba(59,130,246,0.22);--text:#0f172a;--text2:#475569;--text3:#94a3b8;--glow:rgba(59,130,246,0.08);--pink-glow:rgba(255,0,128,0.15)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:50px 50px;opacity:0.4;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -20%,rgba(59,130,246,0.12) 0%,transparent 70%);pointer-events:none;z-index:0}
+
+@keyframes glitch1{0%,90%,100%{transform:translate(0);opacity:0}91%,93%,95%,97%{opacity:0.6}91%{transform:translate(-3px,1px)}93%{transform:translate(3px,-1px)}95%{transform:translate(-2px,2px)}97%{transform:translate(2px,-2px)}}
+@keyframes glitch2{0%,90%,100%{transform:translate(0);opacity:0}91%,93%,95%,97%{opacity:0.5}91%{transform:translate(3px,-1px)}93%{transform:translate(-3px,1px)}95%{transform:translate(2px,-2px)}97%{transform:translate(-2px,2px)}}
+@keyframes logoPulse{0%,100%{box-shadow:0 0 30px var(--pink-glow),0 0 60px rgba(255,0,128,0.1)}50%{box-shadow:0 0 60px var(--pink-glow),0 0 120px rgba(255,0,128,0.2)}}
+@keyframes scanMove{0%{transform:translateY(0)}100%{transform:translateY(100px)}}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInScale{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
+@keyframes progressShimmer{0%{transform:translateX(-100%)}100%{transform:translateX(300%)}}
+@keyframes checkPop{0%{transform:scale(0.5)}55%{transform:scale(1.35)}80%{transform:scale(0.95)}100%{transform:scale(1)}}
+@keyframes streakFire{0%{transform:scale(1)}35%{transform:scale(1.28) rotate(-5deg)}65%{transform:scale(0.93) rotate(4deg)}100%{transform:scale(1)}}
+@keyframes glowPing{0%{transform:scale(1);opacity:0.7}70%,100%{transform:scale(2.4);opacity:0}}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(28px) scale(0.9)}60%{transform:translateX(-50%) translateY(-4px) scale(1.02)}to{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.75)}}
+@keyframes countBump{0%{transform:scale(1)}40%{transform:scale(1.22);color:var(--green)}100%{transform:scale(1)}}
+@keyframes drawerUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes tileIn{from{opacity:0;transform:translateY(18px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes borderFlow{0%{border-color:rgba(59,130,246,0.2)}50%{border-color:rgba(6,182,212,0.5)}100%{border-color:rgba(59,130,246,0.2)}}
+@keyframes slideRight{from{transform:translateX(24px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* ── AUTH ── */
+#authPage{display:none;position:fixed;inset:0;z-index:100;background:var(--bg);align-items:center;justify-content:center;flex-direction:column;padding:20px}
+.auth-glow{position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(255,0,128,0.08) 0%,rgba(59,130,246,0.06) 40%,transparent 70%);pointer-events:none}
+.auth-brand{text-align:center;margin-bottom:28px;position:relative;z-index:1;animation:fadeInDown 0.55s cubic-bezier(0.16,1,0.3,1) both}
+.auth-brand-logo{width:72px;height:72px;margin:0 auto 16px;border-radius:20px;overflow:hidden;animation:logoPulse 3.5s ease-in-out infinite;position:relative}
+.auth-brand-logo img{width:100%;height:100%;object-fit:cover;border-radius:20px;display:block}
+.auth-brand-name{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:800;letter-spacing:0.04em;color:var(--text);margin-bottom:5px;position:relative;display:inline-block}
+.auth-brand-name::before{content:attr(data-text);position:absolute;left:0;top:0;width:100%;height:100%;color:#ff0080;animation:glitch1 4s infinite;clip-path:polygon(0 15%,100% 15%,100% 35%,0 35%)}
+.auth-brand-name::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;height:100%;color:#00ffff;animation:glitch2 4s infinite;clip-path:polygon(0 65%,100% 65%,100% 85%,0 85%)}
+.auth-brand-sub{font-size:0.7rem;color:var(--text3);letter-spacing:0.14em;text-transform:uppercase}
+.auth-card{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:28px 26px;width:100%;max-width:380px;position:relative;z-index:1;box-shadow:0 24px 80px rgba(0,0,0,0.5);animation:fadeInScale 0.5s 0.1s cubic-bezier(0.16,1,0.3,1) both;overflow:hidden}
+.auth-card::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,255,255,0.012) 3px,rgba(0,255,255,0.012) 4px);pointer-events:none;border-radius:20px;animation:scanMove 10s linear infinite}
+.auth-tabs{display:flex;gap:5px;margin-bottom:22px;background:var(--bg2);border-radius:12px;padding:4px}
+.auth-tab{flex:1;padding:9px;background:transparent;border:none;color:var(--text3);font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:600;cursor:pointer;border-radius:9px;transition:all 0.22s cubic-bezier(0.16,1,0.3,1)}
+.auth-tab.active{background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;box-shadow:0 4px 16px rgba(59,130,246,0.4)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:0.67rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.field input{width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:10px;padding:11px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s,box-shadow 0.2s}
+.field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,0.18)}
+.field input::placeholder{color:var(--text3)}
+.pass-wrap{position:relative}
+.pass-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1rem;color:var(--text3);padding:2px}
+.btn-primary{width:100%;padding:13px;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border:none;border-radius:11px;font-family:'Orbitron',monospace;font-size:0.82rem;font-weight:700;cursor:pointer;margin-top:4px;transition:all 0.22s;box-shadow:0 6px 24px rgba(59,130,246,0.4);letter-spacing:0.04em}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(59,130,246,0.55)}
+.auth-err{font-size:0.74rem;color:var(--red);margin-top:10px;min-height:16px;font-weight:500}
+
+/* ── NAV ── */
+.nav{position:sticky;top:0;z-index:50;background:rgba(8,11,18,0.88);backdrop-filter:blur(22px);border-bottom:1px solid var(--border);height:54px;transition:background 0.3s}
+[data-theme="light"] .nav{background:rgba(240,244,252,0.9)}
+.nav-inner{max-width:760px;margin:0 auto;padding:0 16px;height:100%;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
+.nav-logo-img{width:32px;height:32px;border-radius:9px;overflow:hidden;flex-shrink:0;box-shadow:0 0 16px var(--pink-glow);animation:logoPulse 3.5s ease-in-out infinite}
+.nav-logo-img img{width:100%;height:100%;object-fit:cover;display:block}
+.nav-logo-text{font-family:'Orbitron',monospace;font-size:0.78rem;font-weight:700;letter-spacing:0.06em;color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-back{display:none;align-items:center;gap:6px;padding:6px 12px;background:var(--surface);border:1px solid var(--border2);border-radius:9px;color:var(--text2);font-size:0.78rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.18s}
+.nav-back:hover{background:var(--surface2);color:var(--text)}
+.nav-back.show{display:flex}
+.hamburger{background:none;border:1.5px solid var(--border2);border-radius:9px;padding:7px 9px;cursor:pointer;display:flex;flex-direction:column;gap:4px;transition:all 0.2s}
+.hamburger:hover{border-color:var(--accent);background:rgba(59,130,246,0.06)}
+.hamburger span{display:block;width:18px;height:1.5px;background:var(--text2);border-radius:2px;transition:all 0.3s}
+
+/* ── MENU TRAY ── */
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(5px);z-index:60;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.menu-overlay.open{opacity:1;pointer-events:all}
+.menu-tray{position:fixed;top:0;right:0;width:290px;height:100vh;background:var(--surface);border-left:1px solid var(--border2);z-index:70;transform:translateX(100%);transition:transform 0.38s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;overflow:hidden}
+.menu-tray.open{transform:translateX(0);box-shadow:-24px 0 80px rgba(0,0,0,0.6)}
+.menu-head{padding:18px 18px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.menu-head-title{font-family:'Orbitron',monospace;font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3)}
+.menu-close{background:none;border:1px solid var(--border2);border-radius:7px;color:var(--text2);cursor:pointer;padding:5px 10px;font-size:0.8rem;transition:all 0.18s}
+.menu-close:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.menu-user{padding:14px 18px;border-bottom:1px solid var(--border)}
+.menu-user-label{font-size:0.61rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:5px}
+.menu-items{flex:1;padding:10px;overflow-y:auto}
+.menu-item{width:100%;display:flex;align-items:center;gap:11px;padding:10px 12px;background:transparent;border:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:0.84rem;cursor:pointer;border-radius:10px;text-align:left;transition:all 0.15s;margin-bottom:2px}
+.menu-item:hover{background:var(--surface2);color:var(--text);transform:translateX(3px)}
+.menu-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
+.menu-bottom{padding:12px 10px;border-top:1px solid var(--border)}
+.menu-danger:hover{background:rgba(239,68,68,0.1);color:var(--red)}
+
+/* ── MAIN ── */
+.main{max-width:760px;margin:0 auto;padding:0 14px 100px;position:relative;z-index:1}
+
+/* ── DASHBOARD ── */
+.dash-hero{padding:24px 0 20px;animation:fadeInDown 0.5s both}
+.dash-welcome{font-family:'Orbitron',monospace;font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:4px}
+.dash-sub{font-size:0.74rem;color:var(--text3);line-height:1.5;margin-bottom:18px}
+.dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.d-stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 12px;text-align:center;position:relative;overflow:hidden;transition:transform 0.22s}
+.d-stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.d-stat:hover{transform:translateY(-3px)}
+.d-stat-n{display:block;font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:800;color:var(--accent2);line-height:1}
+.d-stat-l{display:block;font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px}
+.streak-row{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between}
+.streak-lbl{font-size:0.64rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:3px}
+.streak-num{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:800;color:var(--orange);line-height:1.1}
+.streak-num.fire{animation:streakFire 0.55s cubic-bezier(0.16,1,0.3,1)}
+.streak-num small{font-size:0.55rem;color:var(--text3);display:block;font-family:'DM Sans',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:0.1em;margin-top:2px}
+.btn-streak{background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(6,182,212,0.1));border:1px solid rgba(16,185,129,0.35);color:#10b981;font-family:'DM Sans',sans-serif;font-size:0.75rem;font-weight:700;padding:9px 14px;border-radius:10px;cursor:pointer;transition:all 0.22s;white-space:nowrap}
+.btn-streak:hover{background:rgba(16,185,129,0.22);border-color:rgba(16,185,129,0.6)}
+.btn-streak:disabled{opacity:0.6;cursor:not-allowed}
+.btn-streak.marked{background:linear-gradient(135deg,rgba(239,68,68,0.15),rgba(239,68,68,0.1)) !important;border-color:rgba(239,68,68,0.35) !important;color:#ef4444 !important;}
+.btn-streak.marked:hover{background:rgba(239,68,68,0.25) !important;}
+.sec-label{font-family:'Orbitron',monospace;font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin:0 0 14px;display:flex;align-items:center;gap:10px}
+.sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border2),transparent)}
+
+/* ── CAREER PATH TILES ── */
+.paths-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.path-tile{position:relative;border-radius:18px;overflow:hidden;cursor:pointer;transition:transform 0.3s cubic-bezier(0.16,1,0.3,1),box-shadow 0.3s;border:1px solid var(--border);background:var(--surface)}
+.path-tile:hover{transform:translateY(-5px) scale(1.01);box-shadow:0 20px 50px rgba(0,0,0,0.35)}
+.path-tile:active{transform:scale(0.98)}
+.pt-header{padding:18px 16px 12px;position:relative;overflow:hidden}
+.pt-glow{position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;filter:blur(30px);opacity:0.35;pointer-events:none}
+.pt-icon{font-size:2rem;margin-bottom:8px;display:block;position:relative;z-index:1}
+.pt-title{font-family:'Orbitron',monospace;font-size:0.8rem;font-weight:800;letter-spacing:0.02em;color:var(--text);margin-bottom:3px;position:relative;z-index:1}
+.pt-tagline{font-size:0.66rem;color:var(--text3);position:relative;z-index:1}
+.pt-badges{display:flex;flex-wrap:wrap;gap:5px;padding:10px 16px;border-top:1px solid var(--border)}
+.pt-badge{font-size:0.57rem;font-weight:700;padding:3px 8px;border-radius:5px;font-family:'Space Mono',monospace;letter-spacing:0.06em;white-space:nowrap}
+.pt-footer{padding:10px 16px 14px;display:flex;align-items:center;justify-content:space-between}
+.pt-salary{font-size:0.68rem;color:var(--text2);font-weight:600}
+.pt-salary span{color:var(--orange);font-weight:700}
+.pt-arrow{font-size:0.75rem;color:var(--text3);transition:transform 0.2s}
+.path-tile:hover .pt-arrow{transform:translateX(4px)}
+.pt-progress{margin:0 16px 12px;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.pt-progress-fill{height:100%;border-radius:2px;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1)}
+
+/* ── PATH DETAIL VIEW ── */
+#pathView{display:none;animation:slideRight 0.35s cubic-bezier(0.16,1,0.3,1) both}
+.path-hero{padding:20px 0 16px;border-bottom:1px solid var(--border);margin-bottom:20px}
+.ph-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.ph-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;border:1px solid var(--border2)}
+.ph-title{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:800;color:var(--text);margin-bottom:4px}
+.ph-tagline{font-size:0.72rem;color:var(--text3)}
+.ph-badges{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.ph-badge{font-size:0.62rem;font-weight:700;padding:5px 11px;border-radius:7px;font-family:'Space Mono',monospace;letter-spacing:0.05em}
+.ph-desc{font-size:0.77rem;color:var(--text2);line-height:1.65;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 15px;margin-bottom:14px}
+.ph-meta-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+.ph-meta-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:11px 13px}
+.ph-meta-label{font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:5px}
+.ph-meta-val{font-size:0.8rem;font-weight:700;color:var(--text);line-height:1.4}
+
+.detail-progress{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:20px}
+.dp-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.dp-label{font-size:0.7rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.08em}
+.dp-val{font-family:'Orbitron',monospace;font-size:0.82rem;font-weight:700;color:var(--accent2)}
+.dp-track{height:7px;background:var(--bg2);border-radius:99px;overflow:hidden;position:relative}
+.dp-fill{height:100%;border-radius:99px;position:relative;overflow:hidden;transition:width 0.8s cubic-bezier(0.34,1.56,0.64,1)}
+.dp-fill::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.45),transparent);animation:progressShimmer 1.8s ease-in-out infinite}
+
+/* ── PHASES + COURSES ── */
+.phase-wrap{margin-bottom:10px;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s}
+.phase-wrap:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(59,130,246,0.08);border-color:rgba(99,179,255,0.2)}
+.phase-head{padding:16px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background 0.2s;user-select:none}
+.phase-head:hover{background:rgba(99,179,255,0.04)}
+.phase-left{display:flex;align-items:center;gap:12px}
+.phase-pip{width:4px;height:40px;border-radius:2px;flex-shrink:0}
+.phase-title{font-family:'Orbitron',monospace;font-size:0.75rem;font-weight:700;letter-spacing:0.04em;color:var(--text);margin-bottom:3px}
+.phase-sub{font-size:0.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em}
+.phase-right{display:flex;align-items:center;gap:10px}
+.phase-count{font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700}
+.phase-chev{color:var(--text3);font-size:0.7rem;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1)}
+.phase-chev.open{transform:rotate(180deg)}
+.phase-body{max-height:0;overflow:hidden;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1)}
+.phase-body.open{max-height:9999px}
+.course-row{display:flex;align-items:flex-start;gap:12px;padding:11px 18px;border-top:1px solid var(--border);transition:background 0.15s}
+.course-row:hover{background:rgba(99,179,255,0.03)}
+.cbox{width:21px;height:21px;border:1.5px solid var(--border2);border-radius:6px;cursor:pointer;flex-shrink:0;margin-top:2px;transition:all 0.22s cubic-bezier(0.16,1,0.3,1);display:flex;align-items:center;justify-content:center}
+.cbox:hover{border-color:var(--accent);background:rgba(59,130,246,0.08)}
+.cbox.checked{background:linear-gradient(135deg,var(--accent),#1d4ed8);border-color:transparent;box-shadow:0 0 12px rgba(59,130,246,0.45);animation:checkPop 0.35s cubic-bezier(0.16,1,0.3,1)}
+.cbox.checked::after{content:'✓';color:#fff;font-size:0.7rem;font-weight:700}
+.c-info{flex:1;min-width:0}
+.c-name{font-size:0.8rem;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:3px;transition:all 0.2s}
+.c-name.done{color:var(--text3);text-decoration:line-through}
+.c-meta{font-size:0.67rem;color:var(--text3);line-height:1.5;margin-bottom:6px}
+.c-link{display:inline-block;font-size:0.67rem;font-weight:700;color:var(--accent2);text-decoration:none;margin-right:8px;padding:3px 8px;background:rgba(59,130,246,0.1);border-radius:5px;border:1px solid rgba(59,130,246,0.2);transition:all 0.15s;font-family:'Space Mono',monospace}
+.c-link:hover{background:rgba(59,130,246,0.22);color:#fff;transform:translateY(-1px)}
+.free-badge{font-size:0.55rem;background:linear-gradient(135deg,#10b981,#06b6d4);color:#fff;padding:2px 6px;border-radius:4px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;vertical-align:middle;margin-left:5px}
+.new-badge{font-size:0.55rem;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;padding:2px 6px;border-radius:4px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;vertical-align:middle;margin-left:5px}
+.phase-note{padding:12px 18px;font-size:0.72rem;line-height:1.6;border-top:1px solid var(--border)}
+
+/* ── CERTS ── */
+.cert-row{display:flex;align-items:flex-start;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:13px 15px;margin-bottom:8px;transition:transform 0.22s,border-color 0.22s,box-shadow 0.22s}
+.cert-row:hover{transform:translateX(5px);border-color:var(--border2);box-shadow:0 4px 20px rgba(59,130,246,0.07)}
+.cert-circle{width:22px;height:22px;border:2px solid var(--border2);border-radius:50%;cursor:pointer;flex-shrink:0;margin-top:2px;transition:all 0.22s cubic-bezier(0.16,1,0.3,1);display:flex;align-items:center;justify-content:center}
+.cert-circle:hover{border-color:var(--purple)}
+.cert-circle.checked{background:linear-gradient(135deg,var(--purple),var(--accent));border-color:transparent;box-shadow:0 0 14px rgba(139,92,246,0.45);animation:checkPop 0.35s}
+.cert-circle.checked::after{content:'✓';color:#fff;font-size:0.65rem;font-weight:700}
+.cert-info{flex:1;min-width:0}
+.cert-n{font-size:0.8rem;font-weight:700;color:var(--text);margin-bottom:3px;transition:color 0.2s}
+.cert-n.done{text-decoration:line-through;color:var(--text3)}
+.cert-t{font-size:0.68rem;color:var(--text3);line-height:1.5;margin-bottom:6px}
+.cbadge{font-size:0.57rem;font-weight:800;padding:4px 9px;border-radius:5px;text-transform:uppercase;letter-spacing:0.1em;white-space:nowrap;font-family:'Space Mono',monospace;margin-left:auto;align-self:flex-start;flex-shrink:0}
+.cb-now{background:rgba(16,185,129,0.15);color:#10b981;border:1px solid rgba(16,185,129,0.3)}
+.cb-goal{background:rgba(59,130,246,0.12);color:var(--accent2);border:1px solid rgba(59,130,246,0.25)}
+.cb-later{background:rgba(75,96,128,0.2);color:var(--text3);border:1px solid var(--border)}
+
+/* ── SKILLS ── */
+.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.skill-chip{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:9px;transition:all 0.22s cubic-bezier(0.16,1,0.3,1)}
+.skill-chip:hover{border-color:var(--border2);transform:translateY(-2px)}
+.skill-chip.owned{background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(6,182,212,0.05));border-color:rgba(16,185,129,0.35)}
+.skill-dot{width:8px;height:8px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:all 0.3s}
+.skill-chip.owned .skill-dot{background:var(--green);box-shadow:0 0 10px rgba(16,185,129,0.6);animation:pulseDot 2s infinite}
+.skill-name{font-size:0.75rem;font-weight:600;color:var(--text)}
+.skill-cat{font-size:0.6rem;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-top:1px}
+.skill-chip.owned .skill-name{color:var(--green)}
+.skills-note{font-size:0.73rem;color:var(--text2);line-height:1.6;background:rgba(59,130,246,0.05);border:1px solid var(--border);border-radius:10px;padding:11px 13px;margin-bottom:14px}
+
+/* ── TOOLS SECTION ── */
+.tools-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.tool-chip{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:7px 13px;font-size:0.72rem;font-weight:700;color:var(--text2);font-family:'Space Mono',monospace}
+
+/* ── EMPLOYERS SECTION ── */
+.employers-grid{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px}
+.emp-chip{background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:6px 12px;font-size:0.7rem;font-weight:600;color:var(--text2)}
+
+/* ── NIGERIA TIP ── */
+.ng-tip{background:linear-gradient(135deg,rgba(34,197,94,0.06),rgba(6,182,212,0.05));border:1px solid rgba(34,197,94,0.2);border-left:3px solid #22c55e;border-radius:12px;padding:13px 15px;margin-bottom:20px;font-size:0.74rem;color:var(--text2);line-height:1.65}
+.ng-tip strong{color:#22c55e}
+
+/* ── SPL ── */
+.spl-label{font-size:0.68rem;font-weight:700;color:var(--text2);margin:14px 0 5px;text-transform:uppercase;letter-spacing:0.08em}
+.spl-block{background:var(--bg);border:1px solid var(--border);border-radius:11px;padding:12px 14px;font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--cyan);line-height:1.8;white-space:pre-wrap;word-break:break-all;position:relative;margin-bottom:8px}
+.spl-block:hover{border-color:rgba(6,182,212,0.45)}
+.spl-copy{position:absolute;top:8px;right:8px;background:rgba(59,130,246,0.15);border:1px solid rgba(59,130,246,0.25);border-radius:5px;color:var(--accent2);font-family:'DM Sans',sans-serif;font-size:0.62rem;font-weight:700;cursor:pointer;padding:3px 8px;transition:all 0.18s}
+.spl-copy:hover{background:var(--accent);color:#fff}
+.spl-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:15px 17px;margin-bottom:10px}
+.spl-section-title{font-family:'Orbitron',monospace;font-size:0.7rem;font-weight:700;margin-bottom:12px;letter-spacing:0.04em}
+
+/* ── AI FAB ── */
+.ai-fab{position:fixed;bottom:22px;right:18px;z-index:40;display:flex;align-items:center;gap:9px;padding:13px 20px;background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:50px;color:#fff;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:700;box-shadow:0 8px 36px rgba(59,130,246,0.5);transition:all 0.3s cubic-bezier(0.16,1,0.3,1)}
+.ai-fab:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 14px 48px rgba(59,130,246,0.6)}
+.ai-fab::before{content:'';position:absolute;inset:0;border-radius:50px;border:2px solid rgba(59,130,246,0.45);animation:glowPing 2.5s ease-out infinite}
+.ai-fab::after{content:'';position:absolute;inset:0;border-radius:50px;border:2px solid rgba(59,130,246,0.2);animation:glowPing 2.5s ease-out infinite;animation-delay:1.25s}
+
+/* ── AI DRAWER ── */
+.ai-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(7px);z-index:80;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.ai-overlay.open{opacity:1;pointer-events:all}
+.ai-drawer{position:fixed;bottom:0;left:0;right:0;max-height:85vh;background:var(--surface);border:1px solid var(--border2);border-radius:24px 24px 0 0;z-index:90;transform:translateY(100%);transition:transform 0.42s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;overflow:hidden}
+.ai-drawer.open{transform:translateY(0);box-shadow:0 -24px 80px rgba(0,0,0,0.55)}
+.ai-handle{width:40px;height:4px;background:var(--border2);border-radius:2px;margin:12px auto 4px;flex-shrink:0}
+.ai-head{padding:10px 18px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-shrink:0}
+.ai-head-left{display:flex;align-items:center;gap:11px}
+.ai-live{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px rgba(16,185,129,0.7);animation:pulseDot 2s infinite}
+.ai-title{font-family:'Orbitron',monospace;font-size:0.78rem;font-weight:700;color:var(--text)}
+.ai-sub{font-size:0.62rem;color:var(--text3);margin-top:2px}
+.ai-close{background:none;border:1px solid var(--border2);border-radius:7px;color:var(--text2);cursor:pointer;padding:5px 10px;font-size:0.8rem;transition:all 0.18s}
+.ai-close:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.ai-sugs{padding:11px 14px;display:flex;gap:7px;flex-wrap:wrap;border-bottom:1px solid var(--border);flex-shrink:0}
+.ai-sug{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:0.68rem;padding:6px 11px;cursor:pointer;transition:all 0.18s;white-space:nowrap}
+.ai-sug:hover{background:rgba(59,130,246,0.12);border-color:rgba(59,130,246,0.3);color:var(--accent2);transform:translateY(-1px)}
+.ai-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.bubble{max-width:86%;padding:10px 13px;border-radius:14px;font-size:0.78rem;line-height:1.65;animation:fadeInUp 0.25s cubic-bezier(0.16,1,0.3,1) forwards}
+.bubble-u{align-self:flex-end;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border-radius:14px 14px 3px 14px}
+.bubble-ai{align-self:flex-start;background:var(--surface2);border:1px solid var(--border);color:var(--text2);border-radius:14px 14px 14px 3px}
+.bubble-thinking{color:var(--text3);font-style:italic}
+.ai-input-row{padding:12px 14px;border-top:1px solid var(--border);display:flex;gap:9px;background:var(--surface);flex-shrink:0}
+.ai-input{flex:1;background:var(--bg2);border:1.5px solid var(--border2);border-radius:11px;padding:10px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.83rem;resize:none;outline:none;transition:border-color 0.2s}
+.ai-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,0.15)}
+.ai-input::placeholder{color:var(--text3)}
+.ai-btn{background:linear-gradient(135deg,var(--accent),#1d4ed8);border:none;border-radius:11px;color:#fff;font-family:'Orbitron',monospace;font-size:0.72rem;font-weight:700;padding:0 18px;cursor:pointer;transition:all 0.2s}
+.ai-btn:hover{opacity:0.88;transform:scale(1.03)}
+.ai-btn:disabled{opacity:0.45;cursor:not-allowed;transform:none}
+
+/* ── NOTIF MODAL ── */
+#notifModal{display:none;position:fixed;inset:0;z-index:95;background:rgba(0,0,0,0.65);backdrop-filter:blur(7px);align-items:flex-end;justify-content:center;padding:0}
+#notifModal.show{display:flex}
+.notif-sheet{background:var(--surface);border:1px solid var(--border2);border-radius:22px 22px 0 0;padding:20px 22px 30px;width:100%;max-width:500px;animation:drawerUp 0.38s cubic-bezier(0.16,1,0.3,1)}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity 0.6s cubic-bezier(0.16,1,0.3,1),transform 0.6s cubic-bezier(0.16,1,0.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:85px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:10px 18px;font-size:0.79rem;font-weight:600;color:var(--text);z-index:200;opacity:0;transition:opacity 0.15s;pointer-events:none;white-space:nowrap;box-shadow:0 10px 40px rgba(0,0,0,0.4)}
+.toast.show{opacity:1;animation:toastIn 0.42s cubic-bezier(0.16,1,0.3,1) forwards}
+
+.footer{text-align:center;padding:30px 0 10px;font-size:0.67rem;color:var(--text3);line-height:1.8;font-family:'Space Mono',monospace}
+@media(max-width:500px){.paths-grid{grid-template-columns:1fr}.dash-stats{gap:7px}.skills-grid{grid-template-columns:1fr}}
+
+/* ══ COUNTRY & GUIDE ADDITIONS ══ */
+.country-modal{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+.country-modal.show{display:flex}
+.cm-card{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:24px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,0.5)}
+.cm-title{font-family:'Orbitron',monospace;font-size:.88rem;font-weight:800;color:var(--accent2);margin-bottom:4px}
+.cm-sub{font-size:.72rem;color:var(--text2);margin-bottom:16px;line-height:1.6}
+.country-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+.country-opt{background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;transition:all .22s;text-align:center}
+.country-opt:hover{border-color:var(--accent);transform:translateY(-2px)}
+.country-opt.selected{border-color:var(--green);background:rgba(16,185,129,0.08)}
+.co-flag{font-size:1.5rem;margin-bottom:4px}
+.co-name{font-size:.76rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.co-sub{font-size:.6rem;color:var(--text3);font-family:'Space Mono',monospace}
+.cm-confirm-btn{width:100%;padding:12px;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border:none;border-radius:10px;font-family:'Orbitron',monospace;font-size:.74rem;font-weight:700;cursor:pointer;transition:all .22s;letter-spacing:.06em;box-shadow:0 6px 20px rgba(59,130,246,0.35)}
+.cm-confirm-btn:hover{transform:translateY(-2px)}
+.country-banner{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:0 14px 14px 0;padding:13px 16px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.cb-left{display:flex;align-items:center;gap:10px}
+.cb-flag{font-size:1.4rem}
+.cb-info{flex:1}
+.cb-country{font-family:'Orbitron',monospace;font-size:.76rem;font-weight:700;color:var(--text);margin-bottom:2px}
+.cb-sub{font-size:.68rem;color:var(--text2);line-height:1.5}
+.cb-change{font-size:.63rem;color:var(--accent2);cursor:pointer;text-decoration:underline;font-family:'Space Mono',monospace;white-space:nowrap}
+.guide-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:14px}
+.guide-box-title{font-family:'Orbitron',monospace;font-size:.65rem;color:var(--cyan);margin-bottom:8px;letter-spacing:.1em}
+.guide-body{font-size:.76rem;color:var(--text2);line-height:1.75}
+.guide-body code{font-family:'Space Mono',monospace;color:var(--green);background:rgba(16,185,129,0.1);padding:1px 5px;border-radius:4px;font-size:.72rem}
+.guide-body strong{color:var(--text);font-weight:600}
+.guide-step{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start}
+.guide-step-num{background:var(--accent);color:#fff;font-family:'Orbitron',monospace;font-size:.58rem;font-weight:700;min-width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.guide-tip{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-left:3px solid var(--orange);border-radius:0 10px 10px 0;padding:10px 14px;margin-top:10px;font-size:.73rem;color:var(--text2);line-height:1.6}
+.guide-tip::before{content:"💡 TIP: ";font-weight:700;color:var(--orange)}
+@keyframes floatXpUp{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-60px);opacity:0}}
+.xp-float-crp{position:fixed;font-family:'Orbitron',monospace;font-size:1rem;font-weight:900;color:var(--orange);pointer-events:none;z-index:500;animation:floatXpUp 1.2s ease-out forwards}
+@media(max-width:480px){.country-grid{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+
+<!-- ══ AUTH PAGE ══ -->
+<div id="authPage" style="display:flex">
+  <div class="auth-glow"></div>
+  <div class="auth-brand">
+    <div class="auth-brand-logo"><img src="logo.svg" onerror="this.src='https://godsonomichael.github.io/cyber-roadmap/logo.jpg'" alt="CRP" onerror="this.parentElement.innerHTML='<div style=&quot;font-family:Orbitron,monospace;font-size:1.1rem;font-weight:900;color:#ff0080;text-shadow:0 0 12px #ff0080&quot;>CRP</div>'"></div>
+    <div class="auth-brand-name" data-text="Cyber Roadmap Pro">Cyber Roadmap Pro</div>
+    <div class="auth-brand-sub">8 Career Paths · Nigeria 🇳🇬 · 2026</div>
+  </div>
+  <div class="auth-card">
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="setTab('login')">Login</button>
+      <button class="auth-tab" onclick="setTab('signup')">Sign Up</button>
+    </div>
+    <div id="nameField" class="field" style="display:none"><label>Full Name</label><input type="text" id="authName" placeholder="e.g. Godson Uzoezie" autocomplete="name"></div>
+    <div class="field"><label>Email</label><input type="email" id="authEmail" placeholder="your@email.com" autocomplete="email"></div>
+    <div class="field"><label>Password</label>
+      <div class="pass-wrap">
+        <input type="password" id="authPass" placeholder="••••••••" autocomplete="current-password">
+        <button class="pass-eye" id="passEye" onclick="togglePass()" type="button">👁</button>
+      </div>
+    </div>
+    <button class="btn-primary" id="authBtn" onclick="doAuth()">Login</button>
+    <div class="auth-err" id="authErr"></div>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="app" style="display:none">
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-logo" onclick="goHome()">
+        <div class="nav-logo-img"><img src="https://godsonomichael.github.io/cyber-roadmap/logo.jpg" alt="CRP" onerror="this.style.display='none'"></div>
+        <span class="nav-logo-text">Cyber Roadmap</span>
+      </div>
+      <div class="nav-right">
+        <button class="nav-back" id="navBack" onclick="goHome()">← Paths</button>
+        <button class="hamburger" onclick="openMenu()"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+  <div class="menu-tray" id="menuTray">
+    <div class="menu-head"><span class="menu-head-title">Navigation</span><button class="menu-close" onclick="closeMenu()">✕</button></div>
+    <div class="menu-user"><div class="menu-user-label">Signed in as</div><div id="menuUserBlock" style="font-size:0.8rem;color:var(--text2);font-weight:600"></div></div>
+    <div class="menu-items">
+      <button class="menu-item" onclick="closeMenu();goHome()"><span class="menu-icon">🏠</span>Career Paths</button>
+      <button class="menu-item" onclick="closeMenu();openNotifModal()"><span class="menu-icon">🔔</span>Study Reminder</button>
+      <button class="menu-item" onclick="closeMenu();openCountryModalCRP()"><span class="menu-icon">🌍</span>Change Country</button>
+      <button class="menu-item" onclick="toggleTheme();closeMenu()"><span class="menu-icon" id="themeBtn">☀️</span><span id="themeLabel">Light Mode</span></button>
+    </div>
+    <div class="menu-bottom"><button class="menu-item menu-danger" onclick="doLogout()"><span class="menu-icon">🚪</span>Sign Out</button></div>
+  </div>
+
+  <div class="main">
+    <!-- ── DASHBOARD ── -->
+    <div id="dashView">
+      <div class="dash-hero">
+        <div class="dash-welcome" id="dashWelcome">Welcome back 👋</div>
+        <div class="dash-sub">Port Harcourt, Nigeria 🇳🇬 · Choose a career path below to view your full roadmap</div>
+      </div>
+      
+      <!-- Country Banner -->
+      <div class="country-banner" id="crpCountryBanner" style="display:none">
+        <div class="cb-left">
+          <span class="cb-flag" id="crpFlag">🌍</span>
+          <div class="cb-info">
+            <div class="cb-country" id="crpCountryName">Loading...</div>
+            <div class="cb-sub" id="crpCountrySub">Personalised for your location</div>
+          </div>
+        </div>
+        <span class="cb-change" onclick="openCountryModalCRP()">Change country</span>
+      </div>
+
+      <div class="dash-stats">
+        <div class="d-stat"><span class="d-stat-n" id="dStatPaths">0</span><span class="d-stat-l">Paths Started</span></div>
+        <div class="d-stat"><span class="d-stat-n" id="dStatStreak">0</span><span class="d-stat-l">🔥 Streak</span></div>
+        <div class="d-stat"><span class="d-stat-n" id="dStatTotal">0</span><span class="d-stat-l">Total Done</span></div>
+      </div>
+      <div class="streak-row">
+        <div><div class="streak-lbl">Study Streak</div><div class="streak-num" id="streakVal">0<small>days in a row</small></div></div>
+        <button class="btn-streak" id="streakBtn" onclick="markToday()">✓ Mark Today Done</button>
+      </div>
+      <div class="sec-label">Choose Your Career Path</div>
+      <div class="paths-grid" id="pathsGrid"></div>
+      <div class="footer">Cyber Roadmap Pro · Port Harcourt, Nigeria 🇳🇬 · 2026<br><span style="color:var(--text3);font-size:0.6rem">8 Career Paths · Real 2026 Nigerian Job Market Data</span></div>
+    </div>
+
+    <!-- ── PATH DETAIL ── -->
+    <div id="pathView"></div>
+  </div>
+
+  <button class="ai-fab" onclick="toggleAIDrawer()"><span>🤖</span><span>Ask AI Mentor</span></button>
+  <div class="ai-overlay" id="aiOverlay" onclick="closeAIDrawer()"></div>
+  <div class="ai-drawer" id="aiDrawer">
+    <div class="ai-handle"></div>
+    <div class="ai-head">
+      <div class="ai-head-left"><div class="ai-live"></div><div><div class="ai-title">AI Cybersecurity Mentor</div><div class="ai-sub">Powered by Groq · Knows your progress</div></div></div>
+      <button class="ai-close" onclick="closeAIDrawer()">✕</button>
+    </div>
+    <div class="ai-sugs" id="aiSugs">
+      <button class="ai-sug" onclick="askSug(this)">Which path should I start with?</button>
+      <button class="ai-sug" onclick="askSug(this)">Best Nigerian SOC employers?</button>
+      <button class="ai-sug" onclick="askSug(this)">How to get remote work from Nigeria?</button>
+      <button class="ai-sug" onclick="askSug(this)">Security+ vs CyberOps — which first?</button>
+      <button class="ai-sug" onclick="askSug(this)">NITDA subsidy for certifications?</button>
+      <button class="ai-sug" onclick="askSug(this)">Use my HSE background in interviews</button>
+    </div>
+    <div class="ai-msgs" id="aiMsgs"></div>
+    <div class="ai-input-row">
+      <textarea class="ai-input" id="aiInput" rows="2" placeholder="Ask about any path, course, cert, salary..."></textarea>
+      <button class="ai-btn" id="aiBtn" onclick="askGroq()">Send ↑</button>
+    </div>
+  </div>
+</div>
+
+<div id="notifModal">
+  <div class="notif-sheet">
+    <div style="width:34px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 18px"></div>
+    <div style="font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:700;margin-bottom:6px">🔔 Daily Study Reminder</div>
+    <div style="font-size:0.72rem;color:var(--text3);margin-bottom:18px;line-height:1.6">Pick a time. Enable notifications in phone Settings if needed.</div>
+    <div style="margin-bottom:16px"><label style="font-size:0.63rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);display:block;margin-bottom:7px">Reminder Time</label><input type="time" id="notifTime" value="08:00" style="width:100%;background:var(--bg2);border:1.5px solid var(--border2);border-radius:9px;padding:11px 13px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:1rem;outline:none"></div>
+    <button onclick="saveNotifTime()" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.87rem;font-weight:700;cursor:pointer;margin-bottom:9px">Enable Reminder</button>
+    <button onclick="closeNotifModal()" style="width:100%;padding:10px;background:transparent;color:var(--text3);border:1.5px solid var(--border);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.81rem;cursor:pointer">Cancel</button>
+  </div>
+</div>
+
+
+<!-- COUNTRY MODAL -->
+<div class="country-modal" id="countryModal">
+  <div class="cm-card">
+    <div class="cm-title">🌍 Select Your Country</div>
+    <div class="cm-sub">Personalises employers, salaries, compliance requirements and job market data for your location. You can change this anytime from the menu.</div>
+    <div class="country-grid" id="countryGridCRP"></div>
+    <button class="cm-confirm-btn" onclick="confirmCountryCRP()">Confirm →</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════════════
+   CONFIG
+══════════════════════════════════════════════ */
+const firebaseConfig={
+  apiKey:"AIzaSyDe2ngASIsjK2lflmjcb-SoqkrxvH12mNI",
+  authDomain:"godson-cyber-roadmap.firebaseapp.com",
+  projectId:"godson-cyber-roadmap",
+  storageBucket:"godson-cyber-roadmap.firebasestorage.app",
+  messagingSenderId:"597821979440",
+  appId:"1:597821979440:web:2cbbc17da0f71352d9a6f5"
+};
+const WORKER_URL="https://groq-proxy.godsonomichael.workers.dev/";
+
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(), db=firebase.firestore();
+
+/* ══════════════════════════════════════════════
+   CAREER PATHS DATA
+══════════════════════════════════════════════ */
+const PATHS=[
+  /* ─── SOC L1 ─── */
+  {id:'soc1',icon:'🛡️',title:'SOC Analyst L1',tagline:'Monitor · Detect · Respond',
+   color:'#06b6d4',glowColor:'rgba(6,182,212,0.6)',
+   diffBg:'rgba(16,185,129,0.12)',diffClr:'#10b981',difficulty:'Beginner',
+   timeline:'4–6 months',demand:'Very High 🔥',
+   salaryLocal:'₦150K–₦350K/mo',salaryRemote:'$800–$2,000/mo',
+   prereqs:'None — perfect entry point',
+   description:'Monitor security alerts, investigate threats and escalate incidents using SIEM tools. The most in-demand entry-level cybersecurity role in Nigeria — required at every bank, fintech, and telco.',
+   tools:['Splunk','Microsoft Sentinel','IBM QRadar','Wireshark','TryHackMe','CyberDefenders'],
+   employers:['Certfort','GVA Partners','Cardinal Security','Access Bank','Flutterwave','GTBank','Shell Nigeria'],
+   nigeriaTip:'<strong>SIEM appears in 78% of Nigerian SOC job postings.</strong> Splunk + Sentinel = strongest combo. NDPR knowledge puts you ahead of every candidate with only international certs.',
+   phases:[
+     {title:'Phase 1 — Foundation',subtitle:'Months 1–2 · Start Here',color:'#7C6FF7',open:true,
+      note:'⚡ Move to Phase 2 after 6–8 weeks. LabEx is the fastest hands-on practice — use it daily.',
+      courses:[
+       {n:'Palo Alto — Introduction to Cybersecurity',p:'Palo Alto Networks',free:true,m:'Core cybersecurity concepts',links:[{t:'Open Course ↗',u:'https://www.paloaltonetworks.com/cybersecurity-academy'}]},
+       {n:'Cisco — Introduction to Cybersecurity',p:'Cisco NetAcad',free:true,m:'Core concepts + digital badge on completion',links:[{t:'Start on NetAcad ↗',u:'https://www.netacad.com/courses/cybersecurity/introduction-cybersecurity'}]},
+       {n:'Networking Fundamentals',p:'Cisco NetAcad',free:true,m:'TCP/IP, DNS, HTTP, OSI Model — required by all employers',links:[{t:'Networking Basics ↗',u:'https://www.netacad.com/courses/networking-basics'}]},
+       {n:'Linux Essentials',p:'Cisco NetAcad',free:true,m:'Linux required for SOC log analysis & SIEM work',links:[{t:'Linux Essentials ↗',u:'https://www.netacad.com/courses/linux-essentials'}]},
+       {n:'Professor Messer Security+ (SY0-701) Videos',p:'YouTube',free:true,m:'Watch alongside all other phases',links:[{t:'YouTube Channel ↗',u:'https://www.youtube.com/@professormesser'}]},
+       {n:'Google Cybersecurity Certificate',p:'Coursera',free:false,m:'Financial aid available · Includes SIEM + AI for cybersecurity',links:[{t:'Coursera ↗',u:'https://www.coursera.org/professional-certificates/google-cybersecurity'},{t:'Google Official ↗',u:'https://grow.google/certificates/cybersecurity/'}]},
+       {n:'LabEx — Cybersecurity Fundamentals',p:'LabEx.io',free:true,badge:'NEW',m:'20 interactive browser labs · Wireshark, Nmap, Hydra, OpenSSL',links:[{t:'Start Free Labs ↗',u:'https://labex.io/learn/cybersecurity'}]},
+       {n:'Cisco — Endpoint Security',p:'Cisco NetAcad',free:true,badge:'NEW',m:'CCST Cybersecurity path · Secures endpoints, EDR concepts',links:[{t:'NetAcad Cybersecurity ↗',u:'https://www.netacad.com/courses/cybersecurity'}]},
+      ]},
+     {title:'Phase 2 — SOC Core + SIEM',subtitle:'Months 3–4',color:'#06b6d4',open:true,
+      note:'⚡ Splunk + Sentinel appear in 78% of Nigerian SOC postings. The Splunk Blue Team Academy is free and builds a real portfolio.',
+      courses:[
+       {n:'Palo Alto — Fundamentals of SOC',p:'Palo Alto Networks',free:true,m:'Built directly for SOC L1 roles',links:[{t:'Open Course ↗',u:'https://www.paloaltonetworks.com/cybersecurity-academy'}]},
+       {n:'Palo Alto — Fundamentals of Network Security',p:'Palo Alto Networks',free:true,m:'Firewalls, IDS/IPS, IAM concepts',links:[{t:'Open Course ↗',u:'https://www.paloaltonetworks.com/cybersecurity-academy'}]},
+       {n:'Splunk Free Training (Fundamentals 1 + Blue Team Academy)',p:'Splunk',free:true,m:'SIEM in 78% of Nigerian SOC postings · SPL, dashboards, alerts',links:[{t:'Free Courses ↗',u:'https://www.splunk.com/en_us/training/free-courses/overview.html'},{t:'Fundamentals 1 ↗',u:'https://www.splunk.com/en_us/training/splunk-fundamentals.html'}]},
+       {n:'Microsoft Student SOC + Sentinel',p:'Microsoft',free:true,m:'Sentinel SIEM — used at Access Bank, Flutterwave',links:[{t:'Start Microsoft SOC ↗',u:'https://microsoft.github.io/SOC/source/content/#/lessons/j362x-_7A1SESGqKqzF2uu5BRMAmkBTH'}]},
+       {n:'SC-200: Microsoft Security Operations',p:'Microsoft Learn',free:true,m:'Sentinel + Defender training · Strong in fintech/banking',links:[{t:'SC-200 Training ↗',u:'https://learn.microsoft.com/en-us/training/paths/sc-200-mitigate-threats-using-microsoft-defender/'}]},
+       {n:'TryHackMe — SOC Level 1 Path',p:'TryHackMe.com',free:true,m:'Hands-on browser labs · 30 min/day minimum',links:[{t:'Start SOC Path ↗',u:'https://tryhackme.com/path/outline/soclevel1'}]},
+       {n:'Wireshark — Packet Analysis (Chris Greer)',p:'YouTube',free:true,m:'Wireshark in Nigerian SOC job specs — essential skill',links:[{t:'YouTube Channel ↗',u:'https://www.youtube.com/@ChrisGreer'}]},
+       {n:'IBM QRadar SIEM Foundations',p:'IBM Training',free:true,m:'Used by MTN Nigeria, large banks, telecoms',links:[{t:'IBM QRadar Foundations ↗',u:'https://www.ibm.com/training/course/ibm-qradar-siem-foundations-BQ104G'}]},
+       {n:'LabEx — Linux for Security & Network Analysis',p:'LabEx.io',free:true,badge:'NEW',m:'grep, awk, netstat, tcpdump — tested in every Nigerian SOC interview',links:[{t:'Free Security Labs ↗',u:'https://labex.io/free-labs/cybersecurity'}]},
+      ]},
+     {title:'Phase 3 — Certifications + Apply',subtitle:'Months 5–6',color:'#a855f7',open:false,
+      note:'⚡ NDPR knowledge puts you ahead of candidates with only international certs. Mention it in every Nigerian interview.',
+      courses:[
+       {n:'Cisco CyberOps Associate (200-201 CBROPS)',p:'Cisco NetAcad',free:true,m:'SOC-specific cert · Strong employer recognition in Nigeria',links:[{t:'Start CyberOps Associate ↗',u:'https://www.netacad.com/courses/cyberops-associate'}]},
+       {n:'CyberDefenders — SOC Analyst L1 Path',p:'CyberDefenders.org',free:true,m:'Real blue team labs · Builds portfolio employers check',links:[{t:'Blue Team Labs ↗',u:'https://cyberdefenders.org/blueteam-ctf-challenges/'}]},
+       {n:'NDPR Compliance Fundamentals',p:'NITDA.gov.ng',free:true,m:'Nigeria Data Protection Regulation · Comes up in every bank/fintech interview',links:[{t:'NDPR Framework ↗',u:'https://nitda.gov.ng/nit/ndpr/'}]},
+       {n:'ISO 27001 / NIST / PCI-DSS Basics',p:'NIST.gov + ISO.org',free:true,m:'Required by Access Bank, GTBank, Flutterwave postings',links:[{t:'NIST Cyber Framework ↗',u:'https://www.nist.gov/cyberframework'}]},
+       {n:'Cybrary — SOC Analyst Career Path',p:'Cybrary.it',free:true,badge:'NEW',m:'Free account · SOC-focused, Security+ prep, virtual labs',links:[{t:'Free Cybrary Content ↗',u:'https://www.cybrary.it/free-content'}]},
+       {n:'Splunk SIEM — SOC Analyst Training',p:'Udemy',free:false,badge:'NEW',m:'~₦3,000–₦6,000 on sale · 60hrs · SPL, dashboards, incident triage',links:[{t:'Splunk SOC Course ↗',u:'https://www.udemy.com/course/cyber-security-soc-analyst-training-siem-splunk-60-hrs/'}]},
+      ]},
+   ],
+   certs:[
+     {n:'CompTIA Security+ (SY0-701)',timing:'Month 5–6',tier:'Primary #1',tiercls:'cb-now',cost:'~$200 USD · NITDA 50% subsidy available',desc:'Appears in nearly every Nigerian SOC posting',url:'https://www.comptia.org/certifications/security'},
+     {n:'Cisco CyberOps Associate',timing:'Month 5–6',tier:'Primary #2',tiercls:'cb-now',cost:'Free study via NetAcad',desc:'Built specifically for SOC roles',url:'https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/cyberops-associate.html'},
+     {n:'SC-200 Microsoft Security Operations',timing:'After Phase 2',tier:'Phase 2–3',tiercls:'cb-goal',cost:'Exam ~$165 USD',desc:'Sentinel + Defender · Strong in fintech/banking',url:'https://learn.microsoft.com/en-us/credentials/certifications/security-operations-analyst/'},
+     {n:'Splunk Core Certified User',timing:'After Splunk training',tier:'SIEM Cert',tiercls:'cb-goal',cost:'Free voucher sometimes available',desc:'Validates SPL search skills — strong differentiator',url:'https://www.splunk.com/en_us/training/certification-track/splunk-core-certified-user.html'},
+     {n:'CyberDefenders Blue Team Analyst',timing:'After blue team labs',tier:'SOC Path',tiercls:'cb-goal',cost:'Included with platform',desc:'Validates real SOC blue team skills',url:'https://cyberdefenders.org/blue-team-training/courses/'},
+     {n:'CompTIA CySA+',timing:'After first SOC L1 job',tier:'Next Level',tiercls:'cb-later',cost:'~$370 USD',desc:'Step up from Security+ — threat analysis focus',url:'https://www.comptia.org/certifications/cybersecurity-analyst'},
+   ],
+   skills:[
+     {id:'siem',n:'SIEM (Splunk/Sentinel)',c:'Core SOC'},{id:'spl',n:'Splunk SPL Queries',c:'Core SOC'},
+     {id:'wireshark',n:'Wireshark / Packet Analysis',c:'Network'},{id:'linux',n:'Linux CLI',c:'OS'},
+     {id:'windows',n:'Windows Event Logs',c:'OS'},{id:'tcpip',n:'TCP/IP / Networking',c:'Network'},
+     {id:'firewalls',n:'Firewalls / IDS/IPS',c:'Network'},{id:'ndpr',n:'NDPR Compliance',c:'GRC'},
+     {id:'edr',n:'EDR Tools',c:'Security'},{id:'triage',n:'Alert Triage',c:'Core SOC'},
+     {id:'incident',n:'Incident Response basics',c:'Core SOC'},{id:'virustotal',n:'VirusTotal / Threat Intel',c:'Threat Intel'},
+   ],
+   hasSpl:true,
+  },
+
+  /* ─── SOC L2 ─── */
+  {id:'soc2',icon:'🔷',title:'SOC Analyst L2',tagline:'Hunt · Automate · Lead',
+   color:'#3b82f6',glowColor:'rgba(59,130,246,0.6)',
+   diffBg:'rgba(59,130,246,0.12)',diffClr:'#60a5fa',difficulty:'Intermediate',
+   timeline:'12–18 months',demand:'High 📈',
+   salaryLocal:'₦400K–₦900K/mo',salaryRemote:'$2,000–$4,000/mo',
+   prereqs:'SOC L1 experience + Security+ recommended',
+   description:'Advanced threat hunting, SOAR automation, and incident response leadership. Reached after 1–2 years in SOC L1. Strong remote demand globally from Nigerian talent.',
+   tools:['Splunk Enterprise Security','Microsoft Sentinel','XSOAR','ELK Stack','MITRE ATT&CK','Cortex XDR'],
+   employers:['Access Bank','MTN Nigeria','Interswitch','Zenith Bank','International MSSP (remote)'],
+   nigeriaTip:'<strong>SOC L2 with SOAR experience commands 2.5× the salary of L1.</strong> Remote opportunities from UK/US are common — target $2,000–4,000/mo after 2 years.',
+   phases:[
+     {title:'Phase 1 — Advanced SIEM & Analytics',subtitle:'Months 1–3',color:'#3b82f6',open:true,
+      note:'⚡ Master KQL and SPL at an advanced level — these are tested in every L2 interview.',
+      courses:[
+       {n:'Splunk Power User & Admin',p:'Splunk Training',free:true,m:'Advanced SPL, lookups, data models, Enterprise Security',links:[{t:'Splunk Training ↗',u:'https://www.splunk.com/en_us/training.html'}]},
+       {n:'Microsoft Sentinel Advanced Analytics',p:'Microsoft Learn',free:true,m:'Custom analytics rules, hunting queries, workbooks',links:[{t:'Sentinel Skill-Up ↗',u:'https://learn.microsoft.com/en-us/azure/sentinel/skill-up-resources'}]},
+       {n:'KQL Advanced Queries for Threat Detection',p:'Microsoft Learn',free:true,m:'Essential for Sentinel — join, parse, summarize operators',links:[{t:'KQL Learning Path ↗',u:'https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/'}]},
+       {n:'Elastic SIEM / ELK Stack',p:'Elastic Training',free:true,m:'Elasticsearch, Logstash, Kibana for security monitoring',links:[{t:'Elastic Free Training ↗',u:'https://www.elastic.co/training/free'}]},
+       {n:'TryHackMe — Cyber Defense Path',p:'TryHackMe',free:true,m:'Advanced blue team skills — network analysis, threat detection',links:[{t:'Cyber Defense ↗',u:'https://tryhackme.com/path/outline/blueteam'}]},
+      ]},
+     {title:'Phase 2 — Threat Hunting & MITRE ATT&CK',subtitle:'Months 4–8',color:'#8b5cf6',open:false,
+      note:'⚡ MITRE ATT&CK knowledge is asked in 60%+ of L2 interviews. Learn the framework deeply.',
+      courses:[
+       {n:'MITRE ATT&CK Framework',p:'MITRE',free:true,m:'Complete framework — tactics, techniques, procedures',links:[{t:'ATT&CK Website ↗',u:'https://attack.mitre.org'},{t:'ATT&CK Academy ↗',u:'https://attack.mitre.org/resources/training/'}]},
+       {n:'AttackIQ — Purple Teaming & Threat Hunting',p:'AttackIQ Academy',free:true,m:'Breach and attack simulation — free professional courses',links:[{t:'AttackIQ Academy ↗',u:'https://academy.attackiq.com'}]},
+       {n:'SANS FOR508 Lite — Threat Hunting Concepts',p:'SANS Cyber Aces',free:true,m:'DFIR and threat hunting concepts from SANS',links:[{t:'SANS Cyber Aces ↗',u:'https://www.cyberaces.org'}]},
+       {n:'CyberDefenders Advanced Blue Team Labs',p:'CyberDefenders',free:false,m:'Hard-level forensics and hunting challenges',links:[{t:'CyberDefenders ↗',u:'https://cyberdefenders.org'}]},
+       {n:'Sigma Rules & Detection Engineering',p:'GitHub / TryHackMe',free:true,m:'Write detection rules that work across any SIEM',links:[{t:'Sigma HQ ↗',u:'https://github.com/SigmaHQ/sigma'},{t:'Detection Engineering ↗',u:'https://tryhackme.com/room/sigma'}]},
+      ]},
+     {title:'Phase 3 — SOAR & Automation',subtitle:'Months 9–12',color:'#06b6d4',open:false,
+      note:'⚡ SOAR automation is the #1 skill separating L1 and L2 pay grades globally.',
+      courses:[
+       {n:'Splunk SOAR (Phantom) Training',p:'Splunk',free:true,m:'Playbooks, automation, incident response orchestration',links:[{t:'Splunk SOAR ↗',u:'https://www.splunk.com/en_us/training/free-courses/overview.html'}]},
+       {n:'Microsoft Sentinel SOAR — Logic Apps',p:'Microsoft Learn',free:true,m:'Automated response playbooks for Sentinel',links:[{t:'Sentinel SOAR ↗',u:'https://learn.microsoft.com/en-us/azure/sentinel/automate-responses-with-playbooks'}]},
+       {n:'Python for Security Automation',p:'Automate the Boring Stuff + Udemy',free:true,m:'Scripting for log parsing, API calls, alert enrichment',links:[{t:'Automate Boring Stuff ↗',u:'https://automatetheboringstuff.com'},{t:'Python Security Udemy ↗',u:'https://www.udemy.com/courses/search/?q=python+security+automation'}]},
+       {n:'Cortex XSOAR Fundamentals',p:'Palo Alto Networks',free:true,m:'Industry-leading SOAR platform training',links:[{t:'XSOAR Training ↗',u:'https://www.paloaltonetworks.com/cybersecurity-academy'}]},
+      ]},
+   ],
+   certs:[
+     {n:'CompTIA CySA+',timing:'Primary target',tier:'Primary #1',tiercls:'cb-now',cost:'~$370 USD',desc:'Industry standard for L2 — threat analysis and detection',url:'https://www.comptia.org/certifications/cybersecurity-analyst'},
+     {n:'GIAC GCIA (Intrusion Analyst)',timing:'After solid L1 experience',tier:'Advanced',tiercls:'cb-goal',cost:'~$2,499 (SANS)',desc:'Gold standard for network intrusion analysis',url:'https://www.giac.org/certifications/certified-intrusion-analyst-gcia/'},
+     {n:'SC-200 (if not already held)',timing:'Early in L2 path',tier:'Must Have',tiercls:'cb-now',cost:'~$165 USD',desc:'Sentinel expertise validation',url:'https://learn.microsoft.com/en-us/credentials/certifications/security-operations-analyst/'},
+     {n:'Splunk Core Certified Power User',timing:'After Power User training',tier:'SIEM',tiercls:'cb-goal',cost:'~$130 USD',desc:'Advanced SPL and Splunk administration',url:'https://www.splunk.com/en_us/training/certification-track/splunk-core-certified-power-user.html'},
+     {n:'GIAC GCIH (Incident Handler)',timing:'After SOAR phase',tier:'Advanced',tiercls:'cb-goal',cost:'~$2,499 (SANS)',desc:'Incident handling and response certification',url:'https://www.giac.org/certifications/certified-incident-handler-gcih/'},
+   ],
+   skills:[
+     {id:'siem',n:'Advanced SIEM Operations',c:'Core'},{id:'kql',n:'KQL Advanced Queries',c:'SIEM'},
+     {id:'spl',n:'Splunk SPL Advanced',c:'SIEM'},{id:'mitre',n:'MITRE ATT&CK',c:'Threat Intel'},
+     {id:'soar',n:'SOAR Automation',c:'Automation'},{id:'threathunt',n:'Threat Hunting',c:'Core'},
+     {id:'sigma',n:'Sigma Detection Rules',c:'Detection'},{id:'python',n:'Python Scripting',c:'Automation'},
+     {id:'incident',n:'Incident Response Lead',c:'Core'},{id:'dfir_basic',n:'DFIR Basics',c:'Forensics'},
+   ],
+  },
+
+  /* ─── ETHICAL HACKER ─── */
+  {id:'ethicalhack',icon:'💀',title:'Ethical Hacker',tagline:'Attack · Exploit · Report',
+   color:'#ef4444',glowColor:'rgba(239,68,68,0.6)',
+   diffBg:'rgba(239,68,68,0.12)',diffClr:'#f87171',difficulty:'Intermediate',
+   timeline:'8–12 months',demand:'High 📈',
+   salaryLocal:'₦500K–₦1.5M/mo',salaryRemote:'$2,500–$6,000/mo',
+   prereqs:'Networking fundamentals + Linux basics first',
+   description:'Legally hack systems to find and report vulnerabilities before attackers do. Highest earning cybersecurity role in Nigeria. Path from SOC L1 → Pentest is common.',
+   tools:['Kali Linux','Metasploit','Burp Suite','Nmap','Wireshark','Hashcat','Hydra','SQLmap'],
+   employers:['Consulting firms','Bug bounty (HackerOne/Bugcrowd)','Shell Nigeria','Access Bank','International remote'],
+   nigeriaTip:'<strong>Bug bounty is accessible from Nigeria with zero cost.</strong> HackerOne and Bugcrowd pay in USD. $500–$5,000 per valid vulnerability report. Start before you have any certifications.',
+   phases:[
+     {title:'Phase 1 — Linux & Networking Foundations',subtitle:'Months 1–2 · Must master before anything else',color:'#ef4444',open:true,
+      note:'⚡ 90% of pentest tools run on Kali Linux. Strong Linux + networking = strong pentester.',
+      courses:[
+       {n:'Kali Linux Revealed',p:'Offensive Security',free:true,m:'Official Kali guide — free online book',links:[{t:'Kali Revealed ↗',u:'https://kali.training/downloads/Kali-Linux-Revealed-1st-edition.pdf'}]},
+       {n:'TryHackMe — Linux Fundamentals (1,2,3)',p:'TryHackMe',free:true,m:'Browser-based Linux terminal — essential before anything else',links:[{t:'Linux Fundamentals ↗',u:'https://tryhackme.com/module/linux-fundamentals'}]},
+       {n:'TryHackMe — Pre-Security Path',p:'TryHackMe',free:true,m:'Networking, web, Linux — all the foundations',links:[{t:'Pre-Security ↗',u:'https://tryhackme.com/path/outline/presecurity'}]},
+       {n:'PortSwigger Web Security Academy',p:'PortSwigger',free:true,m:'Best FREE web hacking resource on the internet — all OWASP Top 10',links:[{t:'Web Security Academy ↗',u:'https://portswigger.net/web-security'}]},
+      ]},
+     {title:'Phase 2 — Web Application Penetration Testing',subtitle:'Months 3–5',color:'#f59e0b',open:false,
+      note:'⚡ Web app testing is the most in-demand pentest specialization. PortSwigger is world-class and completely free.',
+      courses:[
+       {n:'OWASP Top 10 — Complete Guide',p:'OWASP',free:true,m:'Foundation of web security — every pentest interview tests this',links:[{t:'OWASP Top 10 ↗',u:'https://owasp.org/www-project-top-ten/'}]},
+       {n:'TryHackMe — Jr Penetration Tester Path',p:'TryHackMe',free:true,m:'Hands-on browser labs for full pentest workflow',links:[{t:'Jr Pentest Path ↗',u:'https://tryhackme.com/path/outline/jrpenetrationtester'}]},
+       {n:'Burp Suite Essentials — PortSwigger',p:'PortSwigger',free:true,m:'Official Burp Suite training from the makers',links:[{t:'Burp Suite Training ↗',u:'https://portswigger.net/burp/documentation/desktop/getting-started'}]},
+       {n:'SQLmap & SQL Injection',p:'TryHackMe + OWASP',free:true,m:'Most common web vulnerability in Nigerian organizations',links:[{t:'SQL Injection TryHackMe ↗',u:'https://tryhackme.com/module/sql-injection'}]},
+      ]},
+     {title:'Phase 3 — Network Penetration Testing',subtitle:'Months 6–8',color:'#8b5cf6',open:false,
+      note:'⚡ TCM Security Practical Ethical Hacking is the best value paid course for Nigerian pentesters.',
+      courses:[
+       {n:'TCM Security — Practical Ethical Hacking',p:'TCM Security / Udemy',free:false,m:'~$30 USD on Udemy sale · Comprehensive network pentest course',links:[{t:'Practical Ethical Hacking ↗',u:'https://www.udemy.com/course/practical-ethical-hacking/'}]},
+       {n:'Hack The Box — Starting Point',p:'HackTheBox.com',free:true,m:'Only attempt after 6 months on TryHackMe — very competitive',links:[{t:'HTB Starting Point ↗',u:'https://app.hackthebox.com/starting-point'}]},
+       {n:'Metasploit Framework — TryHackMe',p:'TryHackMe',free:true,m:'Industry-standard exploitation framework',links:[{t:'Metasploit Room ↗',u:'https://tryhackme.com/room/metasploitintro'}]},
+       {n:'Active Directory Attacks — TCM Security',p:'TCM Security',free:true,m:'YouTube course — AD is in every enterprise environment',links:[{t:'AD Course YouTube ↗',u:'https://www.youtube.com/@TCMSecurityAcademy'}]},
+      ]},
+     {title:'Phase 4 — Certifications & Bug Bounty',subtitle:'Months 9–12',color:'#06b6d4',open:false,
+      note:'⚡ Create HackerOne + Bugcrowd accounts today. Start finding low-severity bugs immediately for portfolio.',
+      courses:[
+       {n:'INE Starter Pass — eJPT Prep',p:'INE / eLearnSecurity',free:true,m:'Free starter content for eJPT certification prep',links:[{t:'INE Starter Pass ↗',u:'https://ine.com/learning/certifications/internal/elearnsecurity-junior-penetration-tester'}]},
+       {n:'Bug Bounty Hunting — HackerOne Platform',p:'HackerOne',free:true,m:'Start bug hunting immediately — paid in USD per valid finding',links:[{t:'HackerOne ↗',u:'https://www.hackerone.com'},{t:'Bugcrowd ↗',u:'https://www.bugcrowd.com'}]},
+       {n:'PentesterLab — Web Hacking Exercises',p:'PentesterLab',free:true,m:'Free exercises covering real CVEs and web vulnerabilities',links:[{t:'PentesterLab Free ↗',u:'https://pentesterlab.com/exercises'}]},
+      ]},
+   ],
+   certs:[
+     {n:'eJPT (eLearnSecurity Junior Pentester)',timing:'Month 6–8',tier:'Start Here',tiercls:'cb-now',cost:'~$200 USD',desc:'Best entry-level pentest cert — practical exam',url:'https://ine.com/learning/certifications/internal/elearnsecurity-junior-penetration-tester'},
+     {n:'CompTIA Security+',timing:'Month 4–6',tier:'Must Have',tiercls:'cb-now',cost:'~$200 USD (NITDA subsidy)',desc:'Validates foundational security knowledge',url:'https://www.comptia.org/certifications/security'},
+     {n:'CEH — Certified Ethical Hacker',timing:'After eJPT',tier:'Industry Rec.',tiercls:'cb-goal',cost:'~$500–$1,100 USD',desc:'EC-Council — widely recognized in Nigeria',url:'https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/'},
+     {n:'OSCP — Offensive Security Certified Professional',timing:'After 12+ months practice',tier:'Gold Standard',tiercls:'cb-later',cost:'~$1,499 USD',desc:'Hardest + most respected pentest cert globally',url:'https://www.offensive-security.com/pwk-oscp/'},
+     {n:'CompTIA PenTest+',timing:'After Security+',tier:'Alternative',tiercls:'cb-goal',cost:'~$349 USD',desc:'Vendor-neutral pentest certification',url:'https://www.comptia.org/certifications/pentest'},
+   ],
+   skills:[
+     {id:'kali',n:'Kali Linux',c:'Platform'},{id:'burp',n:'Burp Suite',c:'Web Hacking'},
+     {id:'metasploit',n:'Metasploit Framework',c:'Exploitation'},{id:'nmap',n:'Nmap / Recon',c:'Recon'},
+     {id:'sqli',n:'SQL Injection',c:'Web'},{id:'xss',n:'XSS / CSRF',c:'Web'},
+     {id:'linux',n:'Linux CLI Advanced',c:'OS'},{id:'ad_attack',n:'Active Directory Attacks',c:'Network'},
+     {id:'report',n:'Pentest Report Writing',c:'Professional'},{id:'scripting',n:'Python / Scripting',c:'Automation'},
+   ],
+  },
+
+  /* ─── GRC ─── */
+  {id:'grc',icon:'📋',title:'GRC Analyst',tagline:'Govern · Risk · Comply',
+   color:'#10b981',glowColor:'rgba(16,185,129,0.6)',
+   diffBg:'rgba(16,185,129,0.12)',diffClr:'#34d399',difficulty:'Beginner / Intermediate',
+   timeline:'4–6 months',demand:'Very High in Banking 🏦',
+   salaryLocal:'₦200K–₦600K/mo',salaryRemote:'$800–$2,000/mo',
+   prereqs:'None — perfect for career changers from compliance/legal/HSE',
+   description:'Ensure organizations comply with security frameworks and regulations. Your HSE background directly transfers — compliance docs, risk registers, audit trails are the same discipline.',
+   tools:['GRC Platforms (ServiceNow/Archer)','Microsoft Compliance Center','NIST Framework','ISO 27001 Toolkit'],
+   employers:['Access Bank','GTBank','Zenith Bank','Flutterwave','KPMG Nigeria','PwC Nigeria','CBN'],
+   nigeriaTip:'<strong>NDPA 2023 enforcement creates massive GRC demand in Nigeria.</strong> The ₦766M fine against Multichoice = banks and fintechs are hiring urgently. NDPR + ISO 27001 = immediate job.',
+   phases:[
+     {title:'Phase 1 — Governance Frameworks',subtitle:'Months 1–2',color:'#10b981',open:true,
+      note:'⚡ NDPR/NDPA knowledge is YOUR unique edge. No foreign candidate knows Nigerian regulations.',
+      courses:[
+       {n:'NIST Cybersecurity Framework — Official Guide',p:'NIST',free:true,m:'Foundation framework — referenced in 90% of Nigerian enterprise jobs',links:[{t:'NIST CSF ↗',u:'https://www.nist.gov/cyberframework'}]},
+       {n:'NDPR / NDPA 2023 — Nigeria Data Protection',p:'NITDA.gov.ng',free:true,m:'Nigerian law — mandatory knowledge for all GRC roles in Nigeria',links:[{t:'NITDA NDPR ↗',u:'https://nitda.gov.ng/nit/ndpr/'},{t:'NDPC Website ↗',u:'https://ndpc.gov.ng'}]},
+       {n:'ISO 27001 Foundation',p:'PECB / Udemy',free:false,m:'~$30 on Udemy · International information security standard',links:[{t:'ISO 27001 Udemy ↗',u:'https://www.udemy.com/courses/search/?q=iso+27001+foundation'}]},
+       {n:'Introduction to IT GRC',p:'Coursera / ISACA',free:true,m:'GRC fundamentals — governance, risk, compliance lifecycle',links:[{t:'ISACA GRC ↗',u:'https://www.isaca.org/resources/glossary#governance-risk-and-compliance-grc'}]},
+       {n:'Cisco — Cyber Threat Management',p:'Cisco NetAcad',free:true,m:'Governance, threat analysis, compliance fundamentals',links:[{t:'NetAcad Cybersecurity ↗',u:'https://www.netacad.com/courses/cybersecurity'}]},
+      ]},
+     {title:'Phase 2 — Risk Management',subtitle:'Months 3–4',color:'#06b6d4',open:false,
+      note:'⚡ Risk assessment is the daily work of a GRC analyst. Learn to write risk registers and treatment plans.',
+      courses:[
+       {n:'Risk Management Framework (RMF) — NIST SP 800-37',p:'NIST',free:true,m:'Official NIST risk framework — used in all Nigerian banks',links:[{t:'NIST RMF ↗',u:'https://csrc.nist.gov/projects/risk-management/about-rmf'}]},
+       {n:'Information Security Risk Management — ISO 27005',p:'Udemy',free:false,m:'Practical risk assessment and treatment planning',links:[{t:'Risk Management Courses ↗',u:'https://www.udemy.com/courses/search/?q=iso+27005+risk+management'}]},
+       {n:'CISA Exam Prep (Self-Study)',p:'ISACA',free:true,m:'Free ISACA study resources — CISA is top GRC cert',links:[{t:'ISACA CISA ↗',u:'https://www.isaca.org/credentialing/cisa'},{t:'Free Study Resources ↗',u:'https://www.isaca.org/credentialing/cisa/cisa-exam-preparation'}]},
+       {n:'PCI DSS v4.0 Fundamentals',p:'PCI Security Standards Council',free:true,m:'Payment card compliance — required for all fintech/banking GRC roles',links:[{t:'PCI DSS ↗',u:'https://www.pcisecuritystandards.org'}]},
+      ]},
+     {title:'Phase 3 — Audit & Compliance',subtitle:'Months 5–6',color:'#8b5cf6',open:false,
+      note:'⚡ SOC 2 Type II reports are now required for Nigerian fintech companies expanding internationally.',
+      courses:[
+       {n:'SOC 2 Compliance — Complete Guide',p:'AICPA / Udemy',free:false,m:'Required for fintech international expansion — $20–30 on Udemy',links:[{t:'SOC 2 Udemy ↗',u:'https://www.udemy.com/courses/search/?q=soc+2+compliance'}]},
+       {n:'GDPR Compliance — Complete Course',p:'Udemy / LinkedIn Learning',free:false,m:'Applies to all Nigerian companies with EU customers',links:[{t:'GDPR Course ↗',u:'https://www.udemy.com/courses/search/?q=gdpr+compliance'}]},
+       {n:'Internal Audit Fundamentals',p:'IIA (Institute of Internal Auditors)',free:true,m:'Audit methodology used in all Nigerian banks',links:[{t:'IIA Nigeria ↗',u:'https://www.iia.org.ng'}]},
+       {n:'Cybersecurity Audit — ISACA',p:'ISACA',free:true,m:'Technical audit guide for cybersecurity programs',links:[{t:'ISACA Audit Guide ↗',u:'https://www.isaca.org/resources/isaca-journal/issues/2022/volume-3/cybersecurity-audit'}]},
+      ]},
+   ],
+   certs:[
+     {n:'CompTIA Security+',timing:'First cert',tier:'Foundation',tiercls:'cb-now',cost:'~$200 USD (NITDA subsidy)',desc:'Required baseline for all GRC roles',url:'https://www.comptia.org/certifications/security'},
+     {n:'CISA — Certified Information Systems Auditor',timing:'Primary target',tier:'Primary',tiercls:'cb-now',cost:'~$575–$760 USD (ISACA member)',desc:'Gold standard for GRC and IT audit globally',url:'https://www.isaca.org/credentialing/cisa'},
+     {n:'ISO 27001 Lead Implementer',timing:'After framework training',tier:'Industry Req.',tiercls:'cb-goal',cost:'~$1,500 USD (PECB)',desc:'Prove you can implement and manage ISO 27001',url:'https://pecb.com/en/education-and-certification-for-individuals/iso-iec-27001'},
+     {n:'CRISC — Certified in Risk & IS Control',timing:'After CISA',tier:'Next Level',tiercls:'cb-later',cost:'~$575 USD (ISACA member)',desc:'Highest GRC cert — 5+ years experience required',url:'https://www.isaca.org/credentialing/crisc'},
+     {n:'Certified Data Privacy Solutions Engineer (CDPSE)',timing:'After NDPR study',tier:'Privacy Cert',tiercls:'cb-goal',cost:'~$575 USD',desc:'ISACA privacy cert — very relevant for Nigeria NDPA',url:'https://www.isaca.org/credentialing/cdpse'},
+   ],
+   skills:[
+     {id:'ndpr',n:'NDPR / NDPA 2023',c:'Nigeria GRC'},{id:'iso27001',n:'ISO 27001',c:'Standards'},
+     {id:'nist_grc',n:'NIST CSF / RMF',c:'Frameworks'},{id:'pci',n:'PCI DSS v4.0',c:'Compliance'},
+     {id:'riskassess',n:'Risk Assessment',c:'Core'},{id:'riskregister',n:'Risk Register',c:'Core'},
+     {id:'gdpr',n:'GDPR Compliance',c:'Privacy'},{id:'audit',n:'IT Audit',c:'Audit'},
+     {id:'soc2',n:'SOC 2 Compliance',c:'Compliance'},{id:'docwriting',n:'Policy Writing',c:'Professional'},
+   ],
+  },
+
+  /* ─── CLOUD SECURITY ─── */
+  {id:'cloudsec',icon:'☁️',title:'Cloud Security Analyst',tagline:'Protect · Monitor · Architect',
+   color:'#8b5cf6',glowColor:'rgba(139,92,246,0.6)',
+   diffBg:'rgba(139,92,246,0.12)',diffClr:'#a78bfa',difficulty:'Intermediate',
+   timeline:'6–9 months',demand:'Explosive Growth 🚀',
+   salaryLocal:'₦350K–₦700K/mo',salaryRemote:'$1,500–$3,500/mo',
+   prereqs:'Cloud fundamentals (AWS/Azure) + Security+ recommended',
+   description:'Secure cloud infrastructure at scale. Your AWS Udacity background gives you a direct head start. Flutterwave, Kuda, Paystack are all cloud-native and hire urgently.',
+   tools:['AWS Security Hub','Azure Defender','CloudTrail','Terraform','AWS IAM','Microsoft Defender for Cloud','Prisma Cloud'],
+   employers:['Flutterwave','Kuda Bank','Paystack','MTN Nigeria','Interswitch','International cloud companies (remote)'],
+   nigeriaTip:'<strong>Your AWS Udacity background is a massive advantage.</strong> Cloud security is 3× harder to hire for than traditional security in Nigeria. AZ-500 + AWS Security = top 1% of Nigerian cybersecurity candidates.',
+   phases:[
+     {title:'Phase 1 — Cloud Fundamentals + Security Posture',subtitle:'Months 1–2',color:'#8b5cf6',open:true,
+      note:'⚡ If you have AWS Udacity cert already, Phase 1 should take 2–3 weeks not 2 months.',
+      courses:[
+       {n:'AWS Cloud Practitioner (if not already held)',p:'AWS Training',free:true,m:'Foundation for all AWS security work',links:[{t:'AWS Free Training ↗',u:'https://aws.amazon.com/training/digital/aws-cloud-practitioner-essentials/'}]},
+       {n:'Azure Fundamentals AZ-900',p:'Microsoft Learn',free:true,m:'Free Microsoft path — 8 modules, self-paced',links:[{t:'AZ-900 Path ↗',u:'https://learn.microsoft.com/en-us/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/'}]},
+       {n:'AWS Security Fundamentals',p:'AWS Training',free:true,m:'Official AWS security basics — shared responsibility model',links:[{t:'AWS Security Fundamentals ↗',u:'https://explore.skillbuilder.aws/learn/course/external/view/elearning/48/security-fundamentals'}]},
+       {n:'TryHackMe — Cloud Security Path',p:'TryHackMe',free:true,m:'Hands-on cloud security labs — S3, IAM, CloudTrail',links:[{t:'Cloud Security ↗',u:'https://tryhackme.com/module/cloud-security'}]},
+      ]},
+     {title:'Phase 2 — Azure & AWS Advanced Security',subtitle:'Months 3–6',color:'#06b6d4',open:false,
+      note:'⚡ AZ-500 is the fastest path to a cloud security job in Nigerian fintech/banking.',
+      courses:[
+       {n:'AZ-500: Microsoft Azure Security Technologies',p:'Microsoft Learn',free:true,m:'Full free training path for Azure security cert',links:[{t:'AZ-500 Path ↗',u:'https://learn.microsoft.com/en-us/training/paths/implement-resource-mgmt-security/'}]},
+       {n:'AWS Security Specialty Prep',p:'A Cloud Guru / Stephane Maarek',free:false,m:'~$30 Udemy sale · Most valued AWS cert for security',links:[{t:'AWS Security Udemy ↗',u:'https://www.udemy.com/course/aws-certified-security-specialty/'}]},
+       {n:'Cloud Security Alliance (CSA) — CCSK',p:'CSA',free:true,m:'Free study guide · Cloud security knowledge certification',links:[{t:'CSA Free Resources ↗',u:'https://cloudsecurityalliance.org/research/guidance'}]},
+       {n:'HashiCorp — Terraform Security',p:'HashiCorp Learn',free:true,m:'Infrastructure as code security — essential for cloud roles',links:[{t:'Terraform Learn ↗',u:'https://developer.hashicorp.com/terraform/tutorials'}]},
+       {n:'Prisma Cloud Training',p:'Palo Alto Networks',free:true,m:'Cloud native security platform used in enterprises',links:[{t:'Prisma Cloud Academy ↗',u:'https://www.paloaltonetworks.com/cybersecurity-academy'}]},
+      ]},
+     {title:'Phase 3 — DevSecOps & Advanced',subtitle:'Months 7–9',color:'#10b981',open:false,
+      note:'⚡ DevSecOps knowledge pushes cloud security salary to $3,000–5,000/month remote.',
+      courses:[
+       {n:'DevSecOps Fundamentals — LinkedIn Learning',p:'LinkedIn Learning',free:false,m:'Integrate security into CI/CD pipelines',links:[{t:'DevSecOps Learning ↗',u:'https://www.linkedin.com/learning/search?keywords=devsecops'}]},
+       {n:'Container Security — Docker & Kubernetes',p:'Linux Foundation',free:true,m:'Container security fundamentals and CVE scanning',links:[{t:'LF Free Courses ↗',u:'https://training.linuxfoundation.org/resources/?_sft_content_type=free-course'}]},
+       {n:'AWS Well-Architected — Security Pillar',p:'AWS',free:true,m:'Official AWS security architecture guide',links:[{t:'Well-Architected ↗',u:'https://aws.amazon.com/architecture/well-architected/'}]},
+      ]},
+   ],
+   certs:[
+     {n:'AZ-500: Microsoft Azure Security Technologies',timing:'Month 4–6',tier:'Primary #1',tiercls:'cb-now',cost:'~$165 USD',desc:'Fastest path to cloud security job in Nigerian fintech',url:'https://learn.microsoft.com/en-us/credentials/certifications/azure-security-engineer/'},
+     {n:'AWS Certified Security – Specialty',timing:'Month 6–9',tier:'Primary #2',tiercls:'cb-now',cost:'~$300 USD',desc:'Most recognized AWS security qualification',url:'https://aws.amazon.com/certification/certified-security-specialty/'},
+     {n:'CompTIA Security+',timing:'First cert',tier:'Foundation',tiercls:'cb-now',cost:'~$200 USD',desc:'Baseline security cert before cloud specialization',url:'https://www.comptia.org/certifications/security'},
+     {n:'CCSP — Certified Cloud Security Professional',timing:'After 1yr experience',tier:'Advanced',tiercls:'cb-later',cost:'~$599 USD (ISC2)',desc:'Gold standard cloud security cert globally',url:'https://www.isc2.org/certifications/ccsp'},
+     {n:'CCSK — Certificate of Cloud Security Knowledge',timing:'Alongside training',tier:'Entry Cloud',tiercls:'cb-goal',cost:'~$395 USD (CSA)',desc:'Vendor-neutral cloud security knowledge cert',url:'https://cloudsecurityalliance.org/education/ccsk/'},
+   ],
+   skills:[
+     {id:'aws_sec',n:'AWS Security Services',c:'Cloud'},{id:'azure_sec',n:'Azure Security Center',c:'Cloud'},
+     {id:'iam_cloud',n:'Cloud IAM / Identity',c:'Identity'},{id:'cloudtrail',n:'CloudTrail / Logging',c:'Monitoring'},
+     {id:'terraform',n:'Terraform / IaC',c:'DevSecOps'},{id:'container_sec',n:'Container Security',c:'DevSecOps'},
+     {id:'cloud',n:'Cloud Architecture',c:'Architecture'},{id:'linux',n:'Linux / CLI',c:'OS'},
+     {id:'scripting',n:'Python / Scripting',c:'Automation'},{id:'vuln_scan',n:'Cloud Vulnerability Scanning',c:'Assessment'},
+   ],
+  },
+
+  /* ─── DFIR ─── */
+  {id:'dfir',icon:'🔬',title:'DFIR Analyst',tagline:'Investigate · Recover · Report',
+   color:'#f59e0b',glowColor:'rgba(245,158,11,0.6)',
+   diffBg:'rgba(245,158,11,0.12)',diffClr:'#fbbf24',difficulty:'Intermediate',
+   timeline:'6–9 months',demand:'High 🔍',
+   salaryLocal:'₦300K–₦700K/mo',salaryRemote:'$1,500–$3,500/mo',
+   prereqs:'SOC L1 + networking fundamentals',
+   description:'Digital Forensics and Incident Response — investigate breaches, recover evidence, and lead incident containment. Heavily in-demand after every major Nigerian bank breach.',
+   tools:['Autopsy','Volatility','FTK Imager','Wireshark','REMnux','SIFT Workstation','Eric Zimmermann Tools'],
+   employers:['EFCC','NCC','CBN IT Security','Large Nigerian banks','Consulting firms','International DFIR firms (remote)'],
+   nigeriaTip:'<strong>EFCC, NITDA, and NCC are actively building DFIR capabilities.</strong> Government cybercrime units in Nigeria pay ₦400K–₦800K/month for trained DFIR analysts. Very few Nigerians have this skill.',
+   phases:[
+     {title:'Phase 1 — DFIR Foundations',subtitle:'Months 1–2',color:'#f59e0b',open:true,
+      note:'⚡ Start with the SANS Investigative Forensics Toolkit (SIFT) — free VM with all tools pre-installed.',
+      courses:[
+       {n:'Digital Forensics Basics — TryHackMe',p:'TryHackMe',free:true,m:'Introduction to forensics methodology and evidence handling',links:[{t:'Digital Forensics Room ↗',u:'https://tryhackme.com/module/digital-forensics-and-incident-response'}]},
+       {n:'Autopsy Digital Forensics — Official Training',p:'Basis Technology',free:true,m:'Official training for Autopsy — industry standard forensics tool',links:[{t:'Autopsy Training ↗',u:'https://www.autopsy.com/support/training/'}]},
+       {n:'SANS SIFT Workstation Setup',p:'SANS',free:true,m:'Free forensics VM with 100+ tools pre-configured',links:[{t:'SANS SIFT ↗',u:'https://www.sans.org/tools/sift-workstation/'}]},
+       {n:'Incident Response Process — SANS',p:'SANS Cyber Aces',free:true,m:'6-phase IR lifecycle: Preparation, Detection, Containment, Eradication, Recovery',links:[{t:'SANS Incident Handling ↗',u:'https://www.sans.org/white-papers/33926/'}]},
+      ]},
+     {title:'Phase 2 — Disk & Memory Forensics',subtitle:'Months 3–5',color:'#06b6d4',open:false,
+      note:'⚡ Memory forensics is what separates junior and senior DFIR analysts. Volatility is the standard tool.',
+      courses:[
+       {n:'Windows Forensics — TryHackMe',p:'TryHackMe',free:true,m:'Windows artifacts: registry, prefetch, LNK files, event logs',links:[{t:'Windows Forensics 1 ↗',u:'https://tryhackme.com/room/windowsforensics1'},{t:'Windows Forensics 2 ↗',u:'https://tryhackme.com/room/windowsforensics2'}]},
+       {n:'Memory Forensics with Volatility — TryHackMe',p:'TryHackMe',free:true,m:'Analyze RAM dumps to find malware, credentials, processes',links:[{t:'Volatility Room ↗',u:'https://tryhackme.com/room/volatility'}]},
+       {n:'Linux Forensics — TryHackMe',p:'TryHackMe',free:true,m:'Linux artifacts for incident investigation',links:[{t:'Linux Forensics ↗',u:'https://tryhackme.com/room/linuxforensics'}]},
+       {n:'Eric Zimmermann Forensics Tools',p:'Eric Zimmermann (free)',free:true,m:'50+ free Windows forensics tools used in all professional DFIR',links:[{t:'EZ Tools ↗',u:'https://ericzimmerman.github.io/#!index.md'}]},
+      ]},
+     {title:'Phase 3 — Network Forensics & Malware Analysis',subtitle:'Months 6–9',color:'#8b5cf6',open:false,
+      note:'⚡ ANY.RUN interactive malware sandbox is free and Nigerian analysts use it daily in incident response.',
+      courses:[
+       {n:'Network Forensics — Wireshark Deep Dive',p:'Wireshark / TryHackMe',free:true,m:'PCAP analysis, protocol dissection, attack pattern identification',links:[{t:'Wireshark Forensics ↗',u:'https://tryhackme.com/module/network-device-hardening'}]},
+       {n:'Malware Analysis Fundamentals',p:'TryHackMe / ANY.RUN',free:true,m:'Static + dynamic analysis, IOC extraction',links:[{t:'Malware Analysis TryHackMe ↗',u:'https://tryhackme.com/room/malmalintroductory'},{t:'ANY.RUN Free Sandbox ↗',u:'https://app.any.run'}]},
+       {n:'REMnux — Malware Analysis Linux Distro',p:'Lenny Zeltser',free:true,m:'Free Linux VM with 100+ malware analysis tools',links:[{t:'REMnux ↗',u:'https://remnux.org'}]},
+       {n:'SANS FOR610 Lite — Malware Analysis',p:'SANS',free:true,m:'Free course intro to reverse engineering malware',links:[{t:'SANS Reading Room ↗',u:'https://www.sans.org/reading-room/whitepapers/malicious/'}]},
+      ]},
+   ],
+   certs:[
+     {n:'CompTIA Security+',timing:'Foundation',tier:'First',tiercls:'cb-now',cost:'~$200 USD',desc:'Baseline before any DFIR specialization',url:'https://www.comptia.org/certifications/security'},
+     {n:'GCFE — GIAC Certified Forensic Examiner',timing:'After Phase 2',tier:'Primary',tiercls:'cb-now',cost:'~$949 (with SANS course)',desc:'Windows forensics — employer recognized globally',url:'https://www.giac.org/certifications/certified-forensic-examiner-gcfe/'},
+     {n:'GCIH — GIAC Certified Incident Handler',timing:'After Phase 1',tier:'IR Focus',tiercls:'cb-goal',cost:'~$949 USD',desc:'Incident handling and response expertise',url:'https://www.giac.org/certifications/certified-incident-handler-gcih/'},
+     {n:'GCFA — GIAC Certified Forensic Analyst',timing:'After GCFE + 1yr exp',tier:'Advanced',tiercls:'cb-later',cost:'~$949 USD',desc:'Full forensic analysis — highest DFIR cert',url:'https://www.giac.org/certifications/certified-forensic-analyst-gcfa/'},
+     {n:'Certified Malware Analyst (GREM)',timing:'After malware phase',tier:'Specialist',tiercls:'cb-later',cost:'~$949 USD',desc:'Reverse engineering and malware analysis',url:'https://www.giac.org/certifications/reverse-engineering-malware-grem/'},
+   ],
+   skills:[
+     {id:'autopsy',n:'Autopsy / FTK',c:'Forensics Tool'},{id:'volatility',n:'Volatility (Memory)',c:'Memory Forensics'},
+     {id:'wireshark',n:'Wireshark / PCAP',c:'Network'},{id:'windows_artif',n:'Windows Artifacts',c:'Forensics'},
+     {id:'malware_static',n:'Static Malware Analysis',c:'Malware'},{id:'malware_dyn',n:'Dynamic Malware Analysis',c:'Malware'},
+     {id:'incident',n:'Incident Response',c:'Core'},{id:'ioc',n:'IOC Extraction',c:'Threat Intel'},
+     {id:'linux',n:'Linux CLI',c:'OS'},{id:'report',n:'Forensic Report Writing',c:'Professional'},
+   ],
+  },
+
+  /* ─── THREAT INTEL ─── */
+  {id:'threatintel',icon:'🕵️',title:'Threat Intelligence',tagline:'Hunt · Analyse · Intelligence',
+   color:'#ec4899',glowColor:'rgba(236,72,153,0.6)',
+   diffBg:'rgba(236,72,153,0.12)',diffClr:'#f472b6',difficulty:'Intermediate',
+   timeline:'6–9 months',demand:'Growing Fast 📊',
+   salaryLocal:'₦350K–₦800K/mo',salaryRemote:'$1,500–$3,500/mo',
+   prereqs:'SOC L1 experience + OSINT basics',
+   description:'Gather, analyze and share intelligence about threats before they hit your organization. Highly valued by Nigerian banks and oil companies defending against nation-state and criminal threats.',
+   tools:['MITRE ATT&CK','OpenCTI','MISP','Maltego','Shodan','VirusTotal','TheHive','Cortex'],
+   employers:['Nigerian banks (threat monitoring)','Shell Nigeria','MTN Nigeria','International CTI firms (remote)','INTERPOL Africa'],
+   nigeriaTip:'<strong>West African cybercrime groups are tracked by global CTI teams.</strong> Nigerian analysts who understand local threat context are hired at premium by international firms.',
+   phases:[
+     {title:'Phase 1 — CTI Foundations & OSINT',subtitle:'Months 1–2',color:'#ec4899',open:true,
+      note:'⚡ OSINT is free, starts immediately, and builds real skills. Create accounts on Shodan, Censys today.',
+      courses:[
+       {n:'Introduction to Cyber Threat Intelligence',p:'Recorded Future / TryHackMe',free:true,m:'CTI lifecycle, threat actors, indicators of compromise',links:[{t:'TryHackMe CTI ↗',u:'https://tryhackme.com/room/cyberthreatintel'},{t:'Recorded Future Free ↗',u:'https://www.recordedfuture.com/university'}]},
+       {n:'OSINT Fundamentals — TryHackMe',p:'TryHackMe',free:true,m:'Open source intelligence techniques',links:[{t:'OSINT TryHackMe ↗',u:'https://tryhackme.com/module/open-source-intelligence'},{t:'Trace Labs OSINT ↗',u:'https://www.tracelabs.org/competitions/search'}]},
+       {n:'Shodan & Censys — Internet Scanning',p:'Shodan / Censys',free:true,m:'Discover exposed infrastructure — essential CTI tool',links:[{t:'Shodan ↗',u:'https://www.shodan.io'},{t:'Censys ↗',u:'https://search.censys.io'}]},
+       {n:'VirusTotal for Threat Analysis',p:'Google/VirusTotal',free:true,m:'Analyze files, URLs, IPs for threat indicators',links:[{t:'VirusTotal ↗',u:'https://www.virustotal.com'},{t:'VT Academy ↗',u:'https://www.virustotal.com/learn/'}]},
+      ]},
+     {title:'Phase 2 — MITRE ATT&CK & Threat Platforms',subtitle:'Months 3–5',color:'#8b5cf6',open:false,
+      note:'⚡ OpenCTI is the industry-standard open source CTI platform. Learn to deploy and use it.',
+      courses:[
+       {n:'MITRE ATT&CK for CTI Analysts',p:'MITRE',free:true,m:'Map threat actor TTPs to the ATT&CK framework',links:[{t:'ATT&CK CTI ↗',u:'https://attack.mitre.org/resources/working-with-attack/'},{t:'ATT&CK Navigator ↗',u:'https://mitre-attack.github.io/attack-navigator/'}]},
+       {n:'OpenCTI Platform — Threat Intelligence',p:'OpenCTI',free:true,m:'Open source CTI platform — set up and use for threat tracking',links:[{t:'OpenCTI GitHub ↗',u:'https://github.com/OpenCTI-Platform/opencti'},{t:'OpenCTI Docs ↗',u:'https://docs.opencti.io'}]},
+       {n:'MISP Threat Sharing Platform',p:'MISP Project',free:true,m:'Malware information sharing platform — used by NATO and banks',links:[{t:'MISP Project ↗',u:'https://www.misp-project.org'},{t:'MISP Training ↗',u:'https://www.misp-project.org/misp-training/'}]},
+       {n:'STIX/TAXII — Threat Intelligence Standards',p:'OASIS',free:true,m:'Industry standards for sharing threat intelligence',links:[{t:'STIX/TAXII ↗',u:'https://oasis-open.github.io/cti-documentation/'}]},
+      ]},
+     {title:'Phase 3 — Advanced Hunting & Reporting',subtitle:'Months 6–9',color:'#06b6d4',open:false,
+      note:'⚡ CTI reports that help defenders take action are rare. Strong writing + technical depth = premium salary.',
+      courses:[
+       {n:'Sigma Rules for Detection Engineering',p:'GitHub / SigmaHQ',free:true,m:'Write detection rules from CTI intelligence',links:[{t:'SigmaHQ ↗',u:'https://github.com/SigmaHQ/sigma'},{t:'Sigma Rules ↗',u:'https://sigmasearchengine.com'}]},
+       {n:'Dark Web Intelligence — SANS',p:'SANS Reading Room',free:true,m:'Monitoring dark web for organization-specific threats',links:[{t:'SANS Dark Web ↗',u:'https://www.sans.org/reading-room/whitepapers/detection/'}]},
+       {n:'Maltego — Link Analysis',p:'Maltego',free:true,m:'Visualize threat actor infrastructure and connections',links:[{t:'Maltego Community ↗',u:'https://www.maltego.com/maltego-community/'}]},
+       {n:'CTI Report Writing — Structured Analytics',p:'Multiple sources',free:true,m:'Write intelligence reports that drive SOC action',links:[{t:'CISA CTI Guide ↗',u:'https://www.cisa.gov/resources-tools/resources/ctis-guide-cyber-threat-intelligence'}]},
+      ]},
+   ],
+   certs:[
+     {n:'CompTIA Security+',timing:'Foundation',tier:'First',tiercls:'cb-now',cost:'~$200 USD',desc:'Required baseline before CTI specialization',url:'https://www.comptia.org/certifications/security'},
+     {n:'GCTI — GIAC Cyber Threat Intelligence',timing:'After platform training',tier:'Primary CTI',tiercls:'cb-now',cost:'~$949 USD',desc:'Most recognized CTI-specific certification globally',url:'https://www.giac.org/certifications/cyber-threat-intelligence-gcti/'},
+     {n:'eCTHP — eLearnSecurity CTH Professional',timing:'After Phase 2',tier:'CTI Track',tiercls:'cb-goal',cost:'~$200 USD',desc:'Practical CTI certification — more affordable',url:'https://elearnsecurity.com/product/ecthp-certification/'},
+     {n:'CREST CRTI (Threat Intelligence)',timing:'1yr+ experience',tier:'Advanced',tiercls:'cb-later',cost:'Varies',desc:'Highly respected — CREST-registered threat intelligence',url:'https://www.crest-approved.org/skills-certifications-careers/crest-certifications/crest-registered-threat-intelligence-analyst/'},
+   ],
+   skills:[
+     {id:'mitre_cti',n:'MITRE ATT&CK',c:'Framework'},{id:'osint',n:'OSINT Techniques',c:'Core'},
+     {id:'opencti',n:'OpenCTI / MISP',c:'Platforms'},{id:'ioc',n:'IOC Analysis',c:'Core'},
+     {id:'maltego',n:'Maltego',c:'Link Analysis'},{id:'shodan',n:'Shodan / Censys',c:'Recon'},
+     {id:'stix',n:'STIX/TAXII Standards',c:'Standards'},{id:'darkweb',n:'Dark Web Monitoring',c:'Intel'},
+     {id:'virustotal',n:'VirusTotal',c:'Analysis'},{id:'report',n:'Intelligence Report Writing',c:'Professional'},
+   ],
+  },
+
+  /* ─── SECURITY ENGINEER ─── */
+  {id:'seceng',icon:'🔧',title:'Security Engineer',tagline:'Build · Test · Harden',
+   color:'#f59e0b',glowColor:'rgba(245,158,11,0.6)',
+   diffBg:'rgba(245,158,11,0.12)',diffClr:'#fbbf24',difficulty:'Advanced',
+   timeline:'12–24 months',demand:'Very High 💎',
+   salaryLocal:'₦500K–₦1.5M/mo',salaryRemote:'$3,000–$8,000/mo',
+   prereqs:'SOC L1/L2 experience + programming skills',
+   description:'Build, test and harden security systems at the engineering level. The highest-paying cybersecurity path — requires programming, architecture, and hands-on building.',
+   tools:['Python','Burp Suite','SAST/DAST tools','Terraform','GitHub Actions','AWS Security Hub','WAF','SIEM API'],
+   employers:['Flutterwave','Kuda','Paystack','Andela','Remote-first global companies','Google','Meta (remote)'],
+   nigeriaTip:'<strong>Security Engineers are the rarest cybersecurity role in Nigeria.</strong> Only ~200 Nigerians have this title. $3,000–$8,000/month remote is achievable.',
+   phases:[
+     {title:'Phase 1 — Security Programming',subtitle:'Months 1–4 · Python is non-negotiable',color:'#f59e0b',open:true,
+      note:'⚡ Python is the primary language for security engineering. Every automation, tool, and integration uses it.',
+      courses:[
+       {n:'Python for Cybersecurity — Automate the Boring Stuff',p:'Al Sweigart',free:true,m:'Foundation Python — every security engineer uses this',links:[{t:'Automate Boring Stuff ↗',u:'https://automatetheboringstuff.com'},{t:'Python Security Udemy ↗',u:'https://www.udemy.com/course/learn-python/'}]},
+       {n:'Python for Security Automation — TCM Security',p:'TCM Security',free:false,m:'Security-specific Python scripting — log parsing, API calls, automation',links:[{t:'Python for Hackers ↗',u:'https://www.udemy.com/course/python-for-beginners-network-attacks/'}]},
+       {n:'Bash Scripting for Security',p:'TryHackMe',free:true,m:'Shell scripting for security automation',links:[{t:'TryHackMe Scripting ↗',u:'https://tryhackme.com/room/bashscripting'}]},
+       {n:'Secure Coding Fundamentals',p:'OWASP / SAFECode',free:true,m:'How to write secure code — every security engineer reviews code',links:[{t:'OWASP Secure Coding ↗',u:'https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/'}]},
+      ]},
+     {title:'Phase 2 — Application & Infrastructure Security',subtitle:'Months 5–10',color:'#8b5cf6',open:false,
+      note:'⚡ SAST/DAST + secure code review are asked in every security engineer interview.',
+      courses:[
+       {n:'Application Security Testing — OWASP',p:'OWASP',free:true,m:'SAST, DAST, IAST methodologies and tools',links:[{t:'OWASP ASVS ↗',u:'https://owasp.org/www-project-application-security-verification-standard/'},{t:'OWASP Testing Guide ↗',u:'https://owasp.org/www-project-web-security-testing-guide/'}]},
+       {n:'DevSecOps Foundations — Linux Foundation',p:'Linux Foundation',free:true,m:'Integrate security into CI/CD pipelines — free LF course',links:[{t:'LF DevSecOps ↗',u:'https://training.linuxfoundation.org/resources/?_sft_content_type=free-course'}]},
+       {n:'GitHub Actions for Security',p:'GitHub Learning Lab',free:true,m:'Automate security scanning in CI/CD',links:[{t:'GitHub Actions ↗',u:'https://docs.github.com/en/actions/security-guides'}]},
+       {n:'Security Architecture Fundamentals — SABSA',p:'SABSA Institute',free:true,m:'Enterprise security architecture framework',links:[{t:'SABSA Institute ↗',u:'https://sabsa.org/free-resources/'}]},
+       {n:'Cloudflare WAF & DDoS Protection',p:'Cloudflare',free:true,m:'Production WAF configuration — free Cloudflare developer docs',links:[{t:'Cloudflare Learning ↗',u:'https://www.cloudflare.com/learning/'}]},
+      ]},
+     {title:'Phase 3 — PKI, Cryptography & Zero Trust',subtitle:'Months 11–18',color:'#10b981',open:false,
+      note:'⚡ Zero Trust architecture is the top enterprise security framework for 2025–2030. Learn it deeply.',
+      courses:[
+       {n:'Cryptography for Developers — Stanford (Coursera)',p:'Coursera / Stanford',free:true,m:'Audit for free · Essential cryptography for security engineers',links:[{t:'Stanford Cryptography ↗',u:'https://www.coursera.org/learn/crypto'}]},
+       {n:'Zero Trust Architecture — NIST SP 800-207',p:'NIST',free:true,m:'Official NIST Zero Trust guide — required reading',links:[{t:'NIST Zero Trust ↗',u:'https://csrc.nist.gov/publications/detail/sp/800-207/final'}]},
+       {n:'PKI & Certificate Management',p:'Linux Foundation / DigiCert',free:true,m:'Public key infrastructure for enterprise security',links:[{t:'DigiCert PKI Guide ↗',u:'https://www.digicert.com/what-is-pki'}]},
+       {n:'CISSP Study — (ISC)2 Official Materials',p:'(ISC)2',free:true,m:'Begin CISSP prep after 2+ years experience',links:[{t:'ISC2 Free Resources ↗',u:'https://www.isc2.org/candidates/free-cybersecurity-resources'}]},
+      ]},
+   ],
+   certs:[
+     {n:'CompTIA Security+',timing:'Foundation',tier:'First',tiercls:'cb-now',cost:'~$200 USD',desc:'Required baseline before engineering specialization',url:'https://www.comptia.org/certifications/security'},
+     {n:'AZ-500 or AWS Security Specialty',timing:'Early path',tier:'Cloud Security',tiercls:'cb-now',cost:'~$165–$300 USD',desc:'Cloud security engineering is where most roles are',url:'https://learn.microsoft.com/en-us/credentials/certifications/azure-security-engineer/'},
+     {n:'CSSLP — Certified Secure Software Lifecycle',timing:'After AppSec training',tier:'AppSec',tiercls:'cb-goal',cost:'~$599 USD (ISC2)',desc:'Validates secure software development expertise',url:'https://www.isc2.org/certifications/csslp'},
+     {n:'CISSP — Certified Information Systems Security Pro',timing:'After 5yrs experience',tier:'Gold Standard',tiercls:'cb-later',cost:'~$699 USD',desc:'Globally recognized — highest cybersecurity cert',url:'https://www.isc2.org/certifications/cissp'},
+     {n:'CASE .NET or CASE Java (EC-Council)',timing:'After AppSec phase',tier:'Secure Coding',tiercls:'cb-goal',cost:'~$300 USD',desc:'Certified Application Security Engineer',url:'https://www.eccouncil.org/programs/certified-application-security-engineer-case/'},
+   ],
+   skills:[
+     {id:'python_sec',n:'Python Security Automation',c:'Programming'},{id:'bash',n:'Bash Scripting',c:'Scripting'},
+     {id:'sast_dast',n:'SAST/DAST Tools',c:'AppSec'},{id:'devsecops',n:'DevSecOps / CI/CD',c:'Engineering'},
+     {id:'terraform',n:'Terraform / IaC',c:'Infrastructure'},{id:'zero_trust',n:'Zero Trust Architecture',c:'Architecture'},
+     {id:'pki',n:'PKI / Cryptography',c:'Cryptography'},{id:'waf',n:'WAF Configuration',c:'Network'},
+     {id:'code_review',n:'Secure Code Review',c:'AppSec'},{id:'cloud',n:'Cloud Security Engineering',c:'Cloud'},
+   ],
+  },
+];
+
+/* ══════════════════════════════════════════════
+   STATE
+══════════════════════════════════════════════ */
+let uid=null, currentPathId=null, userData={}, authMode='login', signupInProgress=false;
+let currentUserName='', currentUserEmail='', aiHistory=[], aiOpen=false;
+
+/* ══════════════════════════════════════════════
+   UTILS
+══════════════════════════════════════════════ */
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+function goHome(){
+  currentPathId=null;
+  document.getElementById('dashView').style.display='';loadCRPCountry();
+  document.getElementById('pathView').style.display='none';
+  document.getElementById('navBack').classList.remove('show');
+  renderDashboard();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ── Theme ── */
+const savedTheme=localStorage.getItem('crp-theme')||'dark';
+document.documentElement.setAttribute('data-theme',savedTheme);
+
+function applyThemeUI(t){
+  const b=document.getElementById('themeBtn'),l=document.getElementById('themeLabel');
+  if(b) b.textContent=t==='dark'?'☀️':'🌙';
+  if(l) l.textContent=t==='dark'?'Light Mode':'Dark Mode';
+}
+applyThemeUI(savedTheme);
+
+function toggleTheme(){
+  const c=document.documentElement.getAttribute('data-theme');
+  const n=c==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',n);
+  localStorage.setItem('crp-theme',n);
+  applyThemeUI(n);
+}
+
+/* ══════════════════════════════════════════════
+   AUTH
+══════════════════════════════════════════════ */
+function setTab(m){
+  authMode=m;
+  document.querySelectorAll('.auth-tab').forEach((t,i)=>
+    t.classList.toggle('active',(m==='login'&&i===0)||(m==='signup'&&i===1))
+  );
+  document.getElementById('authBtn').textContent=m==='login'?'Login':'Create Account';
+  document.getElementById('authErr').textContent='';
+  document.getElementById('nameField').style.display=m==='signup'?'block':'none';
+}
+
+function togglePass(){
+  const i=document.getElementById('authPass');
+  const e=document.getElementById('passEye');
+  i.type=i.type==='password'?'text':'password';
+  e.textContent=i.type==='password'?'👁':'🙈';
+}
+
+function doAuth(){
+  const e=document.getElementById('authEmail').value.trim();
+  const p=document.getElementById('authPass').value;
+  const name=document.getElementById('authName').value.trim();
+  const err=document.getElementById('authErr');
+  err.textContent='';
+
+  if(!e||!p){err.textContent='Please fill in all fields.';return;}
+
+  if(authMode==='signup'){
+    if(!name){err.textContent='Please enter your full name.';return;}
+    signupInProgress=true;
+    auth.createUserWithEmailAndPassword(e,p)
+      .then(cred=>{
+        return Promise.all([
+          cred.user.updateProfile({displayName:name}),
+          db.collection('users').doc(cred.user.uid).set({
+            name,pathProgress:{},streak:0,lastDay:''
+          })
+        ]).then(()=>cred.user);
+      })
+      .then(user=>{
+        uid=user.uid;
+        currentUserName=name;
+        currentUserEmail=e;
+        signupInProgress=false;
+        document.getElementById('authPage').style.display='none';
+        document.getElementById('app').style.display='block';
+        loadData();
+      })
+      .catch(ex=>{
+        signupInProgress=false;
+        err.textContent=ex.message.replace('Firebase: ','');
+      });
+  } else {
+    auth.signInWithEmailAndPassword(e,p)
+      .catch(ex=>{
+        err.textContent=ex.message.replace('Firebase: ','');
+      });
+  }
+}
+
+function doLogout(){
+  auth.signOut();
+  closeMenu();
+}
+
+/* ══════════════════════════════════════════════
+   FIREBASE AUTH LISTENER  ← THE FIX IS HERE
+══════════════════════════════════════════════ */
+auth.onAuthStateChanged(user=>{
+  if(user){
+    if(signupInProgress||uid===user.uid) return;
+    uid=user.uid;
+    currentUserName=user.displayName||'Analyst';
+    currentUserEmail=user.email||'';
+    document.getElementById('authPage').style.display='none';
+    document.getElementById('app').style.display='block';
+    loadData();
+  } else {
+    uid=null;
+    userData={};
+    currentUserName='';
+    currentUserEmail='';
+    document.getElementById('authPage').style.display='flex';
+    document.getElementById('app').style.display='none';
+  }
+});
+
+/* ══════════════════════════════════════════════
+   DATA — FIRESTORE
+══════════════════════════════════════════════ */
+function loadData(){
+  db.collection('users').doc(uid).get()
+    .then(doc=>{
+      if(doc.exists){
+        userData=doc.data();
+        currentUserName=userData.name||auth.currentUser.displayName||'Analyst';
+      } else {
+        userData={name:currentUserName,pathProgress:{},streak:0,lastDay:''};
+      }
+      const mu=document.getElementById('menuUserBlock');
+      if(mu) mu.textContent=currentUserEmail;
+      renderDashboard();
+    })
+    .catch(()=>{
+      userData={name:currentUserName,pathProgress:{},streak:0,lastDay:''};
+      renderDashboard();
+    });
+}
+
+function saveData(){
+  if(!uid) return;
+  db.collection('users').doc(uid).set(userData,{merge:true}).catch(console.error);
+}
+
+/* ══════════════════════════════════════════════
+   PROGRESS HELPERS
+══════════════════════════════════════════════ */
+function getProgress(pathId){
+  if(!userData.pathProgress) userData.pathProgress={};
+  if(!userData.pathProgress[pathId]) userData.pathProgress[pathId]={courses:{},certs:{},skills:{}};
+  return userData.pathProgress[pathId];
+}
+
+function makeCourseKey(phaseIdx,courseName){
+  return `${phaseIdx}_${courseName.slice(0,24).replace(/[^a-zA-Z0-9]/g,'_')}`;
+}
+
+function countDone(pathId){
+  const p=getProgress(pathId);
+  return Object.values(p.courses||{}).filter(Boolean).length
+       + Object.values(p.certs||{}).filter(Boolean).length;
+}
+
+function countTotal(pathId){
+  const path=PATHS.find(p=>p.id===pathId);
+  if(!path) return 0;
+  let t=0;
+  path.phases.forEach(ph=>t+=ph.courses.length);
+  t+=path.certs.length;
+  return t;
+}
+
+/* ══════════════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════════════ */
+function renderDashboard(){
+  const first=currentUserName.split(' ')[0]||'Analyst';
+  const w=document.getElementById('dashWelcome');
+  if(w) w.textContent=`Welcome back, ${first} 👋`;
+
+  const pp=userData.pathProgress||{};
+  const pathsStarted=Object.keys(pp).filter(pid=>countDone(pid)>0).length;
+  const streak=userData.streak||0;
+  let totalDone=0;
+  PATHS.forEach(p=>totalDone+=countDone(p.id));
+
+  const ds=document.getElementById('dStatPaths');
+  const dstr=document.getElementById('dStatStreak');
+  const dt=document.getElementById('dStatTotal');
+  if(ds) ds.textContent=pathsStarted;
+  if(dstr) dstr.textContent=streak;
+  if(dt) dt.textContent=totalDone;
+
+  const sv=document.getElementById('streakVal');
+  if(sv) sv.innerHTML=`${streak}<small>days in a row</small>`;
+
+  const today=localDate();
+  const btn=document.getElementById('streakBtn');
+  if(btn){
+    if(userData.lastDay===today){
+      btn.textContent='↩ Unmark Today';
+      btn.classList.add('marked');
+      btn.disabled=false;
+    } else {
+      btn.textContent='✓ Mark Today Done';
+      btn.classList.remove('marked');
+      btn.disabled=false;
+    }
+  }
+
+  renderPathTiles();
+}
+
+function renderPathTiles(){
+  const grid=document.getElementById('pathsGrid');
+  if(!grid) return;
+  grid.innerHTML='';
+
+  PATHS.forEach((path,i)=>{
+    const done=countDone(path.id);
+    const total=countTotal(path.id);
+    const pct=total>0?Math.round(done/total*100):0;
+    const started=done>0;
+
+    const tile=document.createElement('div');
+    tile.className='path-tile reveal'+(started?' tile-active':'');
+
+    tile.innerHTML=`
+      <div class="pt-header" style="background:linear-gradient(135deg,${path.color}18,transparent)">
+        <div class="pt-glow" style="background:${path.glowColor}"></div>
+        <span class="pt-icon">${path.icon}</span>
+        <div class="pt-title">${path.title}</div>
+        <div class="pt-tagline">${path.tagline}</div>
+      </div>
+      <div class="pt-badges">
+        <span class="pt-badge" style="background:${path.diffBg};color:${path.diffClr}">${path.difficulty}</span>
+        <span class="pt-badge" style="background:rgba(245,158,11,0.12);color:#f59e0b">${path.timeline}</span>
+        ${started?`<span class="pt-badge" style="background:rgba(16,185,129,0.12);color:#10b981">${pct}% done</span>`:''}
+      </div>
+      ${started?`<div class="pt-progress"><div class="pt-progress-fill" style="width:${pct}%;background:${path.color}"></div></div>`:''}
+      <div class="pt-footer">
+        <span class="pt-salary">Remote: <span>${path.salaryRemote}</span></span>
+        <span class="pt-arrow">→</span>
+      </div>`;
+
+    tile.addEventListener('click',()=>openPath(path.id));
+    grid.appendChild(tile);
+    setTimeout(()=>tile.classList.add('visible'),50+i*70);
+  });
+}
+
+/* ══════════════════════════════════════════════
+   STREAK
+══════════════════════════════════════════════ */
+function localDate(offset=0){
+  const d=new Date(Date.now()+offset);
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+
+function markToday(){
+  const today=localDate();
+  const yesterday=localDate(-86400000);
+  const btn=document.getElementById('streakBtn');
+  const sv=document.getElementById('streakVal');
+  const dstr=document.getElementById('dStatStreak');
+  const isMarked=(userData.lastDay===today);
+
+  if(isMarked){
+    // UNMARK
+    userData.lastDay='';
+    userData.streak=Math.max((userData.streak||1)-1,0);
+    saveData();
+    if(sv) sv.innerHTML=`${userData.streak}<small>days in a row</small>`;
+    if(dstr) dstr.textContent=userData.streak;
+    if(btn){btn.textContent='✓ Mark Today Done';btn.classList.remove('marked');btn.disabled=false;}
+    showToast('↩ Today unmarked');
+  } else {
+    // MARK
+    userData.streak=(userData.lastDay===yesterday)?(userData.streak||0)+1:1;
+    userData.lastDay=today;
+    saveData();
+    if(sv){
+      sv.innerHTML=`${userData.streak}<small>days in a row</small>`;
+      sv.classList.add('fire');
+      setTimeout(()=>sv.classList.remove('fire'),600);
+    }
+    if(dstr) dstr.textContent=userData.streak;
+    if(btn){btn.textContent='↩ Unmark Today';btn.classList.add('marked');btn.disabled=false;}
+    showToast(`🔥 Day ${userData.streak} streak! Keep going!`);
+  }
+}
+
+/* ══════════════════════════════════════════════
+   MENU
+══════════════════════════════════════════════ */
+function openMenu(){
+  document.getElementById('menuOverlay').classList.add('open');
+  document.getElementById('menuTray').classList.add('open');
+  const mu=document.getElementById('menuUserBlock');
+  if(mu) mu.textContent=currentUserEmail||'';
+}
+
+function closeMenu(){
+  document.getElementById('menuOverlay').classList.remove('open');
+  document.getElementById('menuTray').classList.remove('open');
+}
+
+/* ══════════════════════════════════════════════
+   NOTIFICATION MODAL
+══════════════════════════════════════════════ */
+function openNotifModal(){
+  document.getElementById('notifModal').classList.add('show');
+}
+function closeNotifModal(){
+  document.getElementById('notifModal').classList.remove('show');
+}
+function saveNotifTime(){
+  const t=document.getElementById('notifTime').value;
+  if(!t){showToast('Please select a time');return;}
+  localStorage.setItem('crp-reminder',t);
+  closeNotifModal();
+  showToast(`⏰ Reminder set for ${t} daily`);
+}
+
+/* ══════════════════════════════════════════════
+   PATH DETAIL
+══════════════════════════════════════════════ */
+function openPath(pathId){
+  currentPathId=pathId;
+  const path=PATHS.find(p=>p.id===pathId);
+  if(!path) return;
+
+  document.getElementById('dashView').style.display='none';
+  const pv=document.getElementById('pathView');
+  pv.style.display='block';
+  document.getElementById('navBack').classList.add('show');
+  pv.innerHTML=buildPathHTML(path);
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  setTimeout(()=>{
+    pv.querySelectorAll('.reveal').forEach((el,i)=>{
+      setTimeout(()=>el.classList.add('visible'),i*50);
+    });
+  },60);
+}
+
+function buildPathHTML(path){
+  const pp=getProgress(path.id);
+  const done=countDone(path.id);
+  const total=countTotal(path.id);
+  const pct=total>0?Math.round(done/total*100):0;
+
+  let html=`
+  <div class="path-hero reveal">
+    <div class="ph-top">
+      <div class="ph-icon-wrap" style="background:${path.color}18;border-color:${path.color}33">
+        <span>${path.icon}</span>
+      </div>
+      <div>
+        <div class="ph-title">${path.title}</div>
+        <div class="ph-tagline">${path.tagline}</div>
+      </div>
+    </div>
+    <div class="ph-badges">
+      <span class="ph-badge" style="background:${path.diffBg};color:${path.diffClr}">${path.difficulty}</span>
+      <span class="ph-badge" style="background:rgba(245,158,11,0.12);color:#f59e0b">⏱ ${path.timeline}</span>
+      <span class="ph-badge" style="background:rgba(239,68,68,0.1);color:#f87171">🔥 ${path.demand}</span>
+    </div>
+    <div class="ph-desc">${path.description}</div>
+    <div class="ph-meta-row">
+      <div class="ph-meta-card">
+        <div class="ph-meta-label">🇳🇬 Local Salary</div>
+        <div class="ph-meta-val">${path.salaryLocal}</div>
+      </div>
+      <div class="ph-meta-card">
+        <div class="ph-meta-label">🌍 Remote Salary</div>
+        <div class="ph-meta-val">${path.salaryRemote}</div>
+      </div>
+      <div class="ph-meta-card">
+        <div class="ph-meta-label">📋 Prerequisites</div>
+        <div class="ph-meta-val" style="font-size:0.7rem">${path.prereqs}</div>
+      </div>
+      <div class="ph-meta-card">
+        <div class="ph-meta-label">🛠️ Key Tools</div>
+        <div class="ph-meta-val" style="font-size:0.68rem">${path.tools.slice(0,4).join(', ')}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-progress reveal" id="detailProgressBox">
+    <div class="dp-top">
+      <span class="dp-label">Path Progress</span>
+      <span class="dp-val" id="dpVal">${done}/${total} · ${pct}%</span>
+    </div>
+    <div class="dp-track">
+      <div class="dp-fill" id="dpFill" style="width:${pct}%;background:linear-gradient(90deg,${path.color},${path.color}88)"></div>
+    </div>
+  </div>
+
+  <div class="ng-tip reveal">🇳🇬 <strong>Nigeria Insight:</strong> ${path.nigeriaTip}</div>`;
+
+  /* ── Phases ── */
+  html+=`<div class="sec-label reveal">📚 Learning Roadmap</div>`;
+
+  path.phases.forEach((phase,pi)=>{
+    const phaseDoneCnt=phase.courses.filter(c=>{
+      const k=makeCourseKey(pi,c.n);
+      return !!(pp.courses||{})[k];
+    }).length;
+
+    html+=`
+    <div class="phase-wrap reveal">
+      <div class="phase-head" onclick="togglePhase(this)">
+        <div class="phase-left">
+          <div class="phase-pip" style="background:${phase.color}"></div>
+          <div>
+            <div class="phase-title">${phase.title}</div>
+            <div class="phase-sub">${phase.subtitle}</div>
+          </div>
+        </div>
+        <div class="phase-right">
+          <span class="phase-count" style="color:${phase.color}">${phaseDoneCnt}/${phase.courses.length}</span>
+          <span class="phase-chev ${phase.open?'open':''}">▾</span>
+        </div>
+      </div>
+      <div class="phase-body ${phase.open?'open':''}">`;
+
+    phase.courses.forEach(c=>{
+      const k=makeCourseKey(pi,c.n);
+      const ck=!!(pp.courses||{})[k];
+      const links=c.links.map(l=>`<a class="c-link" href="${l.u}" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener">${l.t}</a>`).join('');
+      const freeBadge=c.free?`<span class="free-badge">FREE</span>`:'';
+      const extraBadge=c.badge?`<span class="${c.badge==='NEW'?'new-badge':'free-badge'}">${c.badge}</span>`:'';
+
+      html+=`
+        <div class="course-row">
+          <div class="cbox${ck?' checked':''}" data-path="${path.id}" data-key="${k}" onclick="toggleCourse(this)"></div>
+          <div class="c-info">
+            <div class="c-name${ck?' done':''}">${c.n}${extraBadge}${freeBadge}</div>
+            <div class="c-meta">${c.p} · ${c.m}</div>
+            <div>${links}</div>
+          </div>
+        </div>`;
+    });
+
+    html+=`<div class="phase-note" style="color:${phase.color};background:${phase.color}08">${phase.note}</div>`;
+    html+=`</div></div>`;
+  });
+
+  /* ── Certifications ── */
+  html+=`<div class="sec-label reveal" style="margin-top:20px">🎓 Certifications</div>`;
+  path.certs.forEach((cert,ci)=>{
+    const k=`cert_${ci}`;
+    const ck=!!(pp.certs||{})[k];
+    html+=`
+    <div class="cert-row reveal">
+      <div class="cert-circle${ck?' checked':''}" data-path="${path.id}" data-key="${k}" onclick="toggleCert(this)"></div>
+      <div class="cert-info">
+        <div class="cert-n${ck?' done':''}">${cert.n}</div>
+        <div class="cert-t">${cert.timing} · ${cert.cost}<br>${cert.desc}</div>
+        <a class="c-link" href="${cert.url}" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener">Learn More ↗</a>
+      </div>
+      <span class="cbadge ${cert.tiercls}">${cert.tier}</span>
+    </div>`;
+  });
+
+  /* ── Skills ── */
+  html+=`<div class="sec-label reveal" style="margin-top:20px">⚡ Skills to Build</div>`;
+  html+=`<div class="skills-note reveal">Click to mark skills you've learned. Build these progressively through the phases above.</div>`;
+  html+=`<div class="skills-grid">`;
+  path.skills.forEach(sk=>{
+    const owned=!!(pp.skills||{})[sk.id];
+    html+=`
+    <div class="skill-chip${owned?' owned':''} reveal" data-path="${path.id}" data-id="${sk.id}" onclick="toggleSkill(this)">
+      <div class="skill-dot"></div>
+      <div>
+        <div class="skill-name">${sk.n}</div>
+        <div class="skill-cat">${sk.c}</div>
+      </div>
+    </div>`;
+  });
+  html+=`</div>`;
+
+  /* ── Tools ── */
+  html+=`<div class="sec-label reveal" style="margin-top:20px">🛠️ Tools You'll Use</div>`;
+  html+=`<div class="tools-grid reveal">${path.tools.map(t=>`<div class="tool-chip">${t}</div>`).join('')}</div>`;
+
+  /* ── Employers ── */
+  html+=`<div class="sec-label reveal" style="margin-top:16px">🏢 Where You'll Work</div>`;
+  html+=`<div class="employers-grid reveal">${path.employers.map(e=>`<div class="emp-chip">${e}</div>`).join('')}</div>`;
+
+  /* ── SPL for SOC1 ── */
+  if(path.hasSpl){
+    html+=`
+    <div class="sec-label reveal" style="margin-top:20px">🔍 Essential SPL Queries</div>
+    <div class="spl-section reveal">
+      <div class="spl-section-title" style="color:var(--cyan)">Splunk Search Processing Language</div>
+      <div class="spl-label">Failed Login Detection</div>
+      <div class="spl-block">index=* sourcetype=WinEventLog EventCode=4625
+| stats count by Account_Name, ComputerName, src_ip
+| where count > 5
+| sort -count<button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
+      <div class="spl-label">Malware Communication</div>
+      <div class="spl-block">index=network_logs dest_port IN (4444, 1337, 31337, 8080, 8443)
+| stats count by src_ip, dest_ip, dest_port
+| where count > 3<button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
+      <div class="spl-label">High-Volume Data Transfer</div>
+      <div class="spl-block">index=* sourcetype=proxy bytes_out > 100000000
+| eval GB=round(bytes_out/1073741824,2)
+| table src_ip, dest_ip, dest_domain, GB
+| sort -GB<button class="spl-copy" onclick="copySpl(this)">Copy</button></div>
+    </div>`;
+  }
+
+  return html;
+}
+
+/* ── Phase toggle ── */
+function togglePhase(head){
+  const body=head.nextElementSibling;
+  const chev=head.querySelector('.phase-chev');
+  body.classList.toggle('open');
+  chev.classList.toggle('open');
+}
+
+/* ── Course toggle ── */
+function toggleCourse(el){
+  const pathId=el.dataset.path;
+  const key=el.dataset.key;
+  const pp=getProgress(pathId);
+  if(!pp.courses) pp.courses={};
+  const was=!!pp.courses[key];
+  pp.courses[key]=!was;
+  el.classList.toggle('checked',!was);
+  const nameEl=el.nextElementSibling?.querySelector('.c-name');
+  if(nameEl) nameEl.classList.toggle('done',!was);
+  /* update phase counter */
+  const phaseWrap=el.closest('.phase-wrap');
+  if(phaseWrap){
+    const allCboxes=phaseWrap.querySelectorAll('.cbox');
+    const doneCnt=Array.from(allCboxes).filter(b=>b.classList.contains('checked')).length;
+    const countEl=phaseWrap.querySelector('.phase-count');
+    if(countEl){
+      const parts=countEl.textContent.split('/');
+      countEl.textContent=`${doneCnt}/${parts[1]}`;
+    }
+  }
+  saveData();
+  refreshDetailProgress(pathId);
+  showToast(!was?'✅ Course marked complete!':'↩ Unmarked');
+}
+
+/* ── Cert toggle ── */
+function toggleCert(el){
+  const pathId=el.dataset.path;
+  const key=el.dataset.key;
+  const pp=getProgress(pathId);
+  if(!pp.certs) pp.certs={};
+  const was=!!pp.certs[key];
+  pp.certs[key]=!was;
+  el.classList.toggle('checked',!was);
+  const nameEl=el.nextElementSibling?.querySelector('.cert-n');
+  if(nameEl) nameEl.classList.toggle('done',!was);
+  saveData();
+  refreshDetailProgress(pathId);
+  showToast(!was?'🎓 Cert marked earned!':'↩ Unmarked');
+}
+
+/* ── Skill toggle ── */
+function toggleSkill(el){
+  const pathId=el.dataset.path;
+  const id=el.dataset.id;
+  const pp=getProgress(pathId);
+  if(!pp.skills) pp.skills={};
+  const was=!!pp.skills[id];
+  pp.skills[id]=!was;
+  el.classList.toggle('owned',!was);
+  saveData();
+  showToast(!was?'⚡ Skill added!':'↩ Skill removed');
+}
+
+/* ── Refresh progress bar inside detail view ── */
+function refreshDetailProgress(pathId){
+  const done=countDone(pathId);
+  const total=countTotal(pathId);
+  const pct=total>0?Math.round(done/total*100):0;
+  const valEl=document.getElementById('dpVal');
+  const fillEl=document.getElementById('dpFill');
+  if(valEl) valEl.textContent=`${done}/${total} · ${pct}%`;
+  if(fillEl) fillEl.style.width=pct+'%';
+}
+
+/* ── Copy SPL ── */
+function copySpl(btn){
+  const block=btn.parentElement;
+  const text=block.childNodes[0].textContent.trim();
+  navigator.clipboard.writeText(text)
+    .then(()=>{btn.textContent='✓ Copied!';setTimeout(()=>btn.textContent='Copy',2200);})
+    .catch(()=>showToast('Copy unavailable'));
+}
+
+/* ══════════════════════════════════════════════
+   AI DRAWER
+══════════════════════════════════════════════ */
+function toggleAIDrawer(){
+  aiOpen?closeAIDrawer():openAIDrawer();
+}
+
+function openAIDrawer(){
+  aiOpen=true;
+  document.getElementById('aiOverlay').classList.add('open');
+  document.getElementById('aiDrawer').classList.add('open');
+  if(aiHistory.length===0){
+    const path=currentPathId?PATHS.find(p=>p.id===currentPathId):null;
+    addBubble('ai',`Hi ${currentUserName.split(' ')[0]||'there'}! I'm your AI Cybersecurity Mentor. ${path?`You're on the <strong>${path.title}</strong> path. `:''}Ask me anything about your cybersecurity career in Nigeria 🇳🇬`);
+  }
+}
+
+function closeAIDrawer(){
+  aiOpen=false;
+  document.getElementById('aiOverlay').classList.remove('open');
+  document.getElementById('aiDrawer').classList.remove('open');
+}
+
+function addBubble(role,text){
+  const msgs=document.getElementById('aiMsgs');
+  const div=document.createElement('div');
+  div.className=`bubble bubble-${role==='user'?'u':'ai'}`;
+  div.innerHTML=text;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+function askSug(btn){
+  document.getElementById('aiInput').value=btn.textContent;
+  askGroq();
+}
+
+async function askGroq(){
+  const input=document.getElementById('aiInput');
+  const q=input.value.trim();
+  if(!q) return;
+  const btn=document.getElementById('aiBtn');
+  btn.disabled=true;
+  input.value='';
+  addBubble('user',q);
+  const thinking=addBubble('ai','<em>Thinking...</em>');
+  thinking.classList.add('bubble-thinking');
+
+  const path=currentPathId?PATHS.find(p=>p.id===currentPathId):null;
+  const systemPrompt=`You are an expert cybersecurity career mentor specializing in Nigerian students and professionals.
+The user is based in Port Harcourt, Nigeria and actively building a cybersecurity career.
+${path?`They are currently studying the "${path.title}" path.`:''}
+Give practical, Nigeria-specific advice. Reference local employers (Access Bank, GTBank, Flutterwave, MTN Nigeria, Shell Nigeria, EFCC, Certfort, GVA Partners) and local programs (NITDA subsidies, NDPR, NDPA 2023) where relevant.
+Keep responses concise, actionable, and encouraging. Max 3 short paragraphs.`;
+
+  aiHistory.push({role:'user',content:q});
+
+  try{
+    const res=await fetch(WORKER_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'llama-3.1-8b-instant',
+        messages:[{role:'system',content:systemPrompt},...aiHistory.slice(-10)],
+        max_tokens:450,
+        temperature:0.7
+      })
+    });
+    const data=await res.json();
+    if(data.error){throw new Error(data.error.message||'API error');}
+    const reply=data.choices?.[0]?.message?.content||'No response — please try again.';
+    aiHistory.push({role:'assistant',content:reply});
+    thinking.innerHTML=reply.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
+    thinking.classList.remove('bubble-thinking');
+  }catch(err){
+    thinking.innerHTML=`⚠️ Error: ${err.message||'Connection failed'}. Check internet & try again.`;
+    thinking.classList.remove('bubble-thinking');
+    console.error('AI error:',err);
+  }
+  btn.disabled=false;
+}
+
+
+/* ===================== NAVIGATION MANAGEMENT ===================== */
+// Push initial history state
+if(!window.history.state || !window.history.state.crp_view){
+  window.history.replaceState({crp_view:'dash'}, '', window.location.href);
+}
+
+// Wrap goHome to push history
+const _origGoHome = window.goHome;
+window.goHome = function(){
+  window.history.pushState({crp_view:'dash'}, '', window.location.href);
+  if(_origGoHome) _origGoHome();
+};
+
+// Wrap openPath to push history
+const _origOpenPath = window.openPath;
+window.openPath = function(pathId){
+  window.history.pushState({crp_view:'path', pathId:pathId}, '', window.location.href);
+  if(_origOpenPath) _origOpenPath(pathId);
+};
+
+// Handle browser/Android back button
+window.addEventListener('popstate', function(e){
+  if(e.state && e.state.crp_view){
+    const v = e.state.crp_view;
+    if(v === 'dash'){
+      // Call original goHome directly (no history push)
+      currentPathId = null;
+      document.getElementById('dashView').style.display = '';
+      document.getElementById('pathView').style.display = 'none';
+      document.getElementById('navBack').classList.remove('show');
+      renderDashboard();
+      window.scrollTo({top:0, behavior:'smooth'});
+    } else if(v === 'path' && e.state.pathId){
+      if(_origOpenPath) _origOpenPath(e.state.pathId);
+    }
+  } else {
+    // At root — double-tap to exit
+    _crpBackPress();
+    window.history.pushState({crp_view:'dash'}, '', window.location.href);
+  }
+});
+
+// Double-tap back to exit
+let _crpBackCount = 0;
+let _crpBackTimer = null;
+function _crpBackPress(){
+  _crpBackCount++;
+  if(_crpBackTimer) clearTimeout(_crpBackTimer);
+  if(_crpBackCount === 1){
+    showToast('Press back again to exit');
+    _crpBackTimer = setTimeout(()=>{ _crpBackCount = 0; }, 2500);
+  } else if(_crpBackCount >= 2){
+    _crpBackCount = 0;
+    if(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
+      window.close();
+    }
+  }
+}
+
+// External links — open in new tab, preserve session
+document.addEventListener('click', function(e){
+  const link = e.target.closest('a[href]');
+  if(!link) return;
+  const href = link.getAttribute('href');
+  if(!href || href.startsWith('#') || href.startsWith('javascript:') || href.startsWith('mailto:')) return;
+  if(href.startsWith('/') || href.includes(window.location.hostname)) return;
+  // External — new tab
+  e.preventDefault();
+  window.open(href, '_blank', 'noopener,noreferrer');
+}, true);
+
+// Make sure all task/cert links have target="_blank" dynamically
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('a.c-link, a.cert-link').forEach(a=>{
+    if(!a.getAttribute('target')) a.setAttribute('target','_blank');
+    a.setAttribute('rel','noopener noreferrer');
+  });
+});
+
+// Save current view on unload
+window.addEventListener('beforeunload', function(){
+  try{
+    sessionStorage.setItem('crp-last-view', currentPathId ? 'path:'+currentPathId : 'dash');
+  }catch(e){}
+});
+
+// Restore view on load
+window.addEventListener('load', function(){
+  try{
+    const last = sessionStorage.getItem('crp-last-view');
+    if(last && last.startsWith('path:')){
+      const pathId = last.split(':')[1];
+      setTimeout(()=>{
+        if(typeof openPath === 'function') openPath(pathId);
+      }, 600);
+    }
+    window.history.replaceState({crp_view: last&&last.startsWith('path:')?'path':'dash'}, '', window.location.href);
+  }catch(e){}
+});
+
+
+/* ===================== COUNTRY SELECTOR (ROADMAP) ===================== */
+const CRP_COUNTRIES = [
+  {id:'ng',flag:'🇳🇬',name:'Nigeria',sub:'Lagos · Abuja · Port Harcourt',
+   salaryLocal:'₦150K–₦900K/mo',salaryRemote:'$800–$4,000/mo',
+   compliance:['NDPR 2019','NDPA 2023','CBN Cybersecurity Framework'],
+   employers:['Access Bank','GTBank','Flutterwave','MTN Nigeria','Interswitch','Zenith Bank','Shell Nigeria'],
+   certNotes:'NITDA offers 50% subsidy on CompTIA Security+.',
+   demandNote:'78% of Nigerian SOC postings require Splunk or Sentinel.'},
+  {id:'gh',flag:'🇬🇭',name:'Ghana',sub:'Accra · Kumasi',
+   salaryLocal:'GH₵3,000–15,000/mo',salaryRemote:'$700–$3,000/mo',
+   compliance:['Data Protection Act 2012','Bank of Ghana Cyber Directive'],
+   employers:['Ecobank Ghana','MTN Ghana','Stanbic Bank','Vodafone Ghana'],
+   certNotes:'NITA-Ghana supports digital skills. Check nita.gov.gh.',
+   demandNote:'Ghanaian fintechs rapidly expanding cybersecurity teams.'},
+  {id:'ke',flag:'🇰🇪',name:'Kenya',sub:'Nairobi · Mombasa',
+   salaryLocal:'KSh 80K–400K/mo',salaryRemote:'$900–$4,000/mo',
+   compliance:['Kenya Data Protection Act 2019','CBK Cybersecurity Guidelines'],
+   employers:['Safaricom','Equity Bank','KCB Group','M-Pesa Africa','Andela'],
+   certNotes:'Kenya ICT Authority supports cyber skills development.',
+   demandNote:'M-Pesa ecosystem drives massive fintech security demand.'},
+  {id:'za',flag:'🇿🇦',name:'South Africa',sub:'Johannesburg · Cape Town',
+   salaryLocal:'R25,000–R80,000/mo',salaryRemote:'$1,200–$5,000/mo',
+   compliance:['POPIA 2020','ECTA','SARB Cybersecurity Guidelines'],
+   employers:['Standard Bank','FirstRand','Absa','MTN SA','Vodacom','Discovery'],
+   certNotes:'Most mature cybersecurity market in Africa.',
+   demandNote:'POPIA compliance drives massive security hiring.'},
+  {id:'gb',flag:'🇬🇧',name:'United Kingdom',sub:'London · Manchester',
+   salaryLocal:'£35,000–£90,000/yr',salaryRemote:'$2,000–$7,000/mo',
+   compliance:['UK GDPR','NIS Regulations 2018','Cyber Essentials'],
+   employers:['GCHQ','BAE Systems','BT Security','HSBC','Barclays','Darktrace'],
+   certNotes:'NCSC Cyber Accelerator. Cyber Essentials highly valued.',
+   demandNote:'50,000+ unfilled UK cybersecurity roles. African talent in demand.'},
+  {id:'us',flag:'🇺🇸',name:'United States',sub:'New York · San Francisco',
+   salaryLocal:'$70,000–$180,000/yr',salaryRemote:'$3,000–$10,000/mo',
+   compliance:['NIST CSF','HIPAA','SOX','PCI DSS','CMMC'],
+   employers:['Microsoft','Google','Amazon','CrowdStrike','Palo Alto Networks'],
+   certNotes:'DoD 8570 requires Security+/CISSP for government contracts.',
+   demandNote:'3.5M unfilled global cybersecurity jobs. Remote roles available worldwide.'},
+  {id:'ca',flag:'🇨🇦',name:'Canada',sub:'Toronto · Vancouver',
+   salaryLocal:'CA$65,000–150,000/yr',salaryRemote:'$2,500–$6,000/mo',
+   compliance:['PIPEDA','Quebec Law 25','OSFI Guidelines'],
+   employers:['RBC','TD Bank','Shopify','BlackBerry','CGI Group'],
+   certNotes:'Global Skills Strategy visa for tech workers.',
+   demandNote:'Canada has immigration pathways for tech workers.'},
+  {id:'de',flag:'🇩🇪',name:'Germany',sub:'Berlin · Munich · Frankfurt',
+   salaryLocal:'€50,000–€110,000/yr',salaryRemote:'$2,000–$6,000/mo',
+   compliance:['GDPR','BSI-Grundschutz','NIS2 Directive'],
+   employers:['SAP','Deutsche Telekom','Siemens','Allianz','Deutsche Bank'],
+   certNotes:'BSI certifications highly valued.',
+   demandNote:'137,000+ unfilled IT jobs. NIS2 (2024) increased security demand massively.'},
+];
+
+let crpUserCountry = null;
+let crpSelectedId = 'ng';
+
+function openCountryModalCRP(){
+  renderCountryGridCRP();
+  document.getElementById('countryModal').classList.add('show');
+}
+function renderCountryGridCRP(){
+  const grid = document.getElementById('countryGridCRP');
+  if(!grid) return;
+  grid.innerHTML = CRP_COUNTRIES.map(co => `
+    <div class="country-opt ${co.id===crpSelectedId?'selected':''}"
+         onclick="crpSelectCountry('${co.id}')">
+      <div class="co-flag">${co.flag}</div>
+      <div class="co-name">${co.name}</div>
+      <div class="co-sub">${co.sub}</div>
+    </div>`).join('');
+}
+function crpSelectCountry(id){
+  crpSelectedId = id;
+  document.querySelectorAll('.country-opt').forEach(el=>{
+    const oc = el.getAttribute('onclick')||'';
+    el.classList.toggle('selected', oc.includes("'"+id+"'"));
+  });
+}
+function confirmCountryCRP(){
+  crpUserCountry = CRP_COUNTRIES.find(c=>c.id===crpSelectedId)||CRP_COUNTRIES[0];
+  localStorage.setItem('crp-country', crpSelectedId);
+  document.getElementById('countryModal').classList.remove('show');
+  updateCRPCountryBanner();
+  if(typeof userData !== 'undefined' && uid){
+    userData.country = crpSelectedId;
+    if(typeof saveData==='function') saveData();
+  }
+  showToast('🌍 Location set to '+crpUserCountry.name);
+}
+function updateCRPCountryBanner(){
+  if(!crpUserCountry) return;
+  const banner = document.getElementById('crpCountryBanner');
+  const flag   = document.getElementById('crpFlag');
+  const name   = document.getElementById('crpCountryName');
+  const sub    = document.getElementById('crpCountrySub');
+  if(banner) banner.style.display='flex';
+  if(flag)   flag.textContent = crpUserCountry.flag;
+  if(name)   name.textContent = crpUserCountry.name+' · Cybersecurity Market';
+  if(sub)    sub.innerHTML = crpUserCountry.salaryRemote+' remote · '+
+             crpUserCountry.compliance[0]+' · '+
+             crpUserCountry.employers.length+' local employers tracked';
+}
+function loadCRPCountry(){
+  const saved = (typeof userData!=='undefined'&&userData.country)||
+                localStorage.getItem('crp-country')||'ng';
+  crpSelectedId = saved;
+  crpUserCountry = CRP_COUNTRIES.find(c=>c.id===saved)||CRP_COUNTRIES[0];
+  updateCRPCountryBanner();
+  if(!localStorage.getItem('crp-country')){
+    setTimeout(()=>openCountryModalCRP(), 1000);
+  }
+}
+
+/* ── PWA Service Worker ── */
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("/cyber-roadmap/sw.js")
+      .then(()=>console.log("SW registered"))
+      .catch(err=>console.log("SW error:",err));
+  });
+}
+
+/* Enter to send in AI chat */
+const aiInputEl=document.getElementById('aiInput');
+if(aiInputEl){
+  aiInputEl.addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();askGroq();}
+  });
+}
+</script>
+</body>
+</html>
