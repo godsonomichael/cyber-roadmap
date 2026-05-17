@@ -473,10 +473,10 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
     </div>
     <div class="ai-sugs" id="aiSugs">
       <button class="ai-sug" onclick="askSug(this)">Which path should I start with?</button>
-      <button class="ai-sug" onclick="askSug(this)">Best Nigerian SOC employers?</button>
-      <button class="ai-sug" onclick="askSug(this)">How to get remote work from Nigeria?</button>
+      <button class="ai-sug" id="aiSug1" onclick="askSug(this)">Best SOC employers here?</button>
+      <button class="ai-sug" id="aiSug2" onclick="askSug(this)">How to get remote work from here?</button>
       <button class="ai-sug" onclick="askSug(this)">Security+ vs CyberOps — which first?</button>
-      <button class="ai-sug" onclick="askSug(this)">NITDA subsidy for certifications?</button>
+      <button class="ai-sug" id="aiSug3" onclick="askSug(this)">Certification funding in my country?</button>
       <button class="ai-sug" onclick="askSug(this)">Use my HSE background in interviews</button>
     </div>
     <div class="ai-msgs" id="aiMsgs"></div>
@@ -1368,12 +1368,12 @@ function buildPathHTML(path){
     <div class="ph-desc">${path.description}</div>
     <div class="ph-meta-row">
       <div class="ph-meta-card">
-        <div class="ph-meta-label">🇳🇬 Local Salary</div>
-        <div class="ph-meta-val">${path.salaryLocal}</div>
+        <div class="ph-meta-label">${crpUserCountry?crpUserCountry.flag:"🇳🇬"} Local Salary</div>
+        <div class="ph-meta-val">${crpUserCountry?crpUserCountry.salaryLocal:path.salaryLocal}</div>
       </div>
       <div class="ph-meta-card">
         <div class="ph-meta-label">🌍 Remote Salary</div>
-        <div class="ph-meta-val">${path.salaryRemote}</div>
+        <div class="ph-meta-val">${crpUserCountry?crpUserCountry.salaryRemote:path.salaryRemote}</div>
       </div>
       <div class="ph-meta-card">
         <div class="ph-meta-label">📋 Prerequisites</div>
@@ -1396,7 +1396,7 @@ function buildPathHTML(path){
     </div>
   </div>
 
-  <div class="ng-tip reveal">🇳🇬 <strong>Nigeria Insight:</strong> ${path.nigeriaTip}</div>`;
+  <div class="ng-tip reveal">${crpUserCountry?crpUserCountry.flag:'🇳🇬'} <strong>${crpUserCountry?crpUserCountry.name+' Insight':'Nigeria Insight'}:</strong> ${crpUserCountry?`<strong>${crpUserCountry.compliance[0]}</strong> compliance is essential here. Top employers hiring for this role: <strong>${crpUserCountry.employers.slice(0,4).join(', ')}</strong>. ${crpUserCountry.certNotes} ${crpUserCountry.demandNote}`:path.nigeriaTip}</div>`;
 
   /* ── Phases ── */
   html+=`<div class="sec-label reveal">📚 Learning Roadmap</div>`;
@@ -1486,7 +1486,8 @@ function buildPathHTML(path){
 
   /* ── Employers ── */
   html+=`<div class="sec-label reveal" style="margin-top:16px">🏢 Where You'll Work</div>`;
-  html+=`<div class="employers-grid reveal">${path.employers.map(e=>`<div class="emp-chip">${e}</div>`).join('')}</div>`;
+  const _employers = crpUserCountry ? crpUserCountry.employers : path.employers;
+  html+=`<div class="employers-grid reveal">${_employers.map(e=>`<div class="emp-chip">${e}</div>`).join('')}</div>`;
 
   /* ── SPL for SOC1 ── */
   if(path.hasSpl){
@@ -1611,7 +1612,7 @@ function openAIDrawer(){
   document.getElementById('aiDrawer').classList.add('open');
   if(aiHistory.length===0){
     const path=currentPathId?PATHS.find(p=>p.id===currentPathId):null;
-    addBubble('ai',`Hi ${currentUserName.split(' ')[0]||'there'}! I'm your AI Cybersecurity Mentor. ${path?`You're on the <strong>${path.title}</strong> path. `:''}Ask me anything about your cybersecurity career${crpUserCountry?' in '+crpUserCountry.name+' '+crpUserCountry.flag:''}!`);
+    addBubble('ai',`Hi ${currentUserName.split(' ')[0]||'there'}! I'm your AI Cybersecurity Mentor for <strong>${(crpUserCountry||{name:'Nigeria',flag:'🇳🇬'}).name} ${(crpUserCountry||{flag:'🇳🇬'}).flag}</strong>. ${path?`You're on the <strong>${path.title}</strong> path. `:''}Ask me anything about building your cybersecurity career here!`);
   }
 }
 
@@ -1648,14 +1649,14 @@ async function askGroq(){
   thinking.classList.add('bubble-thinking');
 
   const path=currentPathId?PATHS.find(p=>p.id===currentPathId):null;
-  const ctxCountry = crpUserCountry || {name:'Nigeria',employers:['Access Bank','GTBank','Flutterwave','MTN Nigeria','Shell Nigeria'],compliance:['NDPR','NDPA 2023'],certNotes:'NITDA 50% subsidy available.',demandNote:'78% of Nigerian SOC postings require Splunk or Sentinel.'};
-  const systemPrompt=`You are an expert cybersecurity career mentor specializing in ${ctxCountry.name} students and professionals.
-The user is based in ${ctxCountry.name} and actively building a cybersecurity career.
-${path?`They are currently studying the "${path.title}" path.`:''}
-Local employers in ${ctxCountry.name}: ${ctxCountry.employers.slice(0,5).join(', ')}.
-Compliance frameworks relevant: ${ctxCountry.compliance.join(', ')}.
+  const ctxCountry = crpUserCountry || {name:'Nigeria',flag:'🇳🇬',salaryLocal:'₦150K–₦900K/mo',salaryRemote:'$800–$4,000/mo',employers:['Access Bank','GTBank','Flutterwave','MTN Nigeria','Shell Nigeria','EFCC'],compliance:['NDPR 2019','NDPA 2023','CBN Cybersecurity Framework'],certNotes:'NITDA offers 50% subsidy on CompTIA Security+.',demandNote:'78% of Nigerian SOC postings require Splunk or Sentinel.'};
+  const systemPrompt=`You are an expert cybersecurity career mentor for ${ctxCountry.name} ${ctxCountry.flag||''}.
+The user is based in ${ctxCountry.name} and building a cybersecurity career.
+${path?`They are studying "${path.title}". Local salary for this role in ${ctxCountry.name}: ${ctxCountry.salaryLocal||'varies'} local / ${ctxCountry.salaryRemote||'$800–$4,000'} remote.`:''}
+Key employers in ${ctxCountry.name}: ${ctxCountry.employers.join(', ')}.
+Relevant compliance: ${ctxCountry.compliance.join(', ')}.
 ${ctxCountry.certNotes} ${ctxCountry.demandNote}
-Give practical, location-specific advice. Keep responses concise, actionable, and encouraging. Max 3 short paragraphs.`;
+Give practical, ${ctxCountry.name}-specific career advice. Reference local employers, local laws, and local salary ranges. Max 3 short paragraphs.`;
 
   aiHistory.push({role:'user',content:q});
 
@@ -1886,6 +1887,33 @@ function updateCRPCountryBanner(){
   if(sub)    sub.innerHTML = crpUserCountry.salaryRemote+' remote · '+
              crpUserCountry.compliance[0]+' · '+
              crpUserCountry.employers.length+' local employers tracked';
+  /* Update AI suggestion buttons to match country */
+  const s1 = document.getElementById('aiSug1');
+  const s2 = document.getElementById('aiSug2');
+  const s3 = document.getElementById('aiSug3');
+  if(s1) s1.textContent = 'Best '+crpUserCountry.name+' SOC employers?';
+  if(s2) s2.textContent = 'Remote work opportunities from '+crpUserCountry.name+'?';
+  if(s3) s3.textContent = crpUserCountry.certNotes.slice(0,40)+'...';
+  /* Update dashboard subtitle */
+  const dashSub = document.getElementById('dashSubCRP');
+  if(dashSub) dashSub.textContent = crpUserCountry.flag+' '+crpUserCountry.name+' · Choose a career path below to view your full roadmap';
+  /* Update footer */
+  const ft = document.getElementById('crpFooterCountry');
+  if(ft) ft.textContent = crpUserCountry.flag+' '+crpUserCountry.name;
+  /* Update menu country display */
+  const mc = document.getElementById('menuCountry');
+  if(mc) mc.textContent = crpUserCountry.flag+' '+crpUserCountry.name+' · Change ›';
+  /* If a career path is currently open, re-render it with new country data */
+  const pv = document.getElementById('pathView');
+  if(pv && pv.style.display!=='none' && currentPathId){
+    if(typeof buildPathHTML==='function'){
+      const path = PATHS.find(p=>p.id===currentPathId);
+      if(path) pv.innerHTML = buildPathHTML(path);
+      setTimeout(()=>{
+        pv.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+      },60);
+    }
+  }
 }
 function loadCRPCountry(){
   const saved = (typeof userData!=='undefined'&&userData.country)||
